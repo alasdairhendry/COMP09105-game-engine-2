@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45143408, g: 0.50077796, b: 0.5715438, a: 1}
+  m_IndirectSpecularColor: {r: 0.45143455, g: 0.5007783, b: 0.57154423, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -195,11 +195,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.size
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 4163582799282070, guid: 1405b09d43684d945977c6c66281cdca, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -232,54 +227,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 1879661789177186, guid: c0bc60269595ffb48907eab22e1b2d47,
-        type: 2}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 1996295698057212, guid: e5d2fe7a88911f745887681ca0d8461f,
-        type: 2}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[4]
-      value: 
-      objectReference: {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07,
-        type: 2}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[5]
-      value: 
-      objectReference: {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f,
-        type: 2}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[6]
-      value: 
-      objectReference: {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2,
-        type: 2}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[7]
-      value: 
-      objectReference: {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d,
-        type: 2}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_SpawnPrefabs.Array.data[8]
-      value: 
-      objectReference: {fileID: 1432596401101804, guid: 00aff922b16974e489d8c619412c91c1,
-        type: 2}
-    - target: {fileID: 114774968774170974, guid: 1405b09d43684d945977c6c66281cdca,
-        type: 2}
-      propertyPath: m_PlayerPrefab
-      value: 
-      objectReference: {fileID: 1670821567057222, guid: 11e6b469376306e468fbfd04fe4957b4,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1405b09d43684d945977c6c66281cdca, type: 2}
   m_IsPrefabAsset: 0
@@ -419,26 +366,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &148910950 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1045095969048328, guid: 1405b09d43684d945977c6c66281cdca,
-    type: 2}
-  m_PrefabInternal: {fileID: 22705427}
---- !u!114 &148910954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 148910950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  manager: {fileID: 0}
-  showGUI: 1
-  offsetX: 0
-  offsetY: 0
 --- !u!1001 &195871973
 Prefab:
   m_ObjectHideFlags: 0
