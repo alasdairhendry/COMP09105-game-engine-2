@@ -11,17 +11,25 @@ public class NetworkPlayer : NetworkBehaviour {
     [SerializeField] [SyncVar] private string playerName;
     [SerializeField] [SyncVar] private string playerHealth;
 
+    public override void OnStartAuthority()
+    {
+        base.OnStartClient();
+        Debug.Log("Network Player: Start() + hasAuthority " + hasAuthority);
+        if (!hasAuthority) return;
+        CmdSpawnLocalPlayer(GetComponent<NetworkIdentity>());
+    }
+
     private void Start()
     {
-        if (!isLocalPlayer) return;
-        CmdSpawnLocalPlayer();
+
     }
 
     [Command]
-    private void CmdSpawnLocalPlayer()
+    private void CmdSpawnLocalPlayer(NetworkIdentity id)
     {
         GameObject _localPlayer = Instantiate(localPlayer, transform.position, Quaternion.identity);
-        NetworkServer.SpawnWithClientAuthority(_localPlayer, connectionToClient);
+        _localPlayer.gameObject.name = "LocalRobot";
+        NetworkServer.SpawnWithClientAuthority(_localPlayer, id.connectionToClient);
     }
 
     //private void Start()

@@ -15,7 +15,7 @@ public class ClientMode : MonoBehaviour {
     }
 
     public enum Mode { Normal, VR }
-    private Mode mode = Mode.Normal;
+    [SerializeField] private Mode mode = Mode.Normal;
     public Mode GetMode { get { return mode; } }    
 
 	public void SetModeNormal()

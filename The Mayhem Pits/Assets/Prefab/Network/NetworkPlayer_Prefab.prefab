@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979d81355c0822740ae1780f45d5ff48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localPlayer: {fileID: 1274720679621028, guid: dc04364ad1a131946a1537994d2c1c08,
+  localPlayer: {fileID: 1996295698057212, guid: e5d2fe7a88911f745887681ca0d8461f,
     type: 2}
   playerName: 
   playerHealth: 

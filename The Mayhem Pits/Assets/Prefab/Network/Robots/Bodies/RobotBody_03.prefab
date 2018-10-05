@@ -11,6 +11,22 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1809382880685396}
   m_IsPrefabAsset: 1
+--- !u!1 &1496712725837958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4745252475420900}
+  - component: {fileID: 114423719219883024}
+  m_Layer: 0
+  m_Name: Mount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1809382880685396
 GameObject:
   m_ObjectHideFlags: 0
@@ -22,6 +38,7 @@ GameObject:
   - component: {fileID: 33779087617744448}
   - component: {fileID: 23867373154996888}
   - component: {fileID: 114202220435800674}
+  - component: {fileID: 114730500045859550}
   m_Layer: 0
   m_Name: RobotBody_03
   m_TagString: Untagged
@@ -35,13 +52,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1809382880685396}
-  m_LocalRotation: {x: -0.65906155, y: 0.2561991, z: 0.256199, w: 0.6590615}
-  m_LocalPosition: {x: 0.96, y: 0, z: -2.23}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4745252475420900}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90.00001, y: 0, z: 42.486004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4745252475420900
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1496712725837958}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.211, z: 0.612}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4164545315884360}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &23867373154996888
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -116,3 +147,29 @@ MonoBehaviour:
     i15: 162
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114423719219883024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1496712725837958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff74d68b70872124690ad0836e8db005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceptedWeaponPrefabs:
+  - {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d, type: 2}
+--- !u!114 &114730500045859550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809382880685396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7788ba9bacbe78243b233acc21eed3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponMounts:
+  - {fileID: 114423719219883024}

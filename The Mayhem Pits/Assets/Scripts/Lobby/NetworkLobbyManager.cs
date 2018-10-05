@@ -92,7 +92,7 @@ public class NetworkLobbyManager : MonoBehaviour {
         lobbyStatusText.text = "Joining Match...";
     }
 
-    private void CreateMatch()
+    public void CreateMatch()
     {
         lobbyStatusText.text = "Creating New Match...";
         networkManager.matchMaker.CreateMatch("Match-" + Random.value, 4, true, "", "", "", 0, 0, networkManager.OnMatchCreate);

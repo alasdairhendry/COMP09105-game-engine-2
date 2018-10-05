@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1284099178472842}
+  m_IsPrefabAsset: 1
+--- !u!1 &1284099178472842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4427684417875936}
+  - component: {fileID: 114090017134517682}
+  - component: {fileID: 114639291440175180}
+  - component: {fileID: 114396065102711458}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4427684417875936
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284099178472842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114090017134517682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284099178472842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abaadc014fb00e54ea49e6c786d25d0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114396065102711458
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284099178472842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e33f7b0beee5f404ca9b021cef332aa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotBodyPrefabs:
+  - {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07, type: 2}
+  - {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f, type: 2}
+  - {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2, type: 2}
+  robotWeaponPrefabs:
+  - {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d, type: 2}
+  - {fileID: 1432596401101804, guid: 00aff922b16974e489d8c619412c91c1, type: 2}
+  myRobotData:
+    bodyPrefab: {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07,
+      type: 2}
+    weaponMountPosition: {x: 0, y: 0.25, z: 0.494}
+    weaponMountRotation: {x: 90, y: 0, z: 0}
+    weaponPrefab: {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d,
+      type: 2}
+--- !u!114 &114639291440175180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284099178472842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5063e3055f36f094fb89591a474c0c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

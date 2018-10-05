@@ -20,6 +20,7 @@ public class LobbyModeManager : MonoBehaviour {
             {
                 obj.SetActive(true);
             }
+            UnityEngine.XR.XRSettings.enabled = false;
         }
         else if (ClientMode.singleton.GetMode == ClientMode.Mode.VR)
         {
