@@ -5,79 +5,71 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class NetworkLobbyPlayer : NetworkBehaviour {
-
-    [SyncVar] [SerializeField] private string playerName = "";
-    public string GetPlayerName { get { return playerName; } }
+public class NetworkLobbyPlayer : NetworkBehaviour {       
 
     [SerializeField] private List<GameObject> robotBodies = new List<GameObject>();
+    public NetworkPlayer networkPlayer;
 
     private int currentCountdown = 2;
 
-    private void Awake()
+    public override void OnStartAuthority()
     {
+        base.OnStartAuthority();
+        if (!hasAuthority) return;
         DontDestroyOnLoad(this.gameObject);
-    }
 
-    // Use this for initialization
-    void Start () {        
-        if (!isLocalPlayer) return;
-        SetPlayerName();
-        CmdSpawnLobbyGraphics();
+        Debug.Log("Network Lobby Player: Start() + hasAuthority " + hasAuthority);
 
-        if(isServer)
+        FindNetworkPlayer();                
+        CmdSpawnLobbyGraphics(networkPlayer.GetComponent<NetworkIdentity>());
+
+        if (isServer)
         {
             StartCoroutine(Countdown());
         }
-
-        NetworkController.singleton.onServerSceneChange += OnSceneLoaded;        
     }
 
-    private void SetPlayerName()
+    private void FindNetworkPlayer()
     {
-        if (isServer)
+        NetworkPlayer[] players = GameObject.FindObjectsOfType<NetworkPlayer>();
+
+        foreach (NetworkPlayer player in players)
         {
-            CmdSetPlayerName("Host");
-        }
-        else
-        {
-            CmdSetPlayerName("Client");
+            if (player.GetComponent<NetworkIdentity>().isLocalPlayer)
+            {
+                networkPlayer = player;
+                //Debug.Log("true");
+            }
         }
     }
 
     [Command]
-    private void CmdSetPlayerName(string _playerName)
-    {
-        playerName = _playerName;        
-    }
-    
-    [Command]
-    private void CmdSpawnLobbyGraphics()
-    {
+    private void CmdSpawnLobbyGraphics(NetworkIdentity _conn)
+    {        
         MyRobotData myData = MyRobot.singleton.GetMyRobotData;
         GameObject bodyGraphics = Instantiate(myData.BodyPrefab, this.transform.Find("Graphics"));
         bodyGraphics.transform.localPosition = Vector3.zero;
         bodyGraphics.transform.localEulerAngles = Vector3.zero;
         bodyGraphics.transform.name = "Body";
-        NetworkServer.SpawnWithClientAuthority(bodyGraphics, connectionToClient);
+        NetworkServer.SpawnWithClientAuthority(bodyGraphics, _conn.connectionToClient);
 
         GameObject weaponGraphics = Instantiate(myData.WeaponPrefab, this.transform.Find("Graphics"));
         weaponGraphics.transform.localPosition = myData.WeaponMountPosition;
         weaponGraphics.transform.localEulerAngles = myData.WeaponMountRotation;
-        NetworkServer.SpawnWithClientAuthority(weaponGraphics, connectionToClient);
+        NetworkServer.SpawnWithClientAuthority(weaponGraphics, _conn.connectionToClient);
     }
 
     private IEnumerator Countdown()
     {
-        while(true)
+        while (true)
         {
             if (NetworkController.singleton.numPlayers >= 1)
             {
                 currentCountdown--;
                 RpcSetCountdown(currentCountdown);
 
-                if(currentCountdown <= 0)
-                {                    
+                if (currentCountdown <= 0)
+                {
                     LoadGameScene();
                     yield break;
                 }
@@ -102,57 +94,58 @@ public class NetworkLobbyPlayer : NetworkBehaviour {
 
     private void LoadGameScene()
     {
-        NetworkController.singleton.ServerChangeScene("Game");
+        NetworkController.singleton.ServerChangeScene("Game");        
+        //CmdDestroyLobbyPlayers();
     }
 
-    [SerializeField] private GameObject robotRootPrefab;
-    [SerializeField] private int sceneReadyStatus = 0;
+    //[SerializeField] private GameObject robotRootPrefab;
+    //[SerializeField] private int sceneReadyStatus = 0;
 
-    private void OnSceneLoaded(string scene)
-    {
-        Debug.Log("On Scene Loaded");
-        if (scene == "Game")
-        {            
-            CmdSendReadyStatus();
-        }
-    }
+    //private void OnSceneLoaded(string scene)
+    //{
+    //    Debug.Log("On Scene Loaded");
+    //    if (scene == "Game")
+    //    {            
+    //        CmdSendReadyStatus();
+    //    }
+    //}
 
-    [Command]
-    private void CmdSendReadyStatus()
-    {
-        //ClientScene.Ready(connectionToClient);
-        NetworkServer.SetClientReady(connectionToClient);
-        sceneReadyStatus++;
-        if (sceneReadyStatus >= NetworkController.singleton.numPlayers)
-        {            
-            RpcSpawnRobots();
-            Debug.Log("Scene ready status " + sceneReadyStatus + ", Players: " + NetworkController.singleton.numPlayers);
-        }
-    }
+    //[Command]
+    //private void CmdSendReadyStatus()
+    //{
+    //    //ClientScene.Ready(connectionToClient);
+    //    NetworkServer.SetClientReady(connectionToClient);
+    //    sceneReadyStatus++;
+    //    if (sceneReadyStatus >= NetworkController.singleton.numPlayers)
+    //    {            
+    //        RpcSpawnRobots();
+    //        Debug.Log("Scene ready status " + sceneReadyStatus + ", Players: " + NetworkController.singleton.numPlayers);
+    //    }
+    //}
 
-    [ClientRpc]
-    private void RpcSpawnRobots()
-    {
-        Debug.Log("RpcSpawnRobots");
-        CmdSpawnRobot();
-    }
+    //[ClientRpc]
+    //private void RpcSpawnRobots()
+    //{
+    //    Debug.Log("RpcSpawnRobots");
+    //    CmdSpawnRobot();
+    //}
 
-    [Command]
-    private void CmdSpawnRobot()
-    {
-        Debug.Log("CmdSpawnRobot");
-        GameObject go = Instantiate(robotRootPrefab);
-        go.transform.position = Vector3.zero;
-        go.transform.eulerAngles = Vector3.zero;
-        go.transform.name = "NetworkPlayer";
-        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
+    //[Command]
+    //private void CmdSpawnRobot()
+    //{
+    //    Debug.Log("CmdSpawnRobot");
+    //    GameObject go = Instantiate(robotRootPrefab);
+    //    go.transform.position = Vector3.zero;
+    //    go.transform.eulerAngles = Vector3.zero;
+    //    go.transform.name = "NetworkPlayer";
+    //    NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
 
-        NetworkServer.Destroy(this.gameObject);
-    }
+    //    NetworkServer.Destroy(this.gameObject);
+    //}
 
 
-    private void OnDestroy()
-    {
-        NetworkController.singleton.onServerSceneChange -= OnSceneLoaded;
-    }
+    //private void OnDestroy()
+    //{
+    //    NetworkController.singleton.onServerSceneChange -= OnSceneLoaded;
+    //}
 }

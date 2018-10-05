@@ -15,6 +15,6 @@ public class LobbyNameplate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        textMesh.text = player.GetPlayerName;
+        //textMesh.text = player.GetPlayerName;
     }
 }

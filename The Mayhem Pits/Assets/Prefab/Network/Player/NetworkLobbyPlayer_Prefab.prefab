@@ -201,14 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389ac131dfcdfa34ab46c6a21b7f0c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: 
   robotBodies:
   - {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07, type: 2}
   - {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f, type: 2}
   - {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2, type: 2}
-  robotRootPrefab: {fileID: 1670821567057222, guid: 11e6b469376306e468fbfd04fe4957b4,
-    type: 2}
-  sceneReadyStatus: 0
 --- !u!114 &114570296245541722
 MonoBehaviour:
   m_ObjectHideFlags: 1

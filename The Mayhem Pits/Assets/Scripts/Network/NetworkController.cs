@@ -25,13 +25,15 @@ public class NetworkController : NetworkManager {
     {
         base.OnServerConnect(conn);
 
-        Debug.Log("A new player has connected");
-        Debug.Log(conn);        
+        //Debug.Log("A new player has connected");
+        //Debug.Log(conn);        
     }
 
     public override void ServerChangeScene(string newSceneName)
     {
         base.ServerChangeScene(newSceneName);
+
+
     }
 
     public override void OnServerSceneChanged(string sceneName)

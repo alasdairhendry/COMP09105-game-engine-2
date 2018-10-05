@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979d81355c0822740ae1780f45d5ff48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lobbyPlayer: {fileID: 1987777279222466, guid: b4a0c713bb8da0d46955d65ae6681623,
+    type: 2}
   localPlayer: {fileID: 1996295698057212, guid: e5d2fe7a88911f745887681ca0d8461f,
     type: 2}
   playerName: 

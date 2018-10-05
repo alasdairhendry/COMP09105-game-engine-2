@@ -18,13 +18,15 @@ public class Test_SmoothCamera : MonoBehaviour {
 
     private void Start()
     {
+        if (targetRobot == null) return;
         cameraMounts = GameObject.FindObjectsOfType<CameraMount>();
         initialCameraOffset = transform.position - targetRobot.position;
     }
 
     private void Update()
-    {        
-        if(targetType == TargetType.Robot)
+    {
+        if (targetRobot == null) return;
+        if (targetType == TargetType.Robot)
         {
             currentTarget = targetRobot;
             TargetRobot();

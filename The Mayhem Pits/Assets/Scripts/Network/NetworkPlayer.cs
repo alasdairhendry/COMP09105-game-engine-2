@@ -6,69 +6,61 @@ using UnityEngine.UI;
 
 public class NetworkPlayer : NetworkBehaviour {
 
+    [SerializeField] private GameObject lobbyPlayer;
     [SerializeField] private GameObject localPlayer;
 
     [SerializeField] [SyncVar] private string playerName;
     [SerializeField] [SyncVar] private string playerHealth;
 
-    public override void OnStartAuthority()
+    public override void OnStartLocalPlayer()
     {
-        base.OnStartClient();
-        Debug.Log("Network Player: Start() + hasAuthority " + hasAuthority);
-        if (!hasAuthority) return;
-        CmdSpawnLocalPlayer(GetComponent<NetworkIdentity>());
-    }
-
-    private void Start()
-    {
-
+        base.OnStartLocalPlayer();
+        if (!isLocalPlayer) return;
+        DontDestroyOnLoad(this.gameObject);
+        Debug.Log("Network Player: Start() + isLocalPlayer " + isLocalPlayer);        
+        CmdSpawnLobbyPlayer();
+        NetworkController.singleton.onServerSceneChange += OnSceneLoaded;
     }
 
     [Command]
-    private void CmdSpawnLocalPlayer(NetworkIdentity id)
-    {
-        GameObject _localPlayer = Instantiate(localPlayer, transform.position, Quaternion.identity);
-        _localPlayer.gameObject.name = "LocalRobot";
-        NetworkServer.SpawnWithClientAuthority(_localPlayer, id.connectionToClient);
+    private void CmdSpawnLobbyPlayer()
+    {        
+        GameObject _go = Instantiate(lobbyPlayer, transform.position, transform.rotation);
+        _go.name = "Player_" + connectionToClient.connectionId;
+        NetworkServer.SpawnWithClientAuthority(_go, connectionToClient);        
     }
 
-    //private void Start()
-    //{
-    //    GetComponentInChildren<TextMesh>().text = playerName;
+    [Command]
+    private void CmdSpawnLobbyPlayer_Graphics(GameObject go)
+    {
+        NetworkServer.SpawnWithClientAuthority(go, connectionToClient);
+    }
 
-    //    if (!isLocalPlayer) return;
-    //    RandomiseName();       
-    //}
+    [Command]
+    private void CmdSpawnLocalPlayer()
+    {
+        GameObject _localPlayer = Instantiate(localPlayer, transform.position, Quaternion.identity);
+        _localPlayer.gameObject.name = "Robot_" + connectionToClient.connectionId;
+        NetworkServer.SpawnWithClientAuthority(_localPlayer, connectionToClient);
+    }
 
-    //private void Update()
-    //{
-    //    if (!isLocalPlayer) return;
-    //    if (Input.GetKeyDown(KeyCode.R)) RandomiseName();
-    //}
+    [Command] 
+    public void CmdDestroyLobbyPlayer(GameObject go)
+    {
+        NetworkServer.Destroy(go);
+    }
 
-    //void RandomiseName()
-    //{
-    //    gameObject.name = "Player-" + Random.Range(101, 1000);
-    //    CmdUpdateName(gameObject.name);
-    //}
+    private void OnSceneLoaded(string sceneName)
+    {
+        if (sceneName == "Game")
+        {
+            //CmdSpawnLocalPlayer();
+            Debug.Log("Scene Loaded " + sceneName);
+        }
+    }
 
-    //[Command]
-    //void CmdUpdateName(string name)
-    //{
-    //    playerName = name;
-    //    RpcUpdateName(name);
-    //}
-
-    //[ClientRpc]
-    //void RpcUpdateName(string name)
-    //{
-    //    playerName = name;
-    //    GetComponentInChildren<TextMesh>().text = playerName;
-    //}
-
-    ////void Hook_OnNameChanged(string name)
-    ////{
-    ////    playerName = name;
-    ////    
-    ////}
+    private void OnDestroy()
+    {
+        NetworkController.singleton.onServerSceneChange -= OnSceneLoaded;
+    }
 }
