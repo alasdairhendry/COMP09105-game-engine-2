@@ -18,9 +18,9 @@ public class Test_SmoothCamera : MonoBehaviour {
 
     private void Start()
     {
-        if (targetRobot == null) return;
         cameraMounts = GameObject.FindObjectsOfType<CameraMount>();
-        initialCameraOffset = transform.position - targetRobot.position;
+
+        initialCameraOffset = new Vector3(0.0f, 2.0f, -4.0f);
     }
 
     private void Update()
@@ -63,6 +63,8 @@ public class Test_SmoothCamera : MonoBehaviour {
         // Define a target position above and behind the target transform        
         Vector3 targetPosition = currentTarget.TransformPoint(initialCameraOffset);
 
+        targetPosition.y = currentTarget.position.y + initialCameraOffset.y;
+
         // Smoothly move the camera towards that target position
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, robotSmoothTime);
 
@@ -101,5 +103,10 @@ public class Test_SmoothCamera : MonoBehaviour {
         }
 
         currentTarget = _target;
+    }
+
+    public void SetTarget(Transform target)
+    {
+        targetRobot = target;
     }
 }

@@ -12,6 +12,9 @@ public class ClientMode : MonoBehaviour {
             singleton = this;
         else if (singleton != this)
             Destroy(gameObject);
+
+        if(mode == Mode.Normal)
+            UnityEngine.XR.XRSettings.enabled = false;
     }
 
     public enum Mode { Normal, VR }
@@ -19,7 +22,7 @@ public class ClientMode : MonoBehaviour {
     public Mode GetMode { get { return mode; } }    
 
 	public void SetModeNormal()
-    {
+    {        
         mode = Mode.Normal;
     }
 

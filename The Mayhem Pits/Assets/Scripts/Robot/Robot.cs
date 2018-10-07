@@ -3,31 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Robot : NetworkBehaviour {
+public class Robot : MonoBehaviour {
 
-    public override void OnStartAuthority()
-    {        
-        if (!hasAuthority) return;
-        CmdSpawnRobotGraphics(  MyRobot.singleton.RobotBodyPrefabs.IndexOf(MyRobot.singleton.GetMyRobotData.BodyPrefab),
-                                MyRobot.singleton.RobotWeaponPrefabs.IndexOf(MyRobot.singleton.GetMyRobotData.WeaponPrefab),
-                                MyRobot.singleton.GetMyRobotData.WeaponMountPosition,
-                                MyRobot.singleton.GetMyRobotData.WeaponMountRotation);
+    [SerializeField] private GameObject ability_FlipLeftPrefab;
+    [SerializeField] private GameObject ability_FlipRightPrefab;
+
+    private List<Ability> abilities = new List<Ability>();    
+
+    private void Start()
+    {
+        CreateFlipAbilities();
+        CreateCOMAnchor();
     }
 
-    [Command]
-    public void CmdSpawnRobotGraphics(int bodyIndex, int weaponIndex, Vector3 weaponPosition, Vector3 weaponRotation)
+    private void Update()
     {
-        MyRobot mr = MyRobot.singleton;
-        GameObject bodyGraphics = Instantiate(mr.RobotBodyPrefabs[bodyIndex], this.transform.Find("Graphics"));
-        bodyGraphics.transform.localPosition = Vector3.zero;
-        bodyGraphics.transform.localEulerAngles = Vector3.zero;
-        bodyGraphics.transform.name = "Body";
-        NetworkServer.SpawnWithClientAuthority(bodyGraphics, connectionToClient);
+        MonitorAbilityInput();
+    }
 
-        GameObject weaponGraphics = Instantiate(mr.RobotWeaponPrefabs[weaponIndex], this.transform.Find("Graphics"));
-        weaponGraphics.transform.localPosition = weaponPosition;
-        weaponGraphics.transform.localEulerAngles = weaponRotation;
-        weaponGraphics.transform.name = "Weapon";
-        NetworkServer.SpawnWithClientAuthority(weaponGraphics, connectionToClient);
+    private void CreateFlipAbilities()
+    {
+        abilities.Add(Instantiate(ability_FlipLeftPrefab, Vector3.zero, Quaternion.identity, this.transform.Find("Abilities")).GetComponent<Ability>());
+        abilities.Add(Instantiate(ability_FlipRightPrefab, Vector3.zero, Quaternion.identity, this.transform.Find("Abilities")).GetComponent<Ability>());
+        abilities[0].SetTargetRobot(this);
+        abilities[1].SetTargetRobot(this);
+    }
+
+    private void CreateCOMAnchor()
+    {
+        GameObject go = new GameObject { name = "COM" };
+        go.transform.SetParent(this.transform.Find("Anchors"));
+        go.transform.position = GetComponent<Rigidbody>().worldCenterOfMass;        
+    }
+
+    private void MonitorAbilityInput()
+    {
+        if (Input.GetAxis("XBO_DPAD_Horizontal") > 0)
+        {
+            abilities[1].Activate();
+        }
+        else if (Input.GetAxis("XBO_DPAD_Horizontal") < 0)
+        {
+            abilities[0].Activate();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawIcon(GetComponent<Rigidbody>().worldCenterOfMass, "Icon", true);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision Mag: " + collision.relativeVelocity.magnitude);
+        if(collision.relativeVelocity.magnitude > 10)
+        {
+            GetComponent<RobotHealth>().TakeDamage(Mathf.Lerp(5.0f, 15.0f, (collision.relativeVelocity.magnitude - 10) / (25.0f - 10)));
+        }
     }
 }

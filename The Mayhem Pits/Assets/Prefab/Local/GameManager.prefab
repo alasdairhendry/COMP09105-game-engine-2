@@ -74,10 +74,10 @@ MonoBehaviour:
   myRobotData:
     bodyPrefab: {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07,
       type: 2}
-    weaponMountPosition: {x: 0, y: 0.25, z: 0.494}
-    weaponMountRotation: {x: 90, y: 0, z: 0}
     weaponPrefab: {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d,
       type: 2}
+    weaponMountPosition: {x: 0, y: 0.25, z: 0.494}
+    weaponMountRotation: {x: 90, y: 0, z: 0}
 --- !u!114 &114639291440175180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,3 +89,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5063e3055f36f094fb89591a474c0c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mode: 0
