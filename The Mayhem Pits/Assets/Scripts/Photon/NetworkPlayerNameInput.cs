@@ -4,39 +4,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(InputField))]
 public class NetworkPlayerNameInput : MonoBehaviour
 {
     const string playerNamePrefKey = "PlayerName";
-
-    // Use this for initialization
+    [SerializeField] private Text usernameText;
+    
     private void Start()
     {
-        string defaultName = string.Empty;
-        InputField _inputField = this.GetComponent<InputField>();
-
-        if (_inputField != null)
+        string defaultName = "Default User";    
+        
+        if (PlayerPrefs.HasKey(playerNamePrefKey))
         {
-            if (PlayerPrefs.HasKey(playerNamePrefKey))
-            {
-                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                _inputField.text = defaultName;
-            }
+            defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+            usernameText.text = defaultName;
         }
-
-
+    
         PhotonNetwork.NickName = defaultName;
     }
 
-    public void SetPlayerName(string value)
+    private void Update ()
     {
-        // #Important
+        if (Input.GetButtonDown ( "XBO_Y" ))
+        {
+            FindObjectOfType<Keyboard> ().Open ( (s) => { SetPlayerName ( s ); } );
+        }
+    }
+
+    public void SetPlayerName(string value)
+    {        
         if (string.IsNullOrEmpty(value))
         {
             Debug.LogError("Player Name is null or empty");
             return;
         }
 
+        usernameText.text = value;
         PhotonNetwork.NickName = value;
         PlayerPrefs.SetString(playerNamePrefKey, value);
     }

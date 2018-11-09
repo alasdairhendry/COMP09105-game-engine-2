@@ -6,17 +6,22 @@ using UnityEngine;
 public class Ability : MonoBehaviourPunCallbacks {
 
     [SerializeField] protected string abilityName = "New Ability";
+    [SerializeField] protected Sprite sprite;
     [SerializeField] protected float cooldown = 0.0f;
     [SerializeField] protected int uses = 1;
 
+    public string AbilityName { get { return abilityName; } }
+    public Sprite Sprite { get { return sprite; } }
+
     protected bool isInUse = false;
 
-    protected float currCooldown = 0.0f;
-    protected bool isOnCooldown = false;
+    public float CooldownTime { get { return cooldown; } }
+    public float currCooldown { get; protected set; }
+    public bool isOnCooldown { get; protected set; }
 
     protected int currentUses = 0;
 
-    protected Robot targetRobot;
+    protected GameObject targetRobot;
 
     public struct AbilityActivationStatus
     {
@@ -29,7 +34,7 @@ public class Ability : MonoBehaviourPunCallbacks {
         MonitorCooldown();    
     }
 
-    public virtual void SetTargetRobot(Robot robot)
+    public virtual void SetTargetRobot(GameObject robot)
     {
         targetRobot = robot;
     }

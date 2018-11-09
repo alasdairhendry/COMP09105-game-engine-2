@@ -1,65 +1,72 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Robot : MonoBehaviour {
+public class Robot : MonoBehaviourPunCallbacks {
 
-    [SerializeField] private GameObject ability_FlipLeftPrefab;
-    [SerializeField] private GameObject ability_FlipRightPrefab;
+    Rigidbody rb;
+    private Vector3 currentVelocity;
 
-    private List<Ability> abilities = new List<Ability>();    
+    //private List<Ability> abilities = new List<Ability>();    
 
     private void Start()
     {
-        CreateFlipAbilities();
+        rb = GetComponent<Rigidbody> ();
         CreateCOMAnchor();
     }
 
     private void Update()
     {
-        MonitorAbilityInput();
-    }
 
-    private void CreateFlipAbilities()
-    {
-        abilities.Add(Instantiate(ability_FlipLeftPrefab, Vector3.zero, Quaternion.identity, this.transform.Find("Abilities")).GetComponent<Ability>());
-        abilities.Add(Instantiate(ability_FlipRightPrefab, Vector3.zero, Quaternion.identity, this.transform.Find("Abilities")).GetComponent<Ability>());
-        abilities[0].SetTargetRobot(this);
-        abilities[1].SetTargetRobot(this);
     }
 
     private void CreateCOMAnchor()
     {
         GameObject go = new GameObject { name = "COM" };
         go.transform.SetParent(this.transform.Find("Anchors"));
-        go.transform.position = GetComponent<Rigidbody>().worldCenterOfMass;        
-    }
-
-    private void MonitorAbilityInput()
-    {
-        if (Input.GetAxis("XBO_DPAD_Horizontal") > 0)
-        {
-            abilities[1].Activate();
-        }
-        else if (Input.GetAxis("XBO_DPAD_Horizontal") < 0)
-        {
-            abilities[0].Activate();
-        }
+        go.transform.position = rb.worldCenterOfMass;        
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawIcon(GetComponent<Rigidbody>().worldCenterOfMass, "Icon", true);
+        Gizmos.DrawIcon( rb.worldCenterOfMass, "Icon", true);
+    }
+
+    private void FixedUpdate ()
+    {
+        currentVelocity = rb.velocity;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision Mag: " + collision.relativeVelocity.magnitude);
-        if(collision.relativeVelocity.magnitude > 10)
+        if (collision.gameObject.name == "Ground") return;
+        float collisionForce = currentVelocity.magnitude - rb.velocity.magnitude;
+        
+        if(collisionForce > 5)
         {
-            GetComponent<RobotHealth>().TakeDamage(Mathf.Lerp(5.0f, 15.0f, (collision.relativeVelocity.magnitude - 10) / (25.0f - 10)));
+            GetComponent<RobotHealth>().TakeDamage(Mathf.Lerp(1.0f, 15.0f, collisionForce / 20));
         }
+
+        //if (collision.gameObject.name == "Barriers")
+        //{            
+        //    Rigidbody rb = GetComponent<Rigidbody> ();           
+        //    Vector3 reboundDirection = new Vector3 ( collision.contacts[0].normal.x, 0.0f, collision.contacts[0].normal.z );
+        //    rb.AddForce ( reboundDirection * 2.0f * (Mathf.Clamp ( collision.relativeVelocity.magnitude, 0.0f, 10.0f ) / rb.velocity.magnitude), ForceMode.Impulse );            
+        //}
+    }
+
+    public void AddHeat(float amount)
+    {
+        GetComponent<Heatable> ().Add ( amount );
+        photonView.RPC ( "RPCAddHeat", RpcTarget.OthersBuffered, amount );
+    }
+
+    [PunRPC]
+    private void RPCAddHeat (float amount)
+    {
+        GetComponent<Heatable> ().Add ( amount );
     }
 }

@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfeb116227f77b24aa493a79645ecbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: Flip_Left
-  cooldown: 1
+  abilityName: Flip
+  sprite: {fileID: 21300000, guid: 0b6f999675e85be4b937be061e38ef59, type: 3}
+  cooldown: 0.75
   uses: 0
   side: 0
-  force: 125
+  force: 200

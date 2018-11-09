@@ -64,20 +64,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33f7b0beee5f404ca9b021cef332aa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotBodyPrefabs:
-  - {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07, type: 2}
-  - {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f, type: 2}
-  - {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2, type: 2}
-  robotWeaponPrefabs:
-  - {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d, type: 2}
-  - {fileID: 1432596401101804, guid: 00aff922b16974e489d8c619412c91c1, type: 2}
+  bodyDatas:
+  - name: Cuber
+    description: 
+    prefab: {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07, type: 2}
+    maxSpeed: 10
+    acceleration: 1000
+    rotationalSpeed: 120
+    mass: 2
+  - name: Flipper
+    description: 
+    prefab: {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f, type: 2}
+    maxSpeed: 12
+    acceleration: 1250
+    rotationalSpeed: 120
+    mass: 1
+  - name: Tanky
+    description: 
+    prefab: {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2, type: 2}
+    maxSpeed: 9
+    acceleration: 800
+    rotationalSpeed: 120
+    mass: 4
+  weaponDatas:
+  - weaponName: Wheelsaw
+    prefab: {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d, type: 2}
+    sprite: {fileID: 21300000, guid: 32ca33c35ee876441bfd38e221f6d983, type: 3}
+    baseDamage: 2
+    resourceType: 0
+    baseResourceMax: 100
+    baseResourceDepletion: 15
+    baseResourceRegeneration: 5
+  - weaponName: Melter
+    prefab: {fileID: 1370256643284910, guid: 68a736dc5f1907241bb5c271bae7bfb6, type: 2}
+    sprite: {fileID: 21300000, guid: 8ed0975cbebf4a142b772ac9a66c1efc, type: 3}
+    baseDamage: 3
+    resourceType: 1
+    baseResourceMax: 100
+    baseResourceDepletion: 15
+    baseResourceRegeneration: 0
   myRobotData:
-    bodyPrefab: {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07,
-      type: 2}
-    weaponPrefab: {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d,
-      type: 2}
-    weaponMountPosition: {x: 0, y: 0.25, z: 0.494}
-    weaponMountRotation: {x: 90, y: 0, z: 0}
+    bodyData:
+      name: 
+      description: 
+      prefab: {fileID: 0}
+      maxSpeed: 0
+      acceleration: 0
+      rotationalSpeed: 0
+      mass: 0
+    weaponData:
+      weaponName: 
+      prefab: {fileID: 0}
+      sprite: {fileID: 0}
+      baseDamage: 0
+      resourceType: 0
+      baseResourceMax: 0
+      baseResourceDepletion: 0
+      baseResourceRegeneration: 0
+  DEBUG_ROBOT_DATA_INDEX: 1
+  DEBUG_WEAPON_DATA_INDEX: 1
 --- !u!114 &114639291440175180
 MonoBehaviour:
   m_ObjectHideFlags: 1

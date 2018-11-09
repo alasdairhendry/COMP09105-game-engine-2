@@ -204,6 +204,8 @@ GameObject:
   - component: {fileID: 114614069013757412}
   - component: {fileID: 114337714215051110}
   - component: {fileID: 114563072122818974}
+  - component: {fileID: 114946459876109610}
+  - component: {fileID: 114626848959180650}
   - component: {fileID: 114684736948687152}
   - component: {fileID: 54753667900170726}
   m_Layer: 0
@@ -478,10 +480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961a63999d0702b4bad03dac73b8ed30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ability_FlipLeftPrefab: {fileID: 1334463593252544, guid: 06e95b601064094458e66a6d07495877,
-    type: 2}
-  ability_FlipRightPrefab: {fileID: 1334463593252544, guid: 2bd5a07c2a6ddd448a358f36238c4855,
-    type: 2}
 --- !u!114 &114456420426139226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -547,6 +545,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b239a056c999fdf488ad534b906b4d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114626848959180650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996295698057212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05d19a9f270de97489d049384164e9a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heat: 0
+  heatMax: 10
+  visualHeatMax: 3
+  reductionRate: 1
+  affectedMeshes: []
+  materials: []
+  autoDetectMeshes: 0
+  detectChildren: 0
+  detectInactiveChildren: 0
 --- !u!114 &114684736948687152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -558,8 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c3b05c889367b4ca36c4ba25dd9803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1000
-  rotateSpeed: 150
+  wheelConnections: []
 --- !u!114 &114687250792227884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -635,6 +652,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114946459876109610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996295698057212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e66e5f9277e793409662048243169a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability_FlipLeftPrefab: {fileID: 1334463593252544, guid: 06e95b601064094458e66a6d07495877,
+    type: 2}
+  ability_FlipRightPrefab: {fileID: 1334463593252544, guid: 2bd5a07c2a6ddd448a358f36238c4855,
+    type: 2}
 --- !u!114 &114982342773057094
 MonoBehaviour:
   m_ObjectHideFlags: 1
