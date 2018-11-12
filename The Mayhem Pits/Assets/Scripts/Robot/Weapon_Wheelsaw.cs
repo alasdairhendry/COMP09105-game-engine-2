@@ -16,12 +16,14 @@ public class Weapon_Wheelsaw : Weapon {
         {
             if (currentResourceLeft <= data.baseResourceMax * 0.20f)
             {
-                weaponPanel.SetSliderState ( false );
+                if (weaponPanel != null)
+                    weaponPanel.SetSliderState ( false );
                 allowedAttack = false;
             }
             else
             {
-                weaponPanel.SetSliderState ( true );
+                if (weaponPanel != null)
+                    weaponPanel.SetSliderState ( true );
                 allowedAttack = true;
             }
         }

@@ -22,14 +22,34 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
     private void Start()
     {
         gameObject.name = "NetworkPlayer_" + photonView.Owner.NickName;
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        Debug.Log ( "NetworkPlayerStart" );
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;        
         CreateNetworkLobbyPlayer();
         SceneManager.sceneLoaded += OnSceneChange;
     }
 
     private void OnSceneChange(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "Game")
+        if(this == null)
+        {
+            Debug.Log ( "Found null network player" );
+            return;
+        }
+
+        if (this.gameObject == null)
+        {
+            Debug.Log ( "Found null gameobject" );
+            return;
+        }
+
+        if(photonView == null)
+        {
+            Debug.Log ( "Found null photonView" );
+            return;
+        }
+
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if (scene.name == "Game")
         {
             CreateNetworkGamePlayer();
         }
@@ -37,6 +57,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
 
     private void CreateNetworkLobbyPlayer()
     {
+        Debug.Log ( "CreateNetworkLobbyPlayer - " + this.gameObject.name, this );
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             PhotonNetwork.Instantiate(networkLobbyPlayerPrefab.name, transform.position, transform.rotation, 0);
@@ -45,6 +66,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
 
     private void CreateNetworkGamePlayer()
     {
+        if(this.gameObject == null)
+        {
+            Debug.Log ( "Found null gameobject" );
+            return;
+        }
+        Debug.Log ( "CreateNetworkGamePlayer - ", this );
         NetworkSpawnPoint mySpawnPoint = GetSpawnPoint(GameObject.FindObjectsOfType<NetworkSpawnPoint>());
 
         PhotonNetwork.Instantiate(networkGamePlayerPrefab.name, mySpawnPoint.transform.position, mySpawnPoint.transform.rotation, 0);

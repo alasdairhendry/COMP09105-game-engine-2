@@ -19,7 +19,9 @@ public class Weapon : MonoBehaviourPunCallbacks
         animator = GetComponent<Animator> ();
         currentResourceLeft = data.baseResourceMax;
         weaponPanel = FindObjectOfType<HUD_Weapon_Panel> ();
-        weaponPanel.SetValues ( data );
+
+        if (weaponPanel != null)
+            weaponPanel.SetValues ( data );
     }
 
     protected virtual void Update ()
@@ -31,7 +33,8 @@ public class Weapon : MonoBehaviourPunCallbacks
     protected virtual void Attack()
     {
         //Debug.Log ( "Attacking" );
-        weaponPanel.UpdateResourceValue ( currentResourceLeft, data.baseResourceMax ); 
+        if (weaponPanel != null)
+            weaponPanel.UpdateResourceValue ( currentResourceLeft, data.baseResourceMax );
     }
 
     protected virtual void Animate ()

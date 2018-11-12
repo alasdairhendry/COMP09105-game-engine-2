@@ -91,7 +91,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 112000002, guid: c5604d28d3483d34da99bbdb43ae90fc,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -8725,7 +8725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3803a5f9218884f8c2da10cb0dae18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   ai: 0
   networkGamePlayerPrefab: {fileID: 1996295698057212, guid: e5d2fe7a88911f745887681ca0d8461f,
     type: 2}

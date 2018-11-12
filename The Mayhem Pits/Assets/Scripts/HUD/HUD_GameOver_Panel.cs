@@ -49,7 +49,6 @@ public class HUD_GameOver_Panel : MonoBehaviour {
     public void OnPress_Menu ()
     {
         Debug.Log ( "BOOOOO" );
-        return;
         PhotonNetwork.LeaveRoom ();
         SceneLoader.singleton.LoadScene ( "Menu" );
     }

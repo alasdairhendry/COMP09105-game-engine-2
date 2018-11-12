@@ -8,6 +8,7 @@ public class HUD_MenuController : MonoBehaviour {
     [SerializeField] private GameObject findGame_Button;
     [SerializeField] private GameObject myRobot_Button;
     [SerializeField] private GameObject leaveGame_Button;
+    public NetworkPlayer localPlayer;
 
     private void Start()
     {
@@ -35,7 +36,7 @@ public class HUD_MenuController : MonoBehaviour {
     }
 
     public void OnClick_LeaveLobby()
-    {
+    {        
         NetworkManager.singleton.DisconnectFromRoom();
     }
     
