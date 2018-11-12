@@ -21,6 +21,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
 
     private void Start()
     {
+        gameObject.name = "NetworkPlayer_" + photonView.Owner.NickName;
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         CreateNetworkLobbyPlayer();
         SceneManager.sceneLoaded += OnSceneChange;
@@ -83,6 +84,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
 
     public override void OnPlayerLeftRoom (Player otherPlayer)
     {
+        if (KillFeed.Instance == null) return;
         KillFeed.Instance.AddInfo ( otherPlayer.NickName + " has left the game.", KillFeed.InfoType.Disconnect );
     }
 }

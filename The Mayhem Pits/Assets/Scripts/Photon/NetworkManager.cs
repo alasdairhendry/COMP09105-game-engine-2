@@ -169,8 +169,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
         Debug.Log("IndexInPlayerList = " + indexInPlayerList);
         Debug.Log("IndexInSpawnPointList = " + mySpawn.index);
 
-        Debug.Log("Mcgraw");
-
         Vector3 _pos = mySpawn.transform.position;
         Quaternion _rot = mySpawn.transform.rotation;
         localNetworkPlayer = PhotonNetwork.Instantiate(networkPlayerPrefab.name, _pos, _rot, 0);

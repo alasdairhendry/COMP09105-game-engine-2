@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class Test_SmoothCamera : MonoBehaviour {
     private CameraMount[] cameraMounts;
     private Vector3 initialCameraOffset = new Vector3();
     private Vector3 velocity = Vector3.zero;
+
+    private bool allowModeSwitch = true;
 
     private void Start()
     {
@@ -33,7 +36,8 @@ public class Test_SmoothCamera : MonoBehaviour {
 
             if (Input.GetButtonDown("XBO_A"))
             {
-                targetType = TargetType.Pillars;
+                if (allowModeSwitch)
+                    targetType = TargetType.Pillars;
             }
         }
         else if (targetType == TargetType.Pillars)
@@ -43,7 +47,8 @@ public class Test_SmoothCamera : MonoBehaviour {
 
             if (Input.GetButtonDown("XBO_A"))
             {
-                targetType = TargetType.Overview;
+                if (allowModeSwitch)
+                    targetType = TargetType.Overview;
             }
         }
         else if (targetType == TargetType.Overview)
@@ -53,16 +58,17 @@ public class Test_SmoothCamera : MonoBehaviour {
 
             if (Input.GetButtonDown("XBO_A"))
             {
-                targetType = TargetType.Robot;
+                if (allowModeSwitch)
+                    targetType = TargetType.Robot;
             }
         }
 
         AxisRotate ();
     }
 
-    public void SetModeOverview ()
+    public void SetMode (TargetType type)
     {
-        targetType = TargetType.Overview;
+        targetType = type;
     }
 
     private void AxisRotate ()
@@ -140,5 +146,10 @@ public class Test_SmoothCamera : MonoBehaviour {
     public void SetTarget(Transform target)
     {
         targetRobot = target;
+    }
+
+    public void DisableModeSwitch ()
+    {
+        allowModeSwitch = false;   
     }
 }

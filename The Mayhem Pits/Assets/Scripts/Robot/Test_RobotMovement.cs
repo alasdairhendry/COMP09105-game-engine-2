@@ -9,6 +9,7 @@ public class Test_RobotMovement : MonoBehaviourPunCallbacks {
     [SerializeField] private List<WheelConnection> wheelConnections = new List<WheelConnection> ();
     MyRobotData data;
     Rigidbody rb;
+    private int currWheelConnections = 0;
 
     [System.Serializable]
     class WheelConnection
@@ -37,6 +38,7 @@ public class Test_RobotMovement : MonoBehaviourPunCallbacks {
     {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         CheckWheels ();
+        GetComponent<RobotSound> ().SetAudio (Input.GetAxis("XBO_RT"), currWheelConnections );
     }
 
     private void FindWheels ()
@@ -56,6 +58,8 @@ public class Test_RobotMovement : MonoBehaviourPunCallbacks {
         //    rb.AddForce ( transform.forward * Input.GetAxis ( "XBO_LT" ) * data.BodyData.acceleration * Time.fixedDeltaTime, ForceMode.Acceleration );
         //}
 
+        if (rb.velocity.magnitude >= data.BodyData.maxSpeed) return;
+
         for (int i = 0; i < wheelConnections.Count; i++)
         {
             if (wheelConnections[i].connection)
@@ -74,6 +78,7 @@ public class Test_RobotMovement : MonoBehaviourPunCallbacks {
 
     private void CheckWheels ()
     {
+        int _currConnections = 0;
         for (int i = 0; i < wheelConnections.Count; i++)
         {
             Ray ray = new Ray ( wheelConnections[i].wheel.transform.position + new Vector3(0.0f, 0.05f, 0.0f), -transform.up );
@@ -84,11 +89,14 @@ public class Test_RobotMovement : MonoBehaviourPunCallbacks {
             if(Physics.Raycast(ray, out hit, 0.1f ))
             {
                 wheelConnections[i].connection = true;
+                _currConnections++;
             }
             else
             {
                 wheelConnections[i].connection = false;
             }
         }
+
+        currWheelConnections = _currConnections;
     }
 }

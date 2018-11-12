@@ -19,6 +19,8 @@ public class NetworkLobbyPlayer : MonoBehaviourPunCallbacks {
             GetComponentInChildren<TextMesh>().text = photonView.Owner.NickName;
         }
 
+        gameObject.name = "NetworkLobbyPlayer_" + photonView.Owner.NickName;
+
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
         NetworkManager.singleton.onPlayerListChanged += OnPlayerListChanged;

@@ -98,11 +98,11 @@ MonoBehaviour:
   - weaponName: Melter
     prefab: {fileID: 1370256643284910, guid: 68a736dc5f1907241bb5c271bae7bfb6, type: 2}
     sprite: {fileID: 21300000, guid: 8ed0975cbebf4a142b772ac9a66c1efc, type: 3}
-    baseDamage: 3
+    baseDamage: 1
     resourceType: 1
     baseResourceMax: 100
-    baseResourceDepletion: 15
-    baseResourceRegeneration: 0
+    baseResourceDepletion: 12
+    baseResourceRegeneration: 5
   myRobotData:
     bodyData:
       name: 
@@ -122,7 +122,7 @@ MonoBehaviour:
       baseResourceDepletion: 0
       baseResourceRegeneration: 0
   DEBUG_ROBOT_DATA_INDEX: 1
-  DEBUG_WEAPON_DATA_INDEX: 1
+  DEBUG_WEAPON_DATA_INDEX: 0
 --- !u!114 &114639291440175180
 MonoBehaviour:
   m_ObjectHideFlags: 1

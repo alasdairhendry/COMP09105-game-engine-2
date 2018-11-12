@@ -9,13 +9,17 @@ public class Weapon : MonoBehaviourPunCallbacks
     protected Animator animator;
     protected float currentResourceLeft;
     protected bool isAttacking;
+    protected bool allowedAttack;
+    protected HUD_Weapon_Panel weaponPanel;
 
     protected virtual void Start ()
     {
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;        
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         data = MyRobot.singleton.GetMyRobotData.WeaponData;
         animator = GetComponent<Animator> ();
         currentResourceLeft = data.baseResourceMax;
+        weaponPanel = FindObjectOfType<HUD_Weapon_Panel> ();
+        weaponPanel.SetValues ( data );
     }
 
     protected virtual void Update ()
@@ -27,6 +31,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     protected virtual void Attack()
     {
         //Debug.Log ( "Attacking" );
+        weaponPanel.UpdateResourceValue ( currentResourceLeft, data.baseResourceMax ); 
     }
 
     protected virtual void Animate ()

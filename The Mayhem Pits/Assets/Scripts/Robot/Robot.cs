@@ -40,33 +40,17 @@ public class Robot : MonoBehaviourPunCallbacks {
         currentVelocity = rb.velocity;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter (Collision collision)
     {
         if (collision.gameObject.name == "Ground") return;
         float collisionForce = currentVelocity.magnitude - rb.velocity.magnitude;
-        
-        if(collisionForce > 5)
+
+        if (collisionForce > 5)
         {
-            GetComponent<RobotHealth>().TakeDamage(Mathf.Lerp(1.0f, 15.0f, collisionForce / 20));
-        }
+            float volume = Mathf.Lerp ( 0.2f, 1.0f, collisionForce / 10 );
+            GameSoundEffectManager.Instance.PlayNetworkSound ( GameSoundEffectManager.Effect.MetalImpact, volume, Random.Range ( 0.75f, 1.25f ), true, collision.contacts[0].point );
 
-        //if (collision.gameObject.name == "Barriers")
-        //{            
-        //    Rigidbody rb = GetComponent<Rigidbody> ();           
-        //    Vector3 reboundDirection = new Vector3 ( collision.contacts[0].normal.x, 0.0f, collision.contacts[0].normal.z );
-        //    rb.AddForce ( reboundDirection * 2.0f * (Mathf.Clamp ( collision.relativeVelocity.magnitude, 0.0f, 10.0f ) / rb.velocity.magnitude), ForceMode.Impulse );            
-        //}
-    }
-
-    public void AddHeat(float amount)
-    {
-        GetComponent<Heatable> ().Add ( amount );
-        photonView.RPC ( "RPCAddHeat", RpcTarget.OthersBuffered, amount );
-    }
-
-    [PunRPC]
-    private void RPCAddHeat (float amount)
-    {
-        GetComponent<Heatable> ().Add ( amount );
-    }
+            GetComponent<RobotHealth> ().TakeDamage ( Mathf.Lerp ( 1.0f, 15.0f, collisionForce / 20 ) );            
+        }        
+    }  
 }

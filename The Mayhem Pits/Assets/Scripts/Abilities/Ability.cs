@@ -9,9 +9,16 @@ public class Ability : MonoBehaviourPunCallbacks {
     [SerializeField] protected Sprite sprite;
     [SerializeField] protected float cooldown = 0.0f;
     [SerializeField] protected int uses = 1;
+    [SerializeField] protected bool hasSpecificInput;
+    [SerializeField] protected string specificInput;
+    [SerializeField] protected Sprite specificInputSprite;
 
     public string AbilityName { get { return abilityName; } }
     public Sprite Sprite { get { return sprite; } }
+
+    public bool HasSpecificInput { get { return hasSpecificInput; } }
+    public string SpecificInput { get { return specificInput; } }
+    public Sprite SpecificInputSprite { get { return specificInputSprite; } }
 
     protected bool isInUse = false;
 

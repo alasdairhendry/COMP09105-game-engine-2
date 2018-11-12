@@ -36,4 +36,10 @@ MonoBehaviour:
   - RPCAnimate
   - RPCAddHeat
   - RPCAddInfo
+  - RPCDie
+  - RPCOnPlayerWin
+  - RPCAddNetwork
+  - RPCSetPitch
+  - RPCPlaySound
+  - RPCActivateNetwork
   DisableAutoOpenWizard: 1

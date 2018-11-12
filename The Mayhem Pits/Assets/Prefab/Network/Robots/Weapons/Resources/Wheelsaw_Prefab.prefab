@@ -486,10 +486,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isAttacking
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Blend
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -530,10 +530,10 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
+  Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 114155397030488252}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0

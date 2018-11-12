@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heatable : MonoBehaviour {
+public class Heatable : MonoBehaviourPunCallbacks {
 
     [SerializeField] protected float heat;
 
@@ -88,9 +89,25 @@ public class Heatable : MonoBehaviour {
     }
 
     public virtual void Add (float amount)
-    {
-        Debug.Log ( "Taking heat damage", this );
+    {        
         SendAddCallbacks ( amount );
+        heat += amount;
+        heat = Mathf.Clamp ( heat, 0, heatMax );
+    }
+
+    public virtual void AddNetwork(float amount)
+    {
+        photonView.RPC ( "RPCAddNetwork", RpcTarget.AllBuffered, amount );
+    }
+
+    [PunRPC]
+    protected virtual void RPCAddNetwork(float amount)
+    {
+        if (photonView.IsMine)
+        {
+            SendAddCallbacks ( amount );
+        }
+
         heat += amount;
         heat = Mathf.Clamp ( heat, 0, heatMax );
     }
