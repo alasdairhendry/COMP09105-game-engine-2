@@ -13,17 +13,36 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
     [SerializeField] private Slider healthSlider;
     private bool deathCalled = false;
 
+    private ParticleSystem.MainModule particlesModule;
+    private ParticleSystem particles;
+
 	// Use this for initialization
 	void Start () {
-        currentHealth = maximumHealth;        
+        currentHealth = maximumHealth;
+        particles = GetComponentInChildren<ParticleSystem> ();
+        particlesModule = particles.main;
 	}
 
     private void Update ()
     {
+        UpdateParticles ();
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
         if (!deathCalled)
             Die ();
+    }
+
+    private void UpdateParticles ()
+    {
+        float healthPercent = Mathf.Lerp ( 0.0f, 100.0f, currentHealth / maximumHealth );
+
+        if(healthPercent <= 75.0f)
+        {
+            if (!particles.isPlaying)
+                particles.Play ();
+
+            particlesModule.startSizeMultiplier = Mathf.Lerp ( 3.0f, 0.5f, healthPercent / 75.0f );
+        }
     }
 
     public void TakeDamage(float damage)
@@ -62,6 +81,7 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
             FindObjectOfType<HUD_GameOver_Panel> ().Open (true);
             GetComponent<Test_RobotMovement> ().enabled = false;
             GetComponent<RobotAbilities> ().enabled = false;
+            GetComponent<RobotOverloads> ().enabled = false;
             GetComponentInChildren<Weapon> ().enabled = false;
             GetComponent<RobotSound> ().StopAudio ();
             deathCalled = true;

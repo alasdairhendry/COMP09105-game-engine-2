@@ -3950,9 +3950,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4430c4ac2e1ddf1498a3bc5d34012f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_SOLOSTART: 1
+  DEBUG_SOLOSTART: 0
   countdownTime: 6
   countdownText: {fileID: 1590993018}
+  roomName: 
   currentCountdown: 5
 --- !u!4 &672140679
 Transform:
@@ -12713,6 +12714,7 @@ MonoBehaviour:
   findGame_Button: {fileID: 705900160}
   myRobot_Button: {fileID: 80109007}
   leaveGame_Button: {fileID: 2027552398}
+  localPlayer: {fileID: 0}
 --- !u!4 &1957182197
 Transform:
   m_ObjectHideFlags: 0

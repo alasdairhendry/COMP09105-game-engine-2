@@ -13,7 +13,7 @@ public class GameSoundEffectManager : MonoBehaviourPunCallbacks {
         else if (Instance != this) Destroy ( this.gameObject );
     }
 
-    public enum Effect { MetalImpact }
+    public enum Effect { MetalImpact, SteamBurst }
 
     [SerializeField] private List<EffectPair> pairs = new List<EffectPair> ();
     [SerializeField] private GameObject soundEffect;
@@ -22,7 +22,7 @@ public class GameSoundEffectManager : MonoBehaviourPunCallbacks {
     struct EffectPair
     {
         public Effect effect;
-        public AudioClip clip;
+        public AudioClip[] clip;
     }
 
     private AudioClip GetClip (Effect effect)
@@ -31,17 +31,17 @@ public class GameSoundEffectManager : MonoBehaviourPunCallbacks {
         {
             if (pairs[i].effect == effect)
             {
-                return pairs[i].clip;
+                return pairs[i].clip[Random.Range ( 0, pairs[i].clip.Length )];
             }
         }
 
         Debug.LogError ( "Clip not found" );
-        return pairs[0].clip;
+        return pairs[0].clip[Random.Range ( 0, pairs[0].clip.Length )];
     }
 
     private AudioClip GetClip (int index)
     {
-        return pairs[index].clip;
+        return pairs[index].clip[Random.Range ( 0, pairs[index].clip.Length )];
     }
 
     private int GetIndex(Effect effect)
@@ -75,19 +75,7 @@ public class GameSoundEffectManager : MonoBehaviourPunCallbacks {
 
     public void PlayNetworkSound(Effect effect, float volume, float pitch, bool threeDimensional, Vector3 position)
     {
-        GameObject go = Instantiate ( soundEffect );
-        AudioSource audioSource = go.GetComponent<AudioSource> ();
-
-        audioSource.spatialBlend = (threeDimensional) ? 1.0f : 0.0f;
-        audioSource.volume = volume;
-        audioSource.pitch = pitch;
-
-        go.transform.position = position;
-        audioSource.clip = GetClip ( effect );
-        audioSource.Play ();
-        go.GetComponent<SelfDestruct> ().SetLifetime ( audioSource.clip.length );
-
-        photonView.RPC ( "RPCPlaySound", RpcTarget.Others, GetIndex ( effect ), threeDimensional, position );
+        photonView.RPC ( "RPCPlaySound", RpcTarget.All, GetIndex ( effect ), volume, pitch, threeDimensional, position );
     }
 
     [PunRPC]

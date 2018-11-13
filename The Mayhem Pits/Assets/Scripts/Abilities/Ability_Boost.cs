@@ -6,11 +6,6 @@ public class Ability_Boost : Ability {
 
     [SerializeField] private float boostForce;
 
-    protected override void Update ()
-    {
-        base.Update ();
-    }
-
     // The actual logic for the ability will go here
     protected override void OnActivate ()
     {
@@ -19,11 +14,5 @@ public class Ability_Boost : Ability {
         targetRobot.GetComponent<Rigidbody> ().AddForce ( targetRobot.transform.forward * boostForce * Time.fixedDeltaTime, ForceMode.Impulse );       
 
         Finish ();
-    }
-
-    // Called by the ability itself when it has finished doing its thang.
-    protected override void Finish ()
-    {
-        base.Finish ();
     }
 }

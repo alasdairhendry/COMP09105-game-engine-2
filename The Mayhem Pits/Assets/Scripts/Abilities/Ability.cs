@@ -6,6 +6,7 @@ using UnityEngine;
 public class Ability : MonoBehaviourPunCallbacks {
 
     [SerializeField] protected string abilityName = "New Ability";
+    [SerializeField] protected int id;
     [SerializeField] protected Sprite sprite;
     [SerializeField] protected float cooldown = 0.0f;
     [SerializeField] protected int uses = 1;
@@ -22,9 +23,11 @@ public class Ability : MonoBehaviourPunCallbacks {
 
     protected bool isInUse = false;
 
+    public int GetUsesLeft { get { return uses - currentUses; } }
     public float CooldownTime { get { return cooldown; } }
     public float currCooldown { get; protected set; }
     public bool isOnCooldown { get; protected set; }
+    public int ID { get { return id; } }
 
     protected int currentUses = 0;
 
@@ -52,6 +55,7 @@ public class Ability : MonoBehaviourPunCallbacks {
         if (isInUse) return new AbilityActivationStatus { message = "Ability already in use.", status = false };
         if (isOnCooldown) return new AbilityActivationStatus { message = "Ability not ready yet.", status = false };
 
+        currentUses++;
         isInUse = true;
         OnActivate();
         return new AbilityActivationStatus { message = "Success.", status = true }; ;
@@ -68,7 +72,8 @@ public class Ability : MonoBehaviourPunCallbacks {
     {        
         if(currentUses >= uses && uses >= 1)
         {
-            Destroy(this);
+            FindObjectOfType<HUD_Ability_Panel> ().RemoveAbility ( this );
+            Destroy(this.gameObject);
         }
         else
         {
@@ -101,5 +106,10 @@ public class Ability : MonoBehaviourPunCallbacks {
         }
 
         return null;
+    }
+
+    public void IncreaseUses(int amount)
+    {
+        uses += amount;
     }
 }

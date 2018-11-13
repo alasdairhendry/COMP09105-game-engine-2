@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 23245527113030418}
   - component: {fileID: 114551803536733264}
   - component: {fileID: 64396274895387822}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Saw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,5 +535,5 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114155397030488252}
   viewIdField: 0
-  InstantiationId: 1
+  InstantiationId: 5
   isRuntimeInstantiated: 0

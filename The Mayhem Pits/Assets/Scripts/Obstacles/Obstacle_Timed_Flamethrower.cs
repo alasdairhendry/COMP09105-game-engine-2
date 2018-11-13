@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
 
     [SerializeField] private List<ParticleSystem> particles = new List<ParticleSystem> ();
     [SerializeField] private float particleDelay = 0.25f;
+    [SerializeField] private float damage = 10.0f;
     private float currentParticleDelay = 0.0f;
-
+    private bool obstacleActive = false;
+   
     protected override void Update ()
     {
         base.Update ();
@@ -17,7 +20,8 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
 
     public override void Activate ()
     {
-        PlayParticles ();   
+        PlayParticles ();
+        obstacleActive = true;
     }
 
     private void ParticleDelay ()
@@ -29,7 +33,8 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
             if(currentParticleDelay >= particleDelay)
             {
                 currentParticleDelay = 0.0f;
-                StopParticles ();                
+                StopParticles ();
+                obstacleActive = false;
             }
         }
     }
@@ -47,6 +52,29 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
         for (int i = 0; i < particles.Count; i++)
         {
             particles[i].Stop ();
+        }
+    }
+
+    private void Trigger (Collider other)
+    {
+        if (!obstacleActive) return;
+
+        RobotHealth health = other.gameObject.GetComponentInParent<RobotHealth> ();
+        if (health == GetComponentInParent<RobotHealth> ()) return;
+        if (health != null)
+        {
+            health.ApplyDamageToOtherPlayer ( damage * Time.deltaTime );
+        }
+
+        Heatable heatable = other.gameObject.GetComponentInParent<Heatable> ();
+
+        if (heatable != null)
+        {            
+            heatable.AddNetwork ( damage * Time.deltaTime * 0.5f );
+        }
+        else
+        {
+            Debug.Log ( "Hitting item that isnt heatable" );
         }
     }
 }

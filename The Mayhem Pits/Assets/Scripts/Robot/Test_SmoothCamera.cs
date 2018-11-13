@@ -75,22 +75,47 @@ public class Test_SmoothCamera : MonoBehaviour {
     {
         if (ClientMode.singleton.GetMode == ClientMode.Mode.Normal)
         {
-            Transform t = transform.GetChild ( 0 );           
+            Transform t = transform.GetChild ( 0 );
 
-            if ((Input.GetAxis ( "XBO_RH" ) >= 0.2f || Input.GetAxis ( "XBO_RH" ) <= -0.2f) || (Input.GetAxis ( "XBO_RV" ) >= 0.2f || Input.GetAxis ( "XBO_RV" ) <= -0.2f))
+            if ((Input.GetAxis ( "XBO_RH" ) != 0.0f || Input.GetAxis ( "XBO_RV" ) != 0.0f))
             {
-                Debug.Log ( "Greater" );
+                //Debug.Log ( "Greater" );
                 Vector3 newRot = t.transform.localEulerAngles;
 
-                newRot.x += Input.GetAxis ( "XBO_RV" ) * 20.0f;
-                newRot.y += Input.GetAxis ( "XBO_RH" ) * 20.0f;
+                //newRot.x += Input.GetAxis ( "XBO_RV" ) * 20.0f;
+                //newRot.y += Input.GetAxis ( "XBO_RH" ) * 20.0f;
+                //newRot.z = 0.0f;
+
+                newRot.x = Input.GetAxis ( "XBO_RV" ) * 40.0f;
+                newRot.y = Input.GetAxis ( "XBO_RH" ) * 40.0f;
                 newRot.z = 0.0f;
+
                 t.transform.localRotation = Quaternion.Slerp ( Quaternion.Euler ( t.transform.localEulerAngles ), Quaternion.Euler ( newRot ), Time.deltaTime * 2.0f );
             }
             else
             {
                 t.transform.localRotation = Quaternion.Slerp ( t.transform.localRotation, Quaternion.Euler ( Vector3.zero ), Time.deltaTime * 4.0f );
-            }      
+            }
+
+            //if ((Input.GetAxis ( "XBO_RH" ) >= 0.2f || Input.GetAxis ( "XBO_RH" ) <= -0.2f) || (Input.GetAxis ( "XBO_RV" ) >= 0.2f || Input.GetAxis ( "XBO_RV" ) <= -0.2f))
+            //{
+            //    //Debug.Log ( "Greater" );
+            //    Vector3 newRot = t.transform.localEulerAngles;
+
+            //    //newRot.x += Input.GetAxis ( "XBO_RV" ) * 20.0f;
+            //    //newRot.y += Input.GetAxis ( "XBO_RH" ) * 20.0f;
+            //    //newRot.z = 0.0f;
+
+            //    newRot.x = Input.GetAxis ( "XBO_RV" ) * 40.0f;
+            //    newRot.y = Input.GetAxis ( "XBO_RH" ) * 40.0f;
+            //    newRot.z = 0.0f;
+
+            //    t.transform.localRotation = Quaternion.Slerp ( Quaternion.Euler ( t.transform.localEulerAngles ), Quaternion.Euler ( newRot ), Time.deltaTime * 2.0f );
+            //}
+            //else
+            //{
+            //    t.transform.localRotation = Quaternion.Slerp ( t.transform.localRotation, Quaternion.Euler ( Vector3.zero ), Time.deltaTime * 4.0f );
+            //}      
         }
     }
 

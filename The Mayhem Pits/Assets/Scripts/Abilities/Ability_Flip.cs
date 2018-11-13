@@ -35,10 +35,4 @@ public class Ability_Flip : Ability {
 
         Finish();
     }
-
-    // Called by the ability itself when it has finished doing its thang.
-    protected override void Finish()
-    {
-        base.Finish();
-    }
 }

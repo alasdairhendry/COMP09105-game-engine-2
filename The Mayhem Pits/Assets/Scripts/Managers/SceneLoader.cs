@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
 
-    public static SceneLoader singleton;
+    public static SceneLoader Instance;
 
     private void Awake()
     {
-        if (singleton == null)
-            singleton = this;
-        else if (singleton != this)
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
             Destroy(gameObject);
 
         DontDestroyOnLoad(this.gameObject);

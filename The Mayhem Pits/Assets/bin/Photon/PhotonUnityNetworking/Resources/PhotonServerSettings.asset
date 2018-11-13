@@ -42,4 +42,15 @@ MonoBehaviour:
   - RPCSetPitch
   - RPCPlaySound
   - RPCActivateNetwork
+  - RPCParticles
+  - RPCMissile
+  - RPCUse
+  - RPCExplode
+  - RPCSetupOverload
+  - RPCDestroy
+  - RPCPickup
+  - RPCPickupMaster
+  - RPCOnTargeted
+  - RPCSetupAbility
+  - RPCFailedPickUp
   DisableAutoOpenWizard: 1

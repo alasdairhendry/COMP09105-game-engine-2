@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class Obstacle_Timed : Obstacle
 {
+    protected override void Start ()
+    {
+        
+    }
+
     protected override void Update ()
     {
         CheckDelay ();

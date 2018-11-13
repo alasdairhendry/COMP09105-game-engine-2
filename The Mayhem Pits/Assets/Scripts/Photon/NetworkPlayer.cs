@@ -36,18 +36,6 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
             return;
         }
 
-        if (this.gameObject == null)
-        {
-            Debug.Log ( "Found null gameobject" );
-            return;
-        }
-
-        if(photonView == null)
-        {
-            Debug.Log ( "Found null photonView" );
-            return;
-        }
-
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         if (scene.name == "Game")
         {

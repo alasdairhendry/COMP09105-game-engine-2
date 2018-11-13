@@ -27,6 +27,21 @@ public class NetworkLobbyPlayer : MonoBehaviourPunCallbacks {
         SpawnLobbyGraphics();
 	}
 
+    public override void OnMasterClientSwitched (Player newMasterClient)
+    {
+        if (this == null) return;
+        if (this.photonView == null) return;
+        if (this.photonView.Owner == null) return;
+        if (newMasterClient.ActorNumber == photonView.Owner.ActorNumber)
+        {
+            GetComponentInChildren<TextMesh> ().text = "<size=30>Host</size>\n" + photonView.Owner.NickName;
+        }
+        else
+        {
+            GetComponentInChildren<TextMesh> ().text = photonView.Owner.NickName;
+        }
+    }
+
     private void SpawnLobbyGraphics()
     {
         MyRobotData myData = MyRobot.singleton.GetMyRobotData;

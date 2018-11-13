@@ -77,30 +77,34 @@ public class RobotAbilities : MonoBehaviourPunCallbacks
     }
 
     private void CreateInitialAbilities ()
-    {
-        abilities.Add ( Instantiate ( ability_FlipLeftPrefab, Vector3.zero, Quaternion.identity, this.transform.Find ( "Abilities" ) ).GetComponent<Ability> () );
-        abilities.Add ( Instantiate ( ability_FlipRightPrefab, Vector3.zero, Quaternion.identity, this.transform.Find ( "Abilities" ) ).GetComponent<Ability> () );
-        abilities.Add ( Instantiate ( ability_BoostPrefab, Vector3.zero, Quaternion.identity, this.transform.Find ( "Abilities" ) ).GetComponent<Ability> () );
-
-
-        abilities[0].SetTargetRobot ( this.gameObject );
-        abilities[1].SetTargetRobot ( this.gameObject );
-        abilities[2].SetTargetRobot ( this.gameObject );
-
-        abilityPanel.AddAbility ( abilities[0], abilities );
-        abilityPanel.AddAbility ( abilities[1], abilities );
-        abilityPanel.AddAbility ( abilities[2], abilities );
+    {     
+        AddAbility ( ability_FlipLeftPrefab );
+        AddAbility ( ability_FlipRightPrefab );
+        AddAbility ( ability_BoostPrefab );
+        AddAbility ( ability_BoostPrefab );
+        AddAbility ( ability_BoostPrefab );
+        AddAbility ( ability_BoostPrefab );
     }
 
-    public void ActivateAbility(string abilityName)
+    public void AddAbility (GameObject prefab)
     {
-        for (int i = 0; i < abilities.Count; i++)
-        {
-            if(abilityName == abilities[i].AbilityName)
-            {
-                abilities[i].Activate ();
-                return;
-            }
-        }
+        GameObject go = Instantiate ( prefab, Vector3.zero, Quaternion.identity, this.transform.Find ( "Abilities" ) );
+        Ability ability = go.GetComponent<Ability> ();
+
+        abilities.Add ( ability );
+        ability.SetTargetRobot ( this.gameObject );
+        abilityPanel.AddAbility ( ability, abilities );   
     }
+
+    //public void ActivateAbility(string abilityName)
+    //{
+    //    for (int i = 0; i < abilities.Count; i++)
+    //    {
+    //        if(abilityName == abilities[i].AbilityName)
+    //        {
+    //            abilities[i].Activate ();
+    //            return;
+    //        }
+    //    }
+    //}
 }

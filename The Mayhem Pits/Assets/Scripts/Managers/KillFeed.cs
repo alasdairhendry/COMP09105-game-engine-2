@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class KillFeed : MonoBehaviourPunCallbacks {
 
     public static KillFeed Instance;
-    public enum InfoType { Joined, Disconnect, Killed, Spectate, Ability, Weapon, Flameout, Winner }
+    public enum InfoType { Joined, Disconnect, Killed, Spectate, Ability, Overload, Flameout, Winner }
 
     private void Awake ()
     {

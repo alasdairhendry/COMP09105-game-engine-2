@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviourPunCallbacks {
@@ -24,6 +25,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     public Action onJoinedRoom;
     public Action onLeftRoom;
 
+    private float retryConnectionDelay = 7.0f;
+    private float currentRetryDelay = 0.0f;
+
+    private bool failedToConnect = false;
+
     private void Awake()
     {
         if (singleton == null)
@@ -42,6 +48,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
         ConnectToMasterServer();	
 	}
 
+    private void Update ()
+    {
+        if (failedToConnect)
+        {
+            currentRetryDelay += Time.deltaTime;
+
+            if(currentRetryDelay >= 2.0f)
+            {
+                status_Label.text = "Retrying connection in " + (retryConnectionDelay - currentRetryDelay).ToString ( "00" ) + "...";
+            }
+
+            if(currentRetryDelay >= retryConnectionDelay)
+            {
+                currentRetryDelay = 0.0f;
+                ConnectToMasterServer ();
+            }
+        }
+    }
+
     // Tries to connect the player to the master server
     private void ConnectToMasterServer()
     {
@@ -52,19 +77,29 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     // Called when the player successfully connects to the master server
     public override void OnConnectedToMaster()
     {
-        if (SceneLoader.singleton.CurrentScene() == "NetworkConnection")
+        failedToConnect = false;
+        if (SceneLoader.Instance.CurrentScene() == "NetworkConnection")
         {
-            SceneLoader.singleton.LoadScene("ModeSelect");
+            SceneLoader.Instance.LoadScene("ModeSelect");
         }
-    }
+    }    
 
     // Called when the player disconnects from the master server
     public override void OnDisconnected(DisconnectCause cause)
     {
-        if(SceneLoader.singleton.CurrentScene() == "NetworkConnection")
+        failedToConnect = true;
+
+        if(SceneLoader.Instance.CurrentScene() == "NetworkConnection")
         {
+            status_Label = GameObject.Find ( "ConnectionStatus_Label" ).GetComponent<Text>();
             status_Label.color = new Color(250.0f / 256.0f, 138.0f / 256.0f, 138.0f / 256.0f);
             status_Label.text = "Failed to connect: " + cause.ToString();
+        }
+        else
+        {
+            if (cause == DisconnectCause.DisconnectByClientLogic) return;
+            SceneLoader.Instance.LoadScene ( "NetworkConnection" );
+            ConnectToMasterServer ();
         }
     }
 

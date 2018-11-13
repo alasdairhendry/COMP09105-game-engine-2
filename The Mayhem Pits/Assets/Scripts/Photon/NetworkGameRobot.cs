@@ -2,30 +2,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NetworkGameRobot : MonoBehaviourPunCallbacks {
 
 	// Use this for initialization
-	void Start () {
-        SetDisplayName();
+	void Start () {        
+        SetDisplayName ();
         KillFeed.Instance.AddInfo ( photonView.Owner.NickName + " has joined the game.", KillFeed.InfoType.Joined );
 
+        gameObject.name = "NetworkGameRobot_" + photonView.Owner.NickName;
+
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
-        
+
+        this.gameObject.tag = "LocalGamePlayer";
         SpawnGraphics();
-        SetCamera();
+        SetCamera();        
     }
 
     private void SetDisplayName()
     {
         if (PhotonNetwork.OfflineMode) return;
 
-        TextMesh[] texts = GetComponentsInChildren<TextMesh>();
+        //TextMesh[] texts = GetComponentsInChildren<TextMesh>();
 
-        for (int i = 0; i < texts.Length; i++)
-        {
-            texts[i].text = photonView.Owner.NickName;
-        }
+        Text text = GetComponentInChildren<Text> ();
+        text.text = photonView.Owner.NickName;
+
+        //for (int i = 0; i < texts.Length; i++)
+        //{
+        //    texts[i].text = photonView.Owner.NickName;
+        //}
     }
 
     private void SpawnGraphics()
