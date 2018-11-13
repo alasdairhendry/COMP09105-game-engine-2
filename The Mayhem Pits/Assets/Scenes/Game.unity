@@ -16049,6 +16049,11 @@ Prefab:
       propertyPath: DEBUG_ROBOT_DATA_INDEX
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114639291440175180, guid: 7ae9fb5f7a288a345a574cc2e8abb92b,
+        type: 2}
+      propertyPath: mode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae9fb5f7a288a345a574cc2e8abb92b, type: 2}
   m_IsPrefabAsset: 0
