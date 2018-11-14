@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ClientMode : MonoBehaviour {
 
-    public static ClientMode singleton;
+    public static ClientMode Instance;
 
     private void Awake()
     {
-        if (singleton == null)
-            singleton = this;
-        else if (singleton != this)
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
             Destroy(gameObject);
 
         if(mode == Mode.Normal)

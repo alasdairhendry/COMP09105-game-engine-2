@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,12 @@ using UnityEngine.UI;
 
 public class NetworkGameRobot : MonoBehaviourPunCallbacks {
 
-	// Use this for initialization
-	void Start () {        
-        SetDisplayName ();
-        KillFeed.Instance.AddInfo ( photonView.Owner.NickName + " has joined the game.", KillFeed.InfoType.Joined );
+    // Use this for initialization
+    void Start()
+    {
+        SetDisplayName();
+        RegisterSpotlight(true);
+        KillFeed.Instance.AddInfo(photonView.Owner.NickName + " has joined the game.", KillFeed.InfoType.Joined);
 
         gameObject.name = "NetworkGameRobot_" + photonView.Owner.NickName;
 
@@ -17,22 +20,27 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
 
         this.gameObject.tag = "LocalGamePlayer";
         SpawnGraphics();
-        SetCamera();        
+        SetCamera();
     }
 
     private void SetDisplayName()
     {
         if (PhotonNetwork.OfflineMode) return;
-
-        //TextMesh[] texts = GetComponentsInChildren<TextMesh>();
-
+        
         Text text = GetComponentInChildren<Text> ();
-        text.text = photonView.Owner.NickName;
+        text.text = photonView.Owner.NickName;        
+    }
 
-        //for (int i = 0; i < texts.Length; i++)
-        //{
-        //    texts[i].text = photonView.Owner.NickName;
-        //}
+    private void RegisterSpotlight(bool add)
+    {
+        if (add)
+        {
+            FindObjectOfType<SpotlightController>().Add(this);
+        }
+        else
+        {
+            FindObjectOfType<SpotlightController>().Remove(this);
+        }
     }
 
     private void SpawnGraphics()
@@ -91,5 +99,10 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
     {
         if (PhotonNetwork.OfflineMode) return;
         GameObject.FindObjectOfType<Test_SmoothCamera>().SetTarget(this.transform);
+    }
+
+    private void OnDestroy()
+    {
+        RegisterSpotlight(false);
     }
 }

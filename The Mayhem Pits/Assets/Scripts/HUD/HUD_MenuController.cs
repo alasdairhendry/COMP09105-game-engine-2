@@ -18,7 +18,7 @@ public class HUD_MenuController : MonoBehaviour {
 
     private void OnJoinedRoom()
     {
-        //findGame_Button.SetActive(false);
+        findGame_Button.SetActive(false);
         leaveGame_Button.SetActive(true);
         myRobot_Button.SetActive ( false );
     }
@@ -27,7 +27,7 @@ public class HUD_MenuController : MonoBehaviour {
     {
         leaveGame_Button.SetActive(false);
         myRobot_Button.SetActive ( true );
-        //findGame_Button.SetActive(true);
+        findGame_Button.SetActive(true);
     }
 
     public void OnClick_FindGame(int selectedRoomSize)

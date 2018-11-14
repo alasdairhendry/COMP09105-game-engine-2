@@ -20,6 +20,8 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     protected bool movedHorizontal = false;
     protected bool movedVertical = false;
+
+    protected bool isIncrementing = false;    
 	
 	protected virtual void Start () {
         if (autoDetectChildren)
@@ -27,7 +29,7 @@ public class HUDSelectionGroup : MonoBehaviour {
 
         if (!children[0].IsActive ()) IncrementIndex ();
 
-        if (isActiveGroup) HUDSelectionManager.SetActiveGroup ( this );
+        if (isActiveGroup) { HUDSelectionManager.SetActiveGroup(this); Enable(); }
 	}
 		
 	protected virtual void Update () {
@@ -38,7 +40,28 @@ public class HUDSelectionGroup : MonoBehaviour {
             return;
         }
         DetectInput ();
+        DetectHiddenTarget();
 	}
+
+    private void DetectHiddenTarget()
+    {
+        //return;
+        if (isIncrementing) return;
+
+        if (!children[index].IsActive())
+        {
+            for (int i = 0; i < children.Count; i++)
+            {
+                if (children[i].IsActive())
+                {
+                    index = i;
+                    break;
+                }
+            }
+            //index = 0;
+            SelectIndex();
+        }
+    }
 
     public virtual void SetActiveGroup ()
     {
@@ -47,8 +70,8 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     public virtual void Enable ()
     {
-        if (!children[index].IsActive ()) IncrementIndex ();
-        SelectIndex ();
+        SelectIndex();
+
         isActiveGroup = true;
         setActiveFrameYield = true;
     }
@@ -117,6 +140,7 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     protected virtual void InvokeIndex ()
     {
+        if (!children[index].IsActive()) return;
         Debug.Log ( "Invoking on " + children[index].name );
         children[index].onClick.Invoke ();
         children[index].GetComponent<Animator> ().SetTrigger ( "Pressed" );
@@ -124,7 +148,7 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     protected virtual void SelectIndex ()
     {
-        DeselectIndex ( previousIndex );
+        DeselectIndex ( previousIndex );        
         children[index].GetComponent<Animator> ().SetTrigger ( "Highlighted" );
     }
 
@@ -135,6 +159,8 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     protected virtual void IncrementIndex ()
     {
+        isIncrementing = true;
+
         previousIndex = index;
         do
         {
@@ -143,8 +169,11 @@ public class HUDSelectionGroup : MonoBehaviour {
             if (index >= children.Count) index = 0;
 
         } while (!children[index].IsActive ());
-        
+
+        Debug.Log("Found next active child - " + children[index].gameObject.name);
+
         SelectIndex ();
+        isIncrementing = false;
     }
 
     protected virtual void ChangeIndex(int newIndex)

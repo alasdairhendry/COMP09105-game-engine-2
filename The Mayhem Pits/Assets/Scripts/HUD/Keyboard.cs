@@ -179,6 +179,8 @@ public class Keyboard : MonoBehaviour {
         selectionGroup.SetActiveGroup ();
         SetBody ();
         SwitchMode ( Mode.shift );
+        currentInput = "";
+        UpdateText();
     }
 
     //public void Open ()

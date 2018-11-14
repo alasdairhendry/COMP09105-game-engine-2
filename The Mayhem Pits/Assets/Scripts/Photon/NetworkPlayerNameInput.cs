@@ -26,6 +26,7 @@ public class NetworkPlayerNameInput : MonoBehaviour
     {
         if (Input.GetButtonDown ( "XBO_Y" ))
         {
+            //if (PhotonNetwork.InRoom) return;
             FindObjectOfType<Keyboard> ().Open ( (s) => { SetPlayerName ( s ); } );
         }
     }

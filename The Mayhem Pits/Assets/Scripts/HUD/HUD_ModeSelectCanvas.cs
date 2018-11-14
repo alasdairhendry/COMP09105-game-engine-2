@@ -17,11 +17,11 @@ public class HUD_ModeSelectCanvas : MonoBehaviour {
         {
             if(PlayerPrefs.GetString(prefKey) == "Normal")
             {
-                ClientMode.singleton.SetModeNormal();
+                ClientMode.Instance.SetModeNormal();
             }
             else
             {
-                ClientMode.singleton.SetModeVR();
+                ClientMode.Instance.SetModeVR();
             }
 
             hasSelected = true;
@@ -40,14 +40,14 @@ public class HUD_ModeSelectCanvas : MonoBehaviour {
         {
             hasSelected = true;
             PlayerPrefs.SetString(prefKey, "Normal");
-            ClientMode.singleton.SetModeNormal();
+            ClientMode.Instance.SetModeNormal();
             SceneManager.LoadScene("Menu");
         }
         else if (Input.GetButtonDown("XBO_B"))
         {
             hasSelected = true;
             PlayerPrefs.SetString(prefKey, "VR");
-            ClientMode.singleton.SetModeVR();
+            ClientMode.Instance.SetModeVR();
             SceneManager.LoadScene("Menu");
         }
     }

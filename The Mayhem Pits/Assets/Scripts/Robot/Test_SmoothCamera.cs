@@ -73,7 +73,7 @@ public class Test_SmoothCamera : MonoBehaviour {
 
     private void AxisRotate ()
     {
-        if (ClientMode.singleton.GetMode == ClientMode.Mode.Normal)
+        if (ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
         {
             Transform t = transform.GetChild ( 0 );
 
@@ -130,7 +130,7 @@ public class Test_SmoothCamera : MonoBehaviour {
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, robotSmoothTime);
 
         Vector3 lookAtPos = targetRobot.position;
-        if (ClientMode.singleton.GetMode == ClientMode.Mode.VR)
+        if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
             lookAtPos.y = transform.position.y;
         transform.LookAt(lookAtPos);
     }
@@ -142,7 +142,7 @@ public class Test_SmoothCamera : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(transform.rotation, currentTarget.rotation, pillarSmoothTime);
 
         Vector3 lookAtPos = targetRobot.position;
-        if (ClientMode.singleton.GetMode == ClientMode.Mode.VR)
+        if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
             lookAtPos.y = transform.position.y;
         transform.LookAt(lookAtPos);
     }

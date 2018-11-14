@@ -14,7 +14,7 @@ public class LobbyModeManager : MonoBehaviour {
 
     private void CreateLobbyObjects()
     {
-        if (ClientMode.singleton.GetMode == ClientMode.Mode.Normal)
+        if (ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
         {
             foreach (GameObject obj in normalLobbyObjects)
             {
@@ -22,7 +22,7 @@ public class LobbyModeManager : MonoBehaviour {
             }
             UnityEngine.XR.XRSettings.enabled = false;
         }
-        else if (ClientMode.singleton.GetMode == ClientMode.Mode.VR)
+        else if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
         {
             foreach (GameObject obj in vrLobbyObjects)
             {

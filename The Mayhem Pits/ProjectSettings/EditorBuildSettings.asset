@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/NetworkConnection.unity
     guid: 5e0dce1dcf8eb2c4da25d475ebcd51e3
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/ModeSelect.unity
     guid: 2717a11dac3ec7d4e80779ec00b78d8d
   - enabled: 1
