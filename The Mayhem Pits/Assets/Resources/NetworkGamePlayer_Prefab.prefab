@@ -820,7 +820,7 @@ MonoBehaviour:
   heat: 0
   heatMax: 10
   visualHeatMax: 3
-  reductionRate: 1
+  reductionRate: 0.45
   affectedMeshes: []
   materials: []
   autoDetectMeshes: 0

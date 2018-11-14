@@ -121,7 +121,7 @@ MonoBehaviour:
       baseResourceMax: 0
       baseResourceDepletion: 0
       baseResourceRegeneration: 0
-  DEBUG_ROBOT_DATA_INDEX: 1
+  DEBUG_ROBOT_DATA_INDEX: 0
   DEBUG_WEAPON_DATA_INDEX: 0
 --- !u!114 &114639291440175180
 MonoBehaviour:

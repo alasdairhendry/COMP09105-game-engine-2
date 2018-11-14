@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,28 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
     [SerializeField] private float damage = 10.0f;
     private float currentParticleDelay = 0.0f;
     private bool obstacleActive = false;
-   
+
+    protected override void Start ()
+    {
+        RegisterTriggers ();
+        GetParticles ();
+    }
+
+    private void RegisterTriggers ()
+    {
+        ChildCollider[] colls = GetComponentsInChildren<ChildCollider> ();
+
+        for (int i = 0; i < colls.Length; i++)
+        {
+            colls[i].triggerStay += Trigger;
+        }
+    }
+
+    private void GetParticles ()
+    {
+        particles = GetComponentsInChildren<ParticleSystem> ().ToList ();
+    }
+
     protected override void Update ()
     {
         base.Update ();
@@ -57,6 +79,7 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
 
     private void Trigger (Collider other)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         if (!obstacleActive) return;
 
         RobotHealth health = other.gameObject.GetComponentInParent<RobotHealth> ();
