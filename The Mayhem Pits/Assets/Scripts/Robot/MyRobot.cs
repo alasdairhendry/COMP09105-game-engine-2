@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class MyRobot : MonoBehaviour {
 
-    public static MyRobot singleton;
+    public static MyRobot Instance;
 
     private void Awake()
     {
-        if (singleton == null)
-            singleton = this;
-        else if (singleton != this)
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
             Destroy(gameObject);
     }
 

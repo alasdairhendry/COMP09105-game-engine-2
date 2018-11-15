@@ -15,7 +15,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     protected virtual void Start ()
     {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
-        data = MyRobot.singleton.GetMyRobotData.WeaponData;
+        data = MyRobot.Instance.GetMyRobotData.WeaponData;
         animator = GetComponent<Animator> ();
         currentResourceLeft = data.baseResourceMax;
         weaponPanel = FindObjectOfType<HUD_Weapon_Panel> ();

@@ -159,8 +159,8 @@ MonoBehaviour:
       texture: {fileID: 0}
   DEBUG_ROBOT_DATA_INDEX: 0
   DEBUG_WEAPON_DATA_INDEX: 0
-  DEBUG_EMBLEM_DATA_INDEX: 0
-  DEBUG_SKIN_DATA_INDEX: 0
+  DEBUG_EMBLEM_DATA_INDEX: 3
+  DEBUG_SKIN_DATA_INDEX: 1
 --- !u!114 &114639291440175180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,3 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: a6ade9d3d8ff2b54e8603a3b0dc7941a, type: 2}
+  processProfiles:
+  - {fileID: 11400000, guid: 2502b9f965a080e4d8676aa5606d2c11, type: 2}
+  - {fileID: 11400000, guid: 80e27619555a940438089106463e34fa, type: 2}
+  - {fileID: 11400000, guid: c09196ec7ec3d0a4a9d7cbc5f777a543, type: 2}

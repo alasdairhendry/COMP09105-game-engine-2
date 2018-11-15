@@ -32,10 +32,10 @@ public class MyRobotControls : MonoBehaviour {
         camera = FindObjectOfType<Camera>();
         originalRootPosition = transform.Find("Graphics").transform.position;
 
-        currentBodyIndex = MyRobot.singleton.BodyDatas.IndexOf ( MyRobot.singleton.GetMyRobotData.BodyData );
-        currentWeaponIndex = MyRobot.singleton.WeaponDatas.IndexOf(MyRobot.singleton.GetMyRobotData.WeaponData);
-        currentEmblemIndex = MyRobot.singleton.EmblemDatas.IndexOf(MyRobot.singleton.GetMyRobotData.EmblemData);
-        currentSkinIndex = MyRobot.singleton.SkinDatas.IndexOf(MyRobot.singleton.GetMyRobotData.SkinData);
+        currentBodyIndex = MyRobot.Instance.BodyDatas.IndexOf ( MyRobot.Instance.GetMyRobotData.BodyData );
+        currentWeaponIndex = MyRobot.Instance.WeaponDatas.IndexOf(MyRobot.Instance.GetMyRobotData.WeaponData);
+        currentEmblemIndex = MyRobot.Instance.EmblemDatas.IndexOf(MyRobot.Instance.GetMyRobotData.EmblemData);
+        currentSkinIndex = MyRobot.Instance.SkinDatas.IndexOf(MyRobot.Instance.GetMyRobotData.SkinData);
         SpawnBody();
     }
 
@@ -48,7 +48,7 @@ public class MyRobotControls : MonoBehaviour {
     public void OnClick_NextBody()
     {
         currentBodyIndex++;
-        if (currentBodyIndex >= MyRobot.singleton.BodyDatas.Count)
+        if (currentBodyIndex >= MyRobot.Instance.BodyDatas.Count)
             currentBodyIndex = 0;        
 
         SpawnBody();
@@ -57,7 +57,7 @@ public class MyRobotControls : MonoBehaviour {
     public void OnClick_NextWeapon()
     {
         currentWeaponIndex++;
-        if (currentWeaponIndex >= MyRobot.singleton.WeaponDatas.Count)
+        if (currentWeaponIndex >= MyRobot.Instance.WeaponDatas.Count)
         {
             currentWeaponIndex = 0;            
         }
@@ -68,7 +68,7 @@ public class MyRobotControls : MonoBehaviour {
     public void OnClick_NextEmblem()
     {
         currentEmblemIndex++;
-        if (currentEmblemIndex >= MyRobot.singleton.EmblemDatas.Count)
+        if (currentEmblemIndex >= MyRobot.Instance.EmblemDatas.Count)
         {
             currentEmblemIndex = 0;            
         }
@@ -79,7 +79,7 @@ public class MyRobotControls : MonoBehaviour {
     public void OnClick_NextSkin()
     {
         currentSkinIndex++;
-        if (currentSkinIndex >= MyRobot.singleton.SkinDatas.Count)
+        if (currentSkinIndex >= MyRobot.Instance.SkinDatas.Count)
         {
             currentSkinIndex = 0;            
         }
@@ -97,13 +97,13 @@ public class MyRobotControls : MonoBehaviour {
         if (spawnedBodyPrefab != null)
             Destroy(spawnedBodyPrefab);
 
-        spawnedBodyPrefab = Instantiate(MyRobot.singleton.BodyDatas[currentBodyIndex].prefab, transform.Find("Graphics"));
+        spawnedBodyPrefab = Instantiate(MyRobot.Instance.BodyDatas[currentBodyIndex].prefab, transform.Find("Graphics"));
         spawnedBodyPrefab.transform.localPosition = Vector3.zero;
         spawnedBodyPrefab.transform.localEulerAngles = Vector3.zero;
 
-        MyRobot.singleton.GetMyRobotData.SetBodyData(MyRobot.singleton.BodyDatas[currentBodyIndex]);
+        MyRobot.Instance.GetMyRobotData.SetBodyData(MyRobot.Instance.BodyDatas[currentBodyIndex]);
 
-        myBodyText.text = "BODY: " + MyRobot.singleton.BodyDatas[currentBodyIndex].name.ToUpper ();
+        myBodyText.text = "BODY: " + MyRobot.Instance.BodyDatas[currentBodyIndex].name.ToUpper ();
 
         SpawnWeapon ();
         SpawnEmblem();
@@ -128,14 +128,14 @@ public class MyRobotControls : MonoBehaviour {
 
         foreach (WeaponMount mount in mounts)
         {
-            if(mount.AcceptedWeaponPrefabs.Contains(MyRobot.singleton.WeaponDatas[currentWeaponIndex].prefab))
+            if(mount.AcceptedWeaponPrefabs.Contains(MyRobot.Instance.WeaponDatas[currentWeaponIndex].prefab))
             {
                 found = true;
-                spawnedWeaponPrefab = Instantiate(MyRobot.singleton.WeaponDatas[currentWeaponIndex].prefab, transform.Find("Graphics"));
+                spawnedWeaponPrefab = Instantiate(MyRobot.Instance.WeaponDatas[currentWeaponIndex].prefab, transform.Find("Graphics"));
                 spawnedWeaponPrefab.transform.position = mount.transform.position;
                 spawnedWeaponPrefab.transform.rotation = mount.transform.rotation;
-                MyRobot.singleton.GetMyRobotData.SetWeaponData(MyRobot.singleton.WeaponDatas[currentWeaponIndex], mount);
-                myWeaponText.text = "WEAPON: " + MyRobot.singleton.WeaponDatas[currentWeaponIndex].weaponName.ToUpper ();
+                MyRobot.Instance.GetMyRobotData.SetWeaponData(MyRobot.Instance.WeaponDatas[currentWeaponIndex], mount);
+                myWeaponText.text = "WEAPON: " + MyRobot.Instance.WeaponDatas[currentWeaponIndex].weaponName.ToUpper ();
                 return;
             }
         }
@@ -170,20 +170,20 @@ public class MyRobotControls : MonoBehaviour {
         spawnedEmblemSpringPrefab.transform.localPosition = Vector3.zero;
         spawnedEmblemSpringPrefab.transform.localEulerAngles = Vector3.zero;
 
-        spawnedEmblemPrefab = Instantiate(MyRobot.singleton.EmblemDatas[currentEmblemIndex].prefab);
+        spawnedEmblemPrefab = Instantiate(MyRobot.Instance.EmblemDatas[currentEmblemIndex].prefab);
         spawnedEmblemPrefab.transform.SetParent(spawnedEmblemSpringPrefab.transform.Find("Root").Find("Mount"));
         spawnedEmblemPrefab.transform.localPosition = Vector3.zero;
         spawnedEmblemPrefab.transform.localRotation = Quaternion.identity;
 
-        MyRobot.singleton.GetMyRobotData.SetEmblemData(MyRobot.singleton.EmblemDatas[currentEmblemIndex], mount);
-        myEmblemText.text = "EMBLEM: " + MyRobot.singleton.EmblemDatas[currentEmblemIndex].emblemName.ToUpper();    
+        MyRobot.Instance.GetMyRobotData.SetEmblemData(MyRobot.Instance.EmblemDatas[currentEmblemIndex], mount);
+        myEmblemText.text = "EMBLEM: " + MyRobot.Instance.EmblemDatas[currentEmblemIndex].emblemName.ToUpper();    
     }
 
     private void SpawnSkin()
     {
-        spawnedBodyPrefab.GetComponent<MeshRenderer>().material.SetTexture("_Albedo", MyRobot.singleton.SkinDatas[currentSkinIndex].texture);
-        MyRobot.singleton.GetMyRobotData.SetSkinData(MyRobot.singleton.SkinDatas[currentSkinIndex]);
-        mySkinText.text = "SKIN: " + MyRobot.singleton.SkinDatas[currentSkinIndex].skinName.ToUpper();
+        spawnedBodyPrefab.GetComponent<MeshRenderer>().material.SetTexture("_Albedo", MyRobot.Instance.SkinDatas[currentSkinIndex].texture);
+        MyRobot.Instance.GetMyRobotData.SetSkinData(MyRobot.Instance.SkinDatas[currentSkinIndex]);
+        mySkinText.text = "SKIN: " + MyRobot.Instance.SkinDatas[currentSkinIndex].skinName.ToUpper();
     }
 
     private void GetZoom()

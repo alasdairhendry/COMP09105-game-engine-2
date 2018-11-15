@@ -22,7 +22,7 @@ public class Test_RobotMovement : MonoBehaviourPunCallbacks {
 	void Start () {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         rb = GetComponent<Rigidbody>();
-        data = MyRobot.singleton.GetMyRobotData;
+        data = MyRobot.Instance.GetMyRobotData;
 	}
 	
 	// Update is called once per frame

@@ -10,6 +10,10 @@ public class HUD_Settings_Panel : MonoBehaviour {
     [SerializeField] private GameObject musicVolumeButton;
     [SerializeField] private GameObject sfxVolumeButton;
 
+    [SerializeField] private GameObject vSyncButton;
+    [SerializeField] private GameObject bloomButton;
+    [SerializeField] private GameObject ambientOcclusionButton;
+
     // Use this for initialization
     void Start () {
         SetCallbacks();
@@ -66,6 +70,56 @@ public class HUD_Settings_Panel : MonoBehaviour {
 
             Settings.Instance.SfxVolume = v;
         };
+
+        // ------------------------------------------------------------------------------------------------------------------
+
+        vSyncButton.GetComponent<HUDAxisSlider>().slide += (f) =>
+        {
+            HUDAxisSlider a = vSyncButton.GetComponent<HUDAxisSlider>();
+
+            if (f > 0)
+            {
+                Settings.Instance.VSync = true;
+                vSyncButton.GetComponent<Text>().text = "VSYNC: On";
+            }
+            else if (f < 0)
+            {
+                Settings.Instance.VSync = false;
+                vSyncButton.GetComponent<Text>().text = "VSYNC: Off";
+            }
+        };
+
+        bloomButton.GetComponent<HUDAxisSlider>().slide += (f) =>
+        {
+            HUDAxisSlider a = bloomButton.GetComponent<HUDAxisSlider>();
+
+            if (f > 0)
+            {
+                Settings.Instance.Bloom = true;
+                bloomButton.GetComponent<Text>().text = "BLOOM: On";
+            }
+            else if (f < 0)
+            {
+                Settings.Instance.Bloom = false;
+                bloomButton.GetComponent<Text>().text = "BLOOM: Off";
+            }
+        };
+
+        ambientOcclusionButton.GetComponent<HUDAxisSlider>().slide += (f) =>
+        {
+            HUDAxisSlider a = ambientOcclusionButton.GetComponent<HUDAxisSlider>();
+
+            if (f > 0)
+            {
+                Settings.Instance.AmbientOcclusion = true;
+                ambientOcclusionButton.GetComponent<Text>().text = "AMBIENT OCCLUSION: On";
+            }
+            else if (f < 0)
+            {
+                Settings.Instance.AmbientOcclusion = false;
+                ambientOcclusionButton.GetComponent<Text>().text = "AMBIENT OCCLUSION: Off";
+            }
+        };
     }
 
     private void SetDefaults()
@@ -73,12 +127,27 @@ public class HUD_Settings_Panel : MonoBehaviour {
         SetVolumeButton(Settings.Instance.MasterVolume, masterVolumeButton.GetComponent<Text>(), "Master Volume");
         SetVolumeButton(Settings.Instance.MusicVolume, musicVolumeButton.GetComponent<Text>(), "Music Volume");
         SetVolumeButton(Settings.Instance.SfxVolume, sfxVolumeButton.GetComponent<Text>(), "Effects Volume");
+        SetBoolButton(Settings.Instance.VSync, vSyncButton.GetComponent<Text>(), "VSYNC");
+        SetBoolButton(Settings.Instance.Bloom, bloomButton.GetComponent<Text>(), "BLOOM");
+        SetBoolButton(Settings.Instance.AmbientOcclusion, ambientOcclusionButton.GetComponent<Text>(), "AMBIENT OCCLUSION");
     }
 
     private void SetVolumeButton(float v, Text text, string s)
     {
         if (v <= 0) text.text = s + ": Off";
         else text.text = s + ": " + (v * 100.0f).ToString("00") + "%";
+    }
+
+    private void SetBoolButton(bool b, Text text, string s)
+    {
+        if (b)
+        {
+            text.text = s + ": On";
+        }
+        else
+        {
+            text.text = s + ": Off";
+        }
     }
 
 	public void OnClick_Back()

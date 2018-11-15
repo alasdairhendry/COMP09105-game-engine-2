@@ -46,7 +46,7 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
 
     private void SpawnGraphics()
     {
-        MyRobotData myData = MyRobot.singleton.GetMyRobotData;        
+        MyRobotData myData = MyRobot.Instance.GetMyRobotData;        
 
         GameObject body = PhotonNetwork.Instantiate(myData.BodyData.prefab.name, transform.position, transform.rotation, 0);
         GameObject weapon = PhotonNetwork.Instantiate(myData.WeaponData.prefab.name, transform.position, transform.rotation, 0);
@@ -54,13 +54,14 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         GameObject emblemSpring = PhotonNetwork.Instantiate ( "EmblemSpring_Prefab", transform.position, Quaternion.identity, 0 );
         GameObject emblem = PhotonNetwork.Instantiate ( myData.EmblemData.prefab.name, transform.position, Quaternion.identity, 0 );
 
-        photonView.RPC("RpcSetupGraphics", RpcTarget.AllBuffered, body.GetPhotonView().ViewID, weapon.GetPhotonView ().ViewID, emblemSpring.GetPhotonView ().ViewID, emblem.GetPhotonView ().ViewID, myData.WeaponMountPosition, myData.WeaponMountRotation, myData.BodyData.mass);
+        int skinIndex = MyRobot.Instance.SkinDatas.IndexOf(MyRobot.Instance.GetMyRobotData.SkinData);
+
+        photonView.RPC("RpcSetupGraphics", RpcTarget.AllBuffered, body.GetPhotonView().ViewID, weapon.GetPhotonView ().ViewID, emblemSpring.GetPhotonView ().ViewID, emblem.GetPhotonView ().ViewID, myData.WeaponMountPosition, myData.WeaponMountRotation, myData.BodyData.mass, skinIndex);
     }
 
     [PunRPC]
-    private void RpcSetupGraphics(int bodyID, int weaponID, int springID, int emblemID, Vector3 weaponMountPosition, Vector3 weaponMountRotation, float mass)
-    {
-        //Debug.Log ( "RpcSetupGraphics" );
+    private void RpcSetupGraphics(int bodyID, int weaponID, int springID, int emblemID, Vector3 weaponMountPosition, Vector3 weaponMountRotation, float mass, int skinIndex)
+    {        
         GameObject body = PhotonView.Find(bodyID).gameObject;
         GameObject weapon = PhotonView.Find(weaponID).gameObject;
 
@@ -84,6 +85,8 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         emblem.transform.SetParent ( emblemSpring.transform.Find ( "Root" ).Find ( "Mount" ) );
         emblem.transform.localPosition = Vector3.zero;
         emblem.transform.localEulerAngles = Vector3.zero;
+
+        body.GetComponent<MeshRenderer>().material.SetTexture("_Albedo", MyRobot.Instance.SkinDatas[skinIndex].texture);
 
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody> ().mass = mass;
