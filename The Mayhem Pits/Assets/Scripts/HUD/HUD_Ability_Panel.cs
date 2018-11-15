@@ -27,7 +27,7 @@ public class HUD_Ability_Panel : MonoBehaviour {
         {
             if(localAbilities[i].ID == ability.ID)
             {
-                Debug.Log ( "Already contains ability " + ability.name );
+                //Debug.Log ( "Already contains ability " + ability.name );
                 localAbilities[i].IncreaseUses ( 1 );
                 return;
             }
@@ -54,7 +54,7 @@ public class HUD_Ability_Panel : MonoBehaviour {
             go.transform.Find ( "ControllerButton_Image" ).GetComponent<Image> ().sprite = ability.SpecificInputSprite;
         }
 
-        Debug.Log ( "Added ability " + ability.AbilityName );
+        //Debug.Log ( "Added ability " + ability.AbilityName );
         localAbilities.Add ( ability );
         this.robotAbilities = abilities;
     }    

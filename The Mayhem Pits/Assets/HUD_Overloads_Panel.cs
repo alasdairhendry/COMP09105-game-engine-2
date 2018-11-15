@@ -35,12 +35,20 @@ public class HUD_Overloads_Panel : MonoBehaviour {
         go.transform.Find ( "ControllerButton_Image" ).gameObject.SetActive ( false );
         go.transform.SetAsFirstSibling ();
         overloadObjects.Add ( go );
+        
+        this.overloads = overloads;
 
-        Deselect ( selectionIndex );
-        selectionIndex = overloadObjects.IndexOf ( go );
-        Select ( selectionIndex );
-
-        this.overloads = overloads;        
+        if (overloadObjects.Count == 1)
+        {
+            selectionIndex = 0;
+            Select(selectionIndex);
+        }
+        else
+        {
+            Deselect(selectionIndex);
+            selectionIndex = overloadObjects.IndexOf(go);
+            Select(selectionIndex);
+        }
     }
 
     public void RemoveAbility (Ability ability)

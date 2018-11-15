@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HUD_GameOver_Panel : MonoBehaviour {
 
     [SerializeField] private GameObject body;
+    [SerializeField] private GameObject infoPanel;
     [SerializeField] private GameObject deadPanel;
     [SerializeField] private GameObject wonPanel;
     [SerializeField] private Text wonText;
@@ -42,7 +43,9 @@ public class HUD_GameOver_Panel : MonoBehaviour {
 
     public void OnPress_Spectate ()
     {
-        Close ();
+        spectateInfoButton.SetActive(false);
+        deadPanel.SetActive(false);
+        infoPanel.SetActive(false);
         KillFeed.Instance.AddInfo ( PhotonNetwork.NickName + " is now spectating.", KillFeed.InfoType.Spectate, RpcTarget.AllBuffered );
     }
 

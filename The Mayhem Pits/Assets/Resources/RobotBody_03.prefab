@@ -41,6 +41,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1491438379804264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4013105606375236}
+  - component: {fileID: 114423719219883024}
+  m_Layer: 0
+  m_Name: WeaponMount
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1496712725837958
 GameObject:
   m_ObjectHideFlags: 0
@@ -49,9 +65,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4745252475420900}
-  - component: {fileID: 114423719219883024}
+  - component: {fileID: 114469520552717420}
   m_Layer: 0
-  m_Name: Mount
+  m_Name: EmblemMount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,6 +140,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4013105606375236
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1491438379804264}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.211, z: 0.612}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4164545315884360}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4081932052386864
 Transform:
   m_ObjectHideFlags: 1
@@ -144,9 +173,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1809382880685396}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4013105606375236}
   - {fileID: 4745252475420900}
   - {fileID: 4726614642902402}
   - {fileID: 4477268173604566}
@@ -192,7 +222,7 @@ Transform:
   - {fileID: 4081932052386864}
   - {fileID: 4399346113022996}
   m_Father: {fileID: 4164545315884360}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4726614642902402
 Transform:
@@ -206,7 +236,7 @@ Transform:
   m_Children:
   - {fileID: 4331755256746388}
   m_Father: {fileID: 4164545315884360}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4745252475420900
 Transform:
@@ -214,13 +244,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1496712725837958}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.211, z: 0.612}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: -0.1675, z: 0.798}
+  m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000002}
   m_Children: []
   m_Father: {fileID: 4164545315884360}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!23 &23867373154996888
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -318,14 +348,14 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 3
+  InstantiationId: 1
   isRuntimeInstantiated: 0
 --- !u!114 &114423719219883024
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1496712725837958}
+  m_GameObject: {fileID: 1491438379804264}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff74d68b70872124690ad0836e8db005, type: 3}
@@ -334,6 +364,17 @@ MonoBehaviour:
   acceptedWeaponPrefabs:
   - {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d, type: 2}
   - {fileID: 1370256643284910, guid: 68a736dc5f1907241bb5c271bae7bfb6, type: 2}
+--- !u!114 &114469520552717420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1496712725837958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d4a0cf3d7ef7e4d8d116ae38068c25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114730500045859550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,3 +388,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponMounts:
   - {fileID: 114423719219883024}
+  emblemMount: {fileID: 114469520552717420}

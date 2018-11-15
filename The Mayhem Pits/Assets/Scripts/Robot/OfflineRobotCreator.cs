@@ -20,7 +20,7 @@ public class OfflineRobotCreator : MonoBehaviour {
     {
         if (!active) return;
         GameSpawnLocations spawn = GameObject.FindObjectOfType<GameSpawnLocations>();
-        GameObject root = PhotonNetwork.Instantiate(networkGamePlayerPrefab.name, spawn.transform.position, spawn.transform.rotation, 0);
+        GameObject root = PhotonNetwork.Instantiate(networkGamePlayerPrefab.name, spawn.transform.position - new Vector3(0.0f, 0.0f, 5.0f), spawn.transform.rotation, 0);
 
         if (ai)
         {

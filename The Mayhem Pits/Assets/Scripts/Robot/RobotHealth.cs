@@ -83,6 +83,15 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
             GetComponent<RobotAbilities> ().enabled = false;
             GetComponent<RobotOverloads> ().enabled = false;
             GetComponentInChildren<Weapon> ().enabled = false;
+
+            FindObjectOfType<HUD_Ability_Panel>().gameObject.SetActive(false);
+            FindObjectOfType<HUD_Crosshair_Panel>().gameObject.SetActive(false);
+            FindObjectOfType<HUD_Overloads_Panel>().gameObject.SetActive(false);
+            FindObjectOfType<HUD_Weapon_Panel>().gameObject.SetActive(false);
+
+            FindObjectOfType<Test_SmoothCamera>().SetMode(Test_SmoothCamera.TargetType.Overview);
+            FindObjectOfType<Test_SmoothCamera>().DisableModeSwitch();
+
             GetComponent<RobotSound> ().StopAudio ();
             deathCalled = true;
             FindObjectOfType<Test_SmoothCamera> ().SetMode (Test_SmoothCamera.TargetType.Overview);
@@ -166,6 +175,11 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
             FindObjectOfType<Test_SmoothCamera> ().GetComponentInChildren<Camera> ().fieldOfView = 40.0f;
 
         }
+
+        FindObjectOfType<HUD_Ability_Panel>().gameObject.SetActive(false);
+        FindObjectOfType<HUD_Crosshair_Panel>().gameObject.SetActive(false);
+        FindObjectOfType<HUD_Overloads_Panel>().gameObject.SetActive(false);
+        FindObjectOfType<HUD_Weapon_Panel>().gameObject.SetActive(false);
 
         winningRobot.GetComponent<RobotHealth> ().enabled = false;
         FindObjectOfType<CelebrationEffects> ().Activate ();

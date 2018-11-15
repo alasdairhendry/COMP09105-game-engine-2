@@ -14,6 +14,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
     [SerializeField] private GameObject networkLobbyPlayerPrefab;
     [SerializeField] private GameObject networkGamePlayerPrefab;
 
+    private int readiedPlayers = 0;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -23,7 +25,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
     {
         gameObject.name = "NetworkPlayer_" + photonView.Owner.NickName;
         Debug.Log ( "NetworkPlayerStart" );
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;        
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        this.gameObject.tag = "LocalNetworkPlayer";
         CreateNetworkLobbyPlayer();
         SceneManager.sceneLoaded += OnSceneChange;
     }
@@ -59,7 +62,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
             Debug.Log ( "Found null gameobject" );
             return;
         }
-        Debug.Log ( "CreateNetworkGamePlayer - ", this );
+        //Debug.Log ( "CreateNetworkGamePlayer - ", this );
         NetworkSpawnPoint mySpawnPoint = GetSpawnPoint(GameObject.FindObjectsOfType<NetworkSpawnPoint>());
 
         PhotonNetwork.Instantiate(networkGamePlayerPrefab.name, mySpawnPoint.transform.position, mySpawnPoint.transform.rotation, 0);
@@ -101,5 +104,25 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
     {
         if (KillFeed.Instance == null) return;
         KillFeed.Instance.AddInfo ( otherPlayer.NickName + " has left the game.", KillFeed.InfoType.Disconnect );
+    }
+
+    public void SetGameReady()
+    {
+        photonView.RPC("RPCSetGameReady", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void RPCSetGameReady()
+    {
+        readiedPlayers++;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (readiedPlayers >= PhotonNetwork.PlayerList.Length)
+            {
+                FindObjectOfType<MatchStartController>().SetReady();
+            }
+        }
+
     }
 }

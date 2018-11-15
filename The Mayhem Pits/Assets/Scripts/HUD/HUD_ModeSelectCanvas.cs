@@ -15,7 +15,7 @@ public class HUD_ModeSelectCanvas : MonoBehaviour {
         if (DEBUG_ALWAYSSELECT) return;
         if (PlayerPrefs.HasKey(prefKey))
         {
-            if(PlayerPrefs.GetString(prefKey) == "Normal")
+            if (PlayerPrefs.GetString(prefKey) == "Normal")
             {
                 ClientMode.Instance.SetModeNormal();
             }

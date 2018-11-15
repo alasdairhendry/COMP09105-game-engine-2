@@ -19,18 +19,29 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_1659C202:
-        m_Texture: {fileID: 2800000, guid: da0373d40d8cd174c84ff4bc626d4f76, type: 3}
+        m_Texture: {fileID: 2800000, guid: ff781ec4a6287204dabc974063d9cb6a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_81E90771:
-        m_Texture: {fileID: 2800000, guid: 7177ce4be07f2174bb39a5bf8b6656b0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 25cfa3befabcb454b85e2f03fd4ac5e9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_9E2C37C2:
-        m_Texture: {fileID: 2800000, guid: 6f845a05fc913964a809a56b901af25d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4359e85bd40ffb044bec8a1cbd4fcbc6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 44af1c295c19b814ebbbd4a39183aea1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Metallic:
+        m_Texture: {fileID: 2800000, guid: ff781ec4a6287204dabc974063d9cb6a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_27A1E8B9: 0.5
+    - Vector1_2BB11450: 1
     - _Heat: 0
     - _MoltenIntensity: 0
-    m_Colors: []
+    m_Colors:
+    - _Colour: {r: 1, g: 1, b: 1, a: 1}

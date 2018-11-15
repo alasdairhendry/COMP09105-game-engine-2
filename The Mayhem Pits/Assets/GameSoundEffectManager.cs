@@ -13,7 +13,7 @@ public class GameSoundEffectManager : MonoBehaviourPunCallbacks {
         else if (Instance != this) Destroy ( this.gameObject );
     }
 
-    public enum Effect { MetalImpact, SteamBurst }
+    public enum Effect { MetalImpact, SteamBurst, Explosion }
 
     [SerializeField] private List<EffectPair> pairs = new List<EffectPair> ();
     [SerializeField] private GameObject soundEffect;

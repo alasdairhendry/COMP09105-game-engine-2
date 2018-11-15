@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClientMode : MonoBehaviour {
 
@@ -13,7 +14,7 @@ public class ClientMode : MonoBehaviour {
         else if (Instance != this)
             Destroy(gameObject);
 
-        if(mode == Mode.Normal)
+        if(mode == Mode.Normal && SceneManager.GetActiveScene().name != "ModeSelect")
             UnityEngine.XR.XRSettings.enabled = false;
     }
 
@@ -24,10 +25,12 @@ public class ClientMode : MonoBehaviour {
 	public void SetModeNormal()
     {        
         mode = Mode.Normal;
+        UnityEngine.XR.XRSettings.enabled = false;
     }
 
     public void SetModeVR()
     {
         mode = Mode.VR;
+        UnityEngine.XR.XRSettings.enabled = true;
     } 
 }

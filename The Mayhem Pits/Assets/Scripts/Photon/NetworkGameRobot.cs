@@ -28,6 +28,7 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         if (PhotonNetwork.OfflineMode) return;
         
         Text text = GetComponentInChildren<Text> ();
+        if (photonView.Owner == null) return;
         text.text = photonView.Owner.NickName;        
     }
 
@@ -51,7 +52,7 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         GameObject weapon = PhotonNetwork.Instantiate(myData.WeaponData.prefab.name, transform.position, transform.rotation, 0);
 
         GameObject emblemSpring = PhotonNetwork.Instantiate ( "EmblemSpring_Prefab", transform.position, Quaternion.identity, 0 );
-        GameObject emblem = PhotonNetwork.Instantiate ( "Emblem_Trophy_Prefab", transform.position, Quaternion.identity, 0 );
+        GameObject emblem = PhotonNetwork.Instantiate ( myData.EmblemData.prefab.name, transform.position, Quaternion.identity, 0 );
 
         photonView.RPC("RpcSetupGraphics", RpcTarget.AllBuffered, body.GetPhotonView().ViewID, weapon.GetPhotonView ().ViewID, emblemSpring.GetPhotonView ().ViewID, emblem.GetPhotonView ().ViewID, myData.WeaponMountPosition, myData.WeaponMountRotation, myData.BodyData.mass);
     }
@@ -59,7 +60,7 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
     [PunRPC]
     private void RpcSetupGraphics(int bodyID, int weaponID, int springID, int emblemID, Vector3 weaponMountPosition, Vector3 weaponMountRotation, float mass)
     {
-        Debug.Log ( "RpcSetupGraphics" );
+        //Debug.Log ( "RpcSetupGraphics" );
         GameObject body = PhotonView.Find(bodyID).gameObject;
         GameObject weapon = PhotonView.Find(weaponID).gameObject;
 
@@ -76,12 +77,9 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         weapon.transform.localEulerAngles = weaponMountRotation;
         weapon.name = "Weapon";
 
-
-
-        emblemSpring.transform.SetParent ( body.transform.Find ( "Emblem_Mount" ) );
+        emblemSpring.transform.SetParent ( body.GetComponentInChildren<EmblemMount>().transform );
         emblemSpring.transform.localPosition = Vector3.zero;
-        emblemSpring.transform.localEulerAngles = Vector3.zero;
-        //emblemSpring.GetComponent<HingeJoint> ().connectedBody = GetComponent<Rigidbody> ();
+        emblemSpring.transform.localEulerAngles = Vector3.zero;        
 
         emblem.transform.SetParent ( emblemSpring.transform.Find ( "Root" ).Find ( "Mount" ) );
         emblem.transform.localPosition = Vector3.zero;
@@ -93,6 +91,11 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         Heatable heatable = GetComponent<Heatable> ();
         heatable.AddRenderers ( body.GetComponent<MeshRenderer> () );
         heatable.AddRenderers ( weapon.GetComponentsInChildren<MeshRenderer> ());
+
+        if (PhotonView.Find(bodyID).Owner.IsLocal)
+        {
+            GameObject.FindGameObjectWithTag("LocalNetworkPlayer").GetComponent<NetworkPlayer>().SetGameReady();
+        }
     }
 
     private void SetCamera()

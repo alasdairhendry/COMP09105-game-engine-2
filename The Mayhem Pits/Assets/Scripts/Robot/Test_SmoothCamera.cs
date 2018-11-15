@@ -18,10 +18,16 @@ public class Test_SmoothCamera : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
 
     private bool allowModeSwitch = true;
+    private bool allowTargeting = false;
 
     private void Start()
     {
         cameraMounts = GameObject.FindObjectsOfType<CameraMount>();
+
+        if(ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
+        {
+            transform.GetChild(1).SetParent(transform.GetChild(0));
+        }
 
         initialCameraOffset = new Vector3(0.0f, 2.0f, -4.0f);
     }
@@ -129,10 +135,13 @@ public class Test_SmoothCamera : MonoBehaviour {
         // Smoothly move the camera towards that target position
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, robotSmoothTime);
 
-        Vector3 lookAtPos = targetRobot.position;
-        if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
-            lookAtPos.y = transform.position.y;
-        transform.LookAt(lookAtPos);
+        if (allowTargeting)
+        {
+            Vector3 lookAtPos = targetRobot.position;
+            if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
+                lookAtPos.y = transform.position.y;
+            transform.LookAt(lookAtPos);
+        }
     }
 
     private void TargetPillar()
@@ -141,10 +150,13 @@ public class Test_SmoothCamera : MonoBehaviour {
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, pillarSmoothTime);
         transform.rotation = Quaternion.Slerp(transform.rotation, currentTarget.rotation, pillarSmoothTime);
 
-        Vector3 lookAtPos = targetRobot.position;
-        if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
-            lookAtPos.y = transform.position.y;
-        transform.LookAt(lookAtPos);
+        if (allowTargeting)
+        {
+            Vector3 lookAtPos = targetRobot.position;
+            if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
+                lookAtPos.y = transform.position.y;
+            transform.LookAt(lookAtPos);
+        }
     }
 
     private void FindNearestMount()
@@ -176,5 +188,10 @@ public class Test_SmoothCamera : MonoBehaviour {
     public void DisableModeSwitch ()
     {
         allowModeSwitch = false;   
+    }
+
+    public void SetAllowTarget(bool state)
+    {
+        allowTargeting = state;
     }
 }

@@ -11,6 +11,10 @@ public class HUDSelectionGroup : MonoBehaviour {
     [SerializeField] protected bool autoDetectChildren = false;
 
     [SerializeField] protected bool isActiveGroup = false;
+
+    [SerializeField] protected bool autoScrollV = false;
+    [SerializeField] protected bool autoScrollH = false;
+
     public bool IsActiveGroup { get { return isActiveGroup; } }
 
     protected bool setActiveFrameYield = false;
@@ -95,12 +99,17 @@ public class HUDSelectionGroup : MonoBehaviour {
                 else DecrementIndex ();
 
             }
+
+            if (autoScrollV) movedVertical = false;
         }
         else
         {
             if (movedVertical)
             {
                 movedVertical = false;
+
+                // Didnt change vertically
+                
             }
         }
 
@@ -113,12 +122,18 @@ public class HUDSelectionGroup : MonoBehaviour {
                 // Change horizontally
 
             }
+
+            if (autoScrollH) movedHorizontal = false;
         }
         else
         {
             if (movedHorizontal)
             {
                 movedHorizontal = false;
+
+                //Didnt Change horizontally 
+
+                
             }
         }
 
@@ -141,7 +156,7 @@ public class HUDSelectionGroup : MonoBehaviour {
     protected virtual void InvokeIndex ()
     {
         if (!children[index].IsActive()) return;
-        Debug.Log ( "Invoking on " + children[index].name );
+        //Debug.Log ( "Invoking on " + children[index].name );
         children[index].onClick.Invoke ();
         children[index].GetComponent<Animator> ().SetTrigger ( "Pressed" );
     }
@@ -170,7 +185,7 @@ public class HUDSelectionGroup : MonoBehaviour {
 
         } while (!children[index].IsActive ());
 
-        Debug.Log("Found next active child - " + children[index].gameObject.name);
+        //Debug.Log("Found next active child - " + children[index].gameObject.name);
 
         SelectIndex ();
         isIncrementing = false;

@@ -8,6 +8,7 @@ public class HUD_MenuController : MonoBehaviour {
     [SerializeField] private GameObject findGame_Button;
     [SerializeField] private GameObject myRobot_Button;
     [SerializeField] private GameObject leaveGame_Button;
+    [SerializeField] private GameObject settings_Button;
     public NetworkPlayer localPlayer;
 
     private void Start()
@@ -20,12 +21,14 @@ public class HUD_MenuController : MonoBehaviour {
     {
         findGame_Button.SetActive(false);
         leaveGame_Button.SetActive(true);
+        settings_Button.SetActive(false);
         myRobot_Button.SetActive ( false );
     }
 
     private void OnLeftRoom()
     {
         leaveGame_Button.SetActive(false);
+        settings_Button.SetActive(true);
         myRobot_Button.SetActive ( true );
         findGame_Button.SetActive(true);
     }
@@ -47,7 +50,7 @@ public class HUD_MenuController : MonoBehaviour {
 
     public void OnClick_Settings()
     {
-        SceneManager.LoadScene("MyRobot");
+        SceneManager.LoadScene("Settings");
     }
 
     public void OnClick_Exit()

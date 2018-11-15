@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4144586817460212}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 114665080907130966}
   - component: {fileID: 114180290903565552}
   - component: {fileID: 54890589127654664}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Overload_MissileObject_Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 33328894636173184}
   - component: {fileID: 23436828854291210}
   - component: {fileID: 135077669528745654}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &114180290903565552
 MonoBehaviour:
@@ -189,7 +189,7 @@ MonoBehaviour:
   targetPeak: {x: 0, y: 0, z: 0}
   targetPeakY: 10
   boostedSpeed: 15
-  ascendingSpeed: 2
+  ascendingSpeed: 3
   damage: 20
   explosionParticles: {fileID: 1931540543680938, guid: 3b2932a63ab0fd04cb630d08105fdd24,
     type: 2}

@@ -295,15 +295,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1594218024108516}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 2, z: -0.3}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4557435432946036}
   - {fileID: 4881667532762862}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4412484433279488
 Transform:
   m_ObjectHideFlags: 1
@@ -672,7 +672,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 3
+  InstantiationId: 6
   isRuntimeInstantiated: 0
 --- !u!135 &135795132284884246
 SphereCollider:
@@ -695,10 +695,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 3
+  m_Radius: 0.84
+  m_Height: 5
   m_Direction: 0
-  m_Center: {x: 0.5, y: 0, z: 0}
+  m_Center: {x: 1, y: 0, z: 0}
 --- !u!136 &136216259400579196
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -708,10 +708,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 3
+  m_Radius: 0.84
+  m_Height: 5
   m_Direction: 0
-  m_Center: {x: 0.5, y: 0, z: 0}
+  m_Center: {x: 1, y: 0, z: 0}
 --- !u!136 &136529938813447582
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -721,10 +721,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 3
+  m_Radius: 0.84
+  m_Height: 5
   m_Direction: 0
-  m_Center: {x: 0.5, y: 0, z: 0}
+  m_Center: {x: 1, y: 0, z: 0}
 --- !u!136 &136912213809122508
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -734,10 +734,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 3
+  m_Radius: 0.84
+  m_Height: 5
   m_Direction: 0
-  m_Center: {x: 0.5, y: 0, z: 0}
+  m_Center: {x: 1, y: 0, z: 0}
 --- !u!198 &198054070246264454
 ParticleSystem:
   m_ObjectHideFlags: 1

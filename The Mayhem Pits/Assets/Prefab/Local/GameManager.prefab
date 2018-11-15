@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114090017134517682}
   - component: {fileID: 114639291440175180}
   - component: {fileID: 114396065102711458}
+  - component: {fileID: 114705123267970034}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -103,6 +104,34 @@ MonoBehaviour:
     baseResourceMax: 100
     baseResourceDepletion: 12
     baseResourceRegeneration: 5
+  emblemDatas:
+  - emblemName: Soccer Ball
+    prefab: {fileID: 1065108408312758, guid: 8b116d3991a86e34d9e31d9163ca741a, type: 2}
+    sprite: {fileID: 0}
+  - emblemName: Rubber Duck
+    prefab: {fileID: 1408682102010550, guid: 0c8fffcf96524f14ca045d0f4afc2c03, type: 2}
+    sprite: {fileID: 0}
+  - emblemName: Gamepad
+    prefab: {fileID: 1137074974808026, guid: dee6fadc0eecc5a499f48875fd5bc7f5, type: 2}
+    sprite: {fileID: 0}
+  - emblemName: Trophy
+    prefab: {fileID: 1297259058128264, guid: aead5509c58f49f4db97c62cbb3b258a, type: 2}
+    sprite: {fileID: 0}
+  skinDatas:
+  - skinName: None
+    texture: {fileID: 2800000, guid: 44af1c295c19b814ebbbd4a39183aea1, type: 3}
+  - skinName: Flame
+    texture: {fileID: 2800000, guid: 4359e85bd40ffb044bec8a1cbd4fcbc6, type: 3}
+  - skinName: Artwork
+    texture: {fileID: 2800000, guid: 5cbbd772fbf9bf54fb8e2ee540fbd22b, type: 3}
+  - skinName: Blotch
+    texture: {fileID: 2800000, guid: fe3a0148689db474e8151ce7a485f66d, type: 3}
+  - skinName: Camo
+    texture: {fileID: 2800000, guid: b64ad1bcbae0dc64f808720af7b9853d, type: 3}
+  - skinName: Illusion
+    texture: {fileID: 2800000, guid: 3c05bfdb90d16464bb707c6709fbb8fc, type: 3}
+  - skinName: Lines
+    texture: {fileID: 2800000, guid: aff4b1ca2294f134e982f9a39bb55744, type: 3}
   myRobotData:
     bodyData:
       name: 
@@ -121,8 +150,17 @@ MonoBehaviour:
       baseResourceMax: 0
       baseResourceDepletion: 0
       baseResourceRegeneration: 0
+    emblemData:
+      emblemName: 
+      prefab: {fileID: 0}
+      sprite: {fileID: 0}
+    skinData:
+      skinName: 
+      texture: {fileID: 0}
   DEBUG_ROBOT_DATA_INDEX: 0
   DEBUG_WEAPON_DATA_INDEX: 0
+  DEBUG_EMBLEM_DATA_INDEX: 0
+  DEBUG_SKIN_DATA_INDEX: 0
 --- !u!114 &114639291440175180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -135,3 +173,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
+--- !u!114 &114705123267970034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284099178472842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18caa379da8a1b4d8a5e130abd3e449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: a6ade9d3d8ff2b54e8603a3b0dc7941a, type: 2}

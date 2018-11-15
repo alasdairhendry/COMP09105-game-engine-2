@@ -19,6 +19,8 @@ public class RobotOverloads : MonoBehaviourPunCallbacks {
     //private float inputHold = 0.5f;
     private float currentHold = 0.0f;
 
+    private bool allowUse = false;
+
     // Use this for initialization
     void Start ()
     {
@@ -31,8 +33,13 @@ public class RobotOverloads : MonoBehaviourPunCallbacks {
     // Update is called once per frame
     void Update ()
     {
-        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;        
         CheckInput ();
+    }
+
+    public void SetAllowUse(bool state)
+    {
+        allowUse = state;
     }
 
     private void CheckInput ()
@@ -64,10 +71,14 @@ public class RobotOverloads : MonoBehaviourPunCallbacks {
 
             if (currentDelay >= inputDelay)
             {
-                currentHold += Time.deltaTime;
-                if (!overloadPanel.OnHold ( currentHold ))
+                if (allowUse)
                 {
-                    currentHold = 0.0f;
+                    currentHold += Time.deltaTime;
+
+                    if (!overloadPanel.OnHold(currentHold))
+                    {
+                        currentHold = 0.0f;
+                    }
                 }
             }
         }

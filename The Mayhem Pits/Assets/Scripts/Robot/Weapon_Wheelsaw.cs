@@ -59,14 +59,17 @@ public class Weapon_Wheelsaw : Weapon {
     }
 
     protected override void Animate ()
-    {        
-        if (currentResourceLeft <= 0) lerpedInput = SmoothLerp.Lerp ( lerpedInput, 0.0f, inputDamp * Time.deltaTime );
-        else lerpedInput = SmoothLerp.Lerp ( lerpedInput, Input.GetAxis ( "XBO_LT" ), inputDamp * Time.deltaTime );
-
+    {
         if (!isAttacking)
         {
-            lerpedInput = SmoothLerp.Lerp ( lerpedInput, 0, inputDamp * Time.deltaTime );
+            //Debug.Log("!ISATACKING");
+            lerpedInput = SmoothLerp.Lerp(lerpedInput, 0, inputDamp * Time.deltaTime);
+            animator.SetFloat("Blend", lerpedInput);
+            return;
         }
+
+        if (currentResourceLeft <= 0) lerpedInput = SmoothLerp.Lerp ( lerpedInput, 0.0f, inputDamp * Time.deltaTime );
+        else lerpedInput = SmoothLerp.Lerp ( lerpedInput, Input.GetAxis ( "XBO_LT" ), inputDamp * Time.deltaTime );
 
         lerpedInput = Mathf.Clamp ( lerpedInput, 0.0f, 0.99f );
 

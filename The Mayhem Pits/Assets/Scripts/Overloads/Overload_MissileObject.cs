@@ -63,8 +63,7 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
         }
         
         if (ascending)
-        {
-            
+        {            
             direction = (targetPeak - transform.position).normalized;
             transform.position += direction * ascendingSpeed * Time.deltaTime;
         }
@@ -88,6 +87,14 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
     [PunRPC] 
     private void RPCExplode(int targetRobot)
     {
+        Camera c = FindObjectOfType<Camera>();
+        if(Vector3.Distance(c.gameObject.transform.position, transform.position) < 10.0f)
+        {
+            FindObjectOfType<SFXCutoff>().Cutoff(1.0f);
+        }
+
+        GameSoundEffectManager.Instance.PlayLocalSound(GameSoundEffectManager.Effect.Explosion, 1.0f, Random.Range(0.80f, 1.2f), true, transform.position);
+
         if(targetRobot == PhotonNetwork.LocalPlayer.ActorNumber)
         {
             GameObject.FindGameObjectWithTag ( "LocalGamePlayer" ).GetComponent<Rigidbody> ().AddForceAtPosition ( Vector3.up * 200.0f * Time.fixedDeltaTime, transform.position, ForceMode.VelocityChange );

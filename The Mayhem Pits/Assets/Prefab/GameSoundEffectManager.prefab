@@ -60,6 +60,9 @@ MonoBehaviour:
     clip:
     - {fileID: 8300000, guid: 768fb3cfb4198d245a671ad4c7110a10, type: 3}
     - {fileID: 8300000, guid: dafbe223b12a00a4e83f661a36c79e77, type: 3}
+  - effect: 2
+    clip:
+    - {fileID: 8300000, guid: 555547637fa9dcc428b1ccbc7049c69d, type: 3}
   soundEffect: {fileID: 1741559429015994, guid: a1d6261d83a62cb4db335e6a840e01bb,
     type: 2}
 --- !u!114 &114616171103084470
