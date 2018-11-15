@@ -48,11 +48,6 @@ public class HUD_MenuController : MonoBehaviour {
         SceneManager.LoadScene("MyRobot");
     }
 
-    public void OnClick_Settings()
-    {
-        SceneManager.LoadScene("Settings");
-    }
-
     public void OnClick_Exit()
     {
         Application.Quit();

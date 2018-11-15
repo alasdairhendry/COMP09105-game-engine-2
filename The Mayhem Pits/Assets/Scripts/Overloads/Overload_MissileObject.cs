@@ -79,6 +79,7 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
         targetRobot.GetComponent<RobotHealth> ().ApplyDamageToOtherPlayer ( damage );
+        targetRobot.GetComponent<Heatable>().AddNetwork(5.0f);
         photonView.RPC ( "RPCExplode", RpcTarget.All, targetRobot.GetComponent<PhotonView> ().Owner.ActorNumber );
         PhotonNetwork.Instantiate ( explosionParticles.name, transform.position, Quaternion.identity );        
         PhotonNetwork.Destroy ( this.gameObject );

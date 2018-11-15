@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class HUD_Settings_Panel : MonoBehaviour {
 
+    [SerializeField] private GameObject body;
+
     [SerializeField] private GameObject masterVolumeButton;
     [SerializeField] private GameObject musicVolumeButton;
     [SerializeField] private GameObject sfxVolumeButton;
@@ -18,7 +20,19 @@ public class HUD_Settings_Panel : MonoBehaviour {
     void Start () {
         SetCallbacks();
         SetDefaults();
-       
+        Close();
+    }
+
+    public void Open()
+    {
+        body.SetActive(true);
+        body.GetComponent<HUDSelectionGroup>().SetActiveGroup();
+        SetDefaults();
+    }
+
+    public void Close()
+    {
+        body.SetActive(false);        
     }
 
     private void SetCallbacks()

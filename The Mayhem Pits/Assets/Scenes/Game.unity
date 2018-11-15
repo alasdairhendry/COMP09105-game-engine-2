@@ -1110,6 +1110,7 @@ GameObject:
   - component: {fileID: 140715347}
   - component: {fileID: 140715349}
   - component: {fileID: 140715348}
+  - component: {fileID: 140715350}
   m_Layer: 5
   m_Name: CrosshairConstraints_Image
   m_TagString: Untagged
@@ -1154,7 +1155,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 247a8a907070e424096395a9f67a0905, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3dd372785ce17e4dba264233b699952, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1169,6 +1170,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 140715346}
   m_CullTransparentMesh: 0
+--- !u!114 &140715350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 140715346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &157695379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,7 +2332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: a6ade9d3d8ff2b54e8603a3b0dc7941a, type: 2}
-  duckMin: 333
+  duckMin: 666
   duckMax: 22000
   regenerationRate: 1500
 --- !u!4 &485951931
@@ -4041,6 +4056,7 @@ GameObject:
   - component: {fileID: 822119803}
   - component: {fileID: 822119805}
   - component: {fileID: 822119804}
+  - component: {fileID: 822119806}
   m_Layer: 5
   m_Name: Crosshair_Image
   m_TagString: Untagged
@@ -4085,7 +4101,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f2e14b709194a4a428e8862cef8b1048, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e221b2e3229d8f94db7410e55ae05036, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4100,6 +4116,20 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 822119802}
   m_CullTransparentMesh: 0
+--- !u!114 &822119806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 822119802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &851271960
 Prefab:
   m_ObjectHideFlags: 0

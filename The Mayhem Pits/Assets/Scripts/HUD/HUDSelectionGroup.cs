@@ -163,13 +163,20 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     protected virtual void SelectIndex ()
     {
-        DeselectIndex ( previousIndex );        
-        children[index].GetComponent<Animator> ().SetTrigger ( "Highlighted" );
+        DeselectIndex ( previousIndex );
+
+        if (index >= children.Count) return;
+
+        if (children[index] != null)
+            children[index].GetComponent<Animator> ().SetTrigger ( "Highlighted" );
     }
 
     protected virtual void DeselectIndex (int index)
     {
-        children[index].GetComponent<Animator> ().SetTrigger ( "Normal" );
+        if (index >= children.Count) return;
+
+        if (children[index] != null)
+            children[index].GetComponent<Animator>().SetTrigger("Normal");
     }
 
     protected virtual void IncrementIndex ()
