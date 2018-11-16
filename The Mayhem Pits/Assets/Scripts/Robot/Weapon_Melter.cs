@@ -15,26 +15,45 @@ public class Weapon_Melter : Weapon {
 
     protected override void Attack ()
     {
-        base.Attack ();
+        base.Attack();
+        Animate();
 
         if (!isAttacking)
         {
-            if (currentResourceLeft <= data.baseResourceMax * 0.15f)
+            if (currentResourceLeft <= data.baseResourceMax * 0.20f)
             {
-                return;
+                if (weaponPanel != null)
+                    weaponPanel.SetSliderState(false);
+                allowedAttack = false;
+            }
+            else
+            {
+                if (weaponPanel != null)
+                    weaponPanel.SetSliderState(true);
+                allowedAttack = true;
             }
         }
 
-        Animate ();
-
-        if (Input.GetAxis ( "XBO_LT" ) > 0)
+        if (Input.GetAxis("XBO_LT") > 0)
         {
             if (currentResourceLeft > 0)
             {
-                currentResourceLeft -= Input.GetAxis ( "XBO_LT" ) * Time.deltaTime * data.baseResourceDepletion;
-                isAttacking = true;
+                if (allowedAttack)
+                {
+                    currentResourceLeft -= Input.GetAxis("XBO_LT") * Time.deltaTime * data.baseResourceDepletion;
+                    isAttacking = true;
+                }
+                else
+                {
+                    isAttacking = false;
+                    currentResourceLeft += Time.deltaTime * data.baseResourceRegeneration;
+                }
             }
-            else isAttacking = false;
+            else
+            {
+                isAttacking = false;
+                currentResourceLeft += Time.deltaTime * data.baseResourceRegeneration;
+            }
         }
         else
         {
@@ -42,17 +61,16 @@ public class Weapon_Melter : Weapon {
             isAttacking = false;
         }
 
-        currentResourceLeft = Mathf.Clamp ( currentResourceLeft, 0.0f, data.baseResourceMax );
+        currentResourceLeft = Mathf.Clamp(currentResourceLeft, 0.0f, data.baseResourceMax);
     }
 
     protected override void Animate ()
     {
         base.Animate ();
+        photonView.RPC ( "RPCAnimate", RpcTarget.All, isAttacking );
 
-        if (isAttacking) { if (particles.isPlaying) return; particles.Play (); }
-        else { particles.Stop (); }
-
-        photonView.RPC ( "RPCAnimate", RpcTarget.OthersBuffered, isAttacking );
+        //if (isAttacking) { if (particles.isPlaying) return; particles.Play (); }
+        //else { particles.Stop (); }
     }
 
     [PunRPC]
@@ -64,24 +82,21 @@ public class Weapon_Melter : Weapon {
 
     public override void OnChildCollisionStay (Collider collision)
     {
-        base.OnChildCollisionStay ( collision );
+        base.OnChildCollisionStay ( collision );        
 
         if (!isAttacking) return;        
 
-        RobotHealth health = collision.gameObject.GetComponentInParent<RobotHealth> ();
+        RobotHealth health = collision.gameObject.GetComponentInParent<RobotHealth> ();        
+
         if (health == GetComponentInParent<RobotHealth> ()) return;
+        if (damagesThisFrame.Contains(health)) { Debug.Log("Already hurt this robot!"); return; }
+
         if (health != null)
         {
-            health.ApplyDamageToOtherPlayer ( data.baseDamage * Input.GetAxis ( "XBO_LT" ) * Time.deltaTime );
+            float damage = data.baseDamage * Input.GetAxis("XBO_LT") * Time.deltaTime;
+            health.ApplyDamageToOtherPlayer ( damage );
+            damagesThisFrame.Add(health);
         }
-
-        //Robot robot = collision.gameObject.GetComponent<Robot> ();
-
-        //if (robot != null)
-        //{
-        //    robot.AddHeat ( data.baseDamage * Time.deltaTime * 0.5f );
-        //    return;
-        //}
 
         Heatable heatable = collision.gameObject.GetComponentInParent<Heatable> ();
 

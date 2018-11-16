@@ -40,7 +40,8 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         }
         else
         {
-            FindObjectOfType<SpotlightController>().Remove(this);
+            if (FindObjectOfType<SpotlightController>() != null)
+                FindObjectOfType<SpotlightController>().Remove(this);
         }
     }
 
@@ -97,7 +98,10 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
 
         if (PhotonView.Find(bodyID).Owner.IsLocal)
         {
-            GameObject.FindGameObjectWithTag("LocalNetworkPlayer").GetComponent<NetworkPlayer>().SetGameReady();
+            GameObject go = GameObject.FindGameObjectWithTag("LocalNetworkPlayer");
+
+            if (go != null)
+                go.GetComponent<NetworkPlayer>().SetGameReady();
         }
     }
 

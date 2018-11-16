@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4607381307911852}
   - component: {fileID: 33517958731282652}
   - component: {fileID: 23004441710806042}
+  - component: {fileID: 114193232852940430}
   m_Layer: 0
   m_Name: Emblem_Gamepad_AX
   m_TagString: Untagged
@@ -54,6 +55,7 @@ GameObject:
   - component: {fileID: 4664181640472304}
   - component: {fileID: 33948863963272512}
   - component: {fileID: 23890282679976524}
+  - component: {fileID: 114444776084901858}
   m_Layer: 0
   m_Name: Emblem_Gamepad_Buttons
   m_TagString: Untagged
@@ -71,6 +73,7 @@ GameObject:
   - component: {fileID: 4199295669331860}
   - component: {fileID: 33805839807922338}
   - component: {fileID: 23394245649613174}
+  - component: {fileID: 114877410561173256}
   m_Layer: 0
   m_Name: Emblem_Gamepad_BY
   m_TagString: Untagged
@@ -88,6 +91,7 @@ GameObject:
   - component: {fileID: 4090591234878164}
   - component: {fileID: 33742818342615072}
   - component: {fileID: 23158258622393510}
+  - component: {fileID: 114426386880782096}
   m_Layer: 0
   m_Name: Emblems_Gamepad
   m_TagString: Untagged
@@ -361,6 +365,39 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1614908956768710}
   m_Mesh: {fileID: 4300002, guid: 21fce98c9ccc0084fb285fa8197c3504, type: 3}
+--- !u!114 &114193232852940430
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033506627545802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114426386880782096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1942515284181376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114444776084901858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614908956768710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114535789408064148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -380,5 +417,16 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 1
+  InstantiationId: 3
   isRuntimeInstantiated: 0
+--- !u!114 &114877410561173256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1747292834718292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

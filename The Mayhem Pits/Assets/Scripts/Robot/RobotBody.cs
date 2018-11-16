@@ -45,7 +45,7 @@ public class RobotBody : MonoBehaviour {
 
         metallic.SetPixels(metallicColours);
 
-        AssetDatabase.CreateAsset(tex, "Assets/texture.asset");
+        //AssetDatabase.CreateAsset(tex, "Assets/texture.asset");
 
         Debug.Log(albedo.name);
     }

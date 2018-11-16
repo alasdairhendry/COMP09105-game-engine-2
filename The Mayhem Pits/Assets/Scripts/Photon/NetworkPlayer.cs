@@ -114,15 +114,20 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
     [PunRPC]
     private void RPCSetGameReady()
     {
-        readiedPlayers++;
-
         if (PhotonNetwork.IsMasterClient)
         {
-            if (readiedPlayers >= PhotonNetwork.PlayerList.Length)
-            {
-                FindObjectOfType<MatchStartController>().SetReady();
-            }
-        }
+            GameObject.FindGameObjectWithTag("LocalNetworkPlayer").GetComponent<NetworkPlayer>().SetReadiedPlayer();
+        }              
+    }
 
+    public void SetReadiedPlayer()
+    {
+        readiedPlayers++;
+
+        Debug.Log("Readied Players = " + readiedPlayers + "  -  PlayerCount = " + PhotonNetwork.PlayerList.Length, this);
+        if (readiedPlayers >= PhotonNetwork.PlayerList.Length)
+        {
+            FindObjectOfType<MatchStartController>().SetReady();
+        }
     }
 }

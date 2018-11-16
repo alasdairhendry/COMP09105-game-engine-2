@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class OfflineRobotCreator : MonoBehaviour {
 
-    [SerializeField] private bool active;
-    [SerializeField] private bool ai;
+    [SerializeField] public bool active;
+    [SerializeField] public bool ai;
     [SerializeField] private GameObject networkGamePlayerPrefab;
     
     private void Awake()

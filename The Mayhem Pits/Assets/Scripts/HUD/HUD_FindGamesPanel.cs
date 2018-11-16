@@ -16,4 +16,9 @@ public class HUD_FindGamesPanel : MonoBehaviour {
     {
         anim.SetBool("Active", !anim.GetBool("Active"));        
     }
+
+    public void Hide()
+    {
+        anim.SetBool("Active", false);
+    }
 }

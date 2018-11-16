@@ -182,6 +182,7 @@ public class Test_SmoothCamera : MonoBehaviour {
 
     public void SetTarget(Transform target)
     {
+        if (target.gameObject.tag != "LocalGameRobot" && FindObjectOfType<OfflineRobotCreator>().active && FindObjectOfType<OfflineRobotCreator>().ai) return;
         targetRobot = target;
     }
 

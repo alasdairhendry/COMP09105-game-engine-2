@@ -19,7 +19,7 @@ public class HUD_Weapon_Panel : MonoBehaviour {
     public void SetValues (RobotWeaponData weaponData)
     {
         weaponNameText.text = weaponData.weaponName;
-        resourceNameText.text = "(" + weaponData.resourceType.ToString () + ")";
+        resourceNameText.text = weaponData.resourceType.ToString ();
         weaponIcon.sprite = weaponData.sprite;
     }
 

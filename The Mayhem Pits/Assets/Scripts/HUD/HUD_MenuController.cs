@@ -9,6 +9,7 @@ public class HUD_MenuController : MonoBehaviour {
     [SerializeField] private GameObject myRobot_Button;
     [SerializeField] private GameObject leaveGame_Button;
     [SerializeField] private GameObject settings_Button;
+    [SerializeField] private GameObject instructionsPanel;
     public NetworkPlayer localPlayer;
 
     private void Start()
@@ -46,6 +47,16 @@ public class HUD_MenuController : MonoBehaviour {
     public void OnClick_MyRobot()
     {
         SceneManager.LoadScene("MyRobot");
+    }
+
+    public void ToggleInstructionsPanel()
+    {
+        instructionsPanel.SetActive(!instructionsPanel.activeSelf);
+    }
+
+    public void HideInstructionsPanel()
+    {
+        instructionsPanel.SetActive(false);
     }
 
     public void OnClick_Exit()

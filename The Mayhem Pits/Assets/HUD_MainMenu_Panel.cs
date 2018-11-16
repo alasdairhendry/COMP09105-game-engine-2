@@ -12,7 +12,7 @@ public class HUD_MainMenu_Panel : MonoBehaviour {
     {
         body.SetActive(true);
         mainButtons.SetActive(true);
-        findGameButtons.SetActive(false);
+        findGameButtons.GetComponent<HUD_FindGamesPanel>().Hide();
         mainButtons.GetComponent<HUDSelectionGroup>().SetActiveGroup();
     }
 
@@ -20,6 +20,6 @@ public class HUD_MainMenu_Panel : MonoBehaviour {
     {
         body.SetActive(false);
         mainButtons.SetActive(false);
-        findGameButtons.SetActive(false);
+        findGameButtons.GetComponent<HUD_FindGamesPanel>().Hide();
     }
 }

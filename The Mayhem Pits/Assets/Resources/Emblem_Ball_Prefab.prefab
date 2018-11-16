@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 4124655066288338}
   - component: {fileID: 23554880658514102}
   - component: {fileID: 33618119195048862}
+  - component: {fileID: 114599239638564462}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -162,5 +163,16 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 1
+  InstantiationId: 5
   isRuntimeInstantiated: 0
+--- !u!114 &114599239638564462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1806400534750042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

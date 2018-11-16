@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 33328894636173184}
   - component: {fileID: 23436828854291210}
   - component: {fileID: 135077669528745654}
+  - component: {fileID: 114682427438861452}
   m_Layer: 13
   m_Name: Sphere
   m_TagString: Untagged
@@ -193,6 +194,17 @@ MonoBehaviour:
   damage: 20
   explosionParticles: {fileID: 1931540543680938, guid: 3b2932a63ab0fd04cb630d08105fdd24,
     type: 2}
+--- !u!114 &114682427438861452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1974039997855490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114706453064599052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -212,7 +224,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114180290903565552}
   viewIdField: 0
-  InstantiationId: 5
+  InstantiationId: 1
   isRuntimeInstantiated: 0
 --- !u!135 &135077669528745654
 SphereCollider:

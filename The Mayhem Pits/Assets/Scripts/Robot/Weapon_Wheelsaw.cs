@@ -83,8 +83,12 @@ public class Weapon_Wheelsaw : Weapon {
         //Debug.Log ( "Sawing " + collision.gameObject.name );
 
         RobotHealth health = collision.gameObject.GetComponentInParent<RobotHealth> ();
+
+        if (health == GetComponentInParent<RobotHealth>()) return;
         if (health == null) { Debug.Log ( "Health doesnt exist" ); return; }
+        if (damagesThisFrame.Contains(health)) return;
+
         health.ApplyDamageToOtherPlayer ( data.baseDamage * Input.GetAxis ( "XBO_LT" ) * Time.deltaTime );
-        Debug.Log ( "Applying damage", this );
+        damagesThisFrame.Add(health);
     }
 }

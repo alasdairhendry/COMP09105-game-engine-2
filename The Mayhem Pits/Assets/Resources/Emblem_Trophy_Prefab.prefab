@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 4800733476277436}
   - component: {fileID: 33564255501768636}
   - component: {fileID: 23117406988926588}
+  - component: {fileID: 114552319991441096}
   m_Layer: 0
   m_Name: Emblem_Trophy
   m_TagString: Untagged
@@ -196,8 +197,19 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 6
+  InstantiationId: 2
   isRuntimeInstantiated: 0
+--- !u!114 &114552319991441096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1838177712412850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114578817230020828
 MonoBehaviour:
   m_ObjectHideFlags: 1

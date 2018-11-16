@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     protected bool isAttacking;
     protected bool allowedAttack;
     protected HUD_Weapon_Panel weaponPanel;
+    protected List<RobotHealth> damagesThisFrame = new List<RobotHealth>();
 
     protected virtual void Start ()
     {
@@ -28,6 +29,11 @@ public class Weapon : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         Attack ();
+    }    
+
+    protected virtual void LateUpdate()
+    {
+        damagesThisFrame.Clear();
     }
 
     protected virtual void Attack()

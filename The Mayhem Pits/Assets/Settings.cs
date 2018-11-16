@@ -31,7 +31,7 @@ public class Settings : MonoBehaviour {
 
     private const string BLOOM = "bloom";
     private const string VSYNC = "vsync";
-    private const string AMBIENTOCCLUSION = "ao";
+    private const string VIGNETTE = "vignette";
 
     //----------------------------------------------------------
 
@@ -47,11 +47,11 @@ public class Settings : MonoBehaviour {
     private bool bloom = true;
     public bool Bloom { get { return bloom; } set { OnSet_Bloom(value); bloom = value; } }
 
+    private bool vignette = true;
+    public bool Vignette { get { return vignette; } set { OnSet_VignetteOcclusion(value); vignette = value; } }
+
     private bool vSync = true;
     public bool VSync { get { return vSync; } set { OnSet_VSync(value); vSync = value; } }
-
-    private bool ambientOcclusion = true;
-    public bool AmbientOcclusion { get { return ambientOcclusion; } set { OnSet_AmbientOcclusion(value); ambientOcclusion = value; } }
 
     private void LoadSettings()
     {
@@ -70,8 +70,8 @@ public class Settings : MonoBehaviour {
         if (PlayerPrefs.HasKey(VSYNC)) VSync = bool.Parse(PlayerPrefs.GetString(VSYNC));
         else VSync = true;
 
-        if (PlayerPrefs.HasKey(AMBIENTOCCLUSION)) AmbientOcclusion = bool.Parse(PlayerPrefs.GetString(AMBIENTOCCLUSION));
-        else AmbientOcclusion = true;
+        if (PlayerPrefs.HasKey(VIGNETTE)) Vignette = bool.Parse(PlayerPrefs.GetString(VIGNETTE));
+        else Vignette = true;
     }
 
     private void OnSet_MasterVolume(float value)
@@ -115,16 +115,16 @@ public class Settings : MonoBehaviour {
         PlayerPrefs.SetString(BLOOM, value.ToString());
     }
 
-    private void OnSet_AmbientOcclusion(bool value)
+    private void OnSet_VignetteOcclusion(bool value)
     {
         for (int i = 0; i < processProfiles.Length; i++)
         {
-            if (processProfiles[i].HasSettings<AmbientOcclusion>())
+            if (processProfiles[i].HasSettings<Vignette>())
             {
-                processProfiles[i].GetSetting<AmbientOcclusion>().active = value;
+                processProfiles[i].GetSetting<Vignette>().active = value;
             }
         }
 
-        PlayerPrefs.SetString(AMBIENTOCCLUSION, value.ToString());
+        PlayerPrefs.SetString(VIGNETTE, value.ToString());
     }
 }

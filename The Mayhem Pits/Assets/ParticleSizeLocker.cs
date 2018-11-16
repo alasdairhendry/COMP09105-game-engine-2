@@ -16,6 +16,7 @@ public class ParticleSizeLocker : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (p == null) return;
         m.startSize = new ParticleSystem.MinMaxCurve(minMax.x, minMax.y);
 	}
 }

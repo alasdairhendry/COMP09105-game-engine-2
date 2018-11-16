@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MatchStartController : MonoBehaviourPunCallbacks {
 
-    private float currentCountdown = 4.0f;
+    private float currentCountdown = 5.0f;
     private bool ready = false;
 
     [SerializeField] private GameObject startPanel;
@@ -28,7 +28,7 @@ public class MatchStartController : MonoBehaviourPunCallbacks {
         if (ready)
         {
             if (currentCountdown <= 0) return;
-            photonView.RPC("RPCCountdown", RpcTarget.AllBuffered, currentCountdown - (Time.deltaTime * 0.5f));
+            photonView.RPC("RPCCountdown", RpcTarget.AllBuffered, currentCountdown - (Time.deltaTime * 0.75f));
         }
     }
 
@@ -37,16 +37,18 @@ public class MatchStartController : MonoBehaviourPunCallbacks {
     {
         currentCountdown = time;
 
-        if (currentCountdown >= 3)
+        int displayTime = Mathf.CeilToInt(currentCountdown);
+
+        if (displayTime == 5)
             countdownText.text = "GET READY";
-        else if(currentCountdown <= 1.0f)
+        else if(displayTime == 1)
         {
             countdownText.text = "FIGHT";
             SetCamera();
         }
         else
         {
-            countdownText.text = currentCountdown.ToString("00");
+            countdownText.text = (displayTime - 1).ToString("00");
         }
 
         if(currentCountdown <= 0)

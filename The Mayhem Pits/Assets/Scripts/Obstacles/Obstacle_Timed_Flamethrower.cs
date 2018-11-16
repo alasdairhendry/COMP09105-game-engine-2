@@ -77,16 +77,27 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
         }
     }
 
+    private List<RobotHealth> damagedThisFrame = new List<RobotHealth>();
+
+    private void LateUpdate()
+    {
+        damagedThisFrame.Clear();
+    }
+
     private void Trigger (Collider other)
     {
         if (!PhotonNetwork.IsMasterClient) return;
         if (!obstacleActive) return;
 
         RobotHealth health = other.gameObject.GetComponentInParent<RobotHealth> ();
+
         if (health == GetComponentInParent<RobotHealth> ()) return;
+        if (damagedThisFrame.Contains(health)) return;
+
         if (health != null)
         {
             health.ApplyDamageToOtherPlayer ( damage * Time.deltaTime );
+            damagedThisFrame.Add(health);
         }
 
         Heatable heatable = other.gameObject.GetComponentInParent<Heatable> ();
