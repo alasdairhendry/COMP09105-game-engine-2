@@ -396,6 +396,11 @@ public class ReplayPlayer : MonoBehaviour {
         //calledEndOnCanvas = false;
         isFinishing = false;
     }
+
+    public void ClearQueue ()
+    {
+        replayQueue.Clear ();
+    }
 	
 }
 

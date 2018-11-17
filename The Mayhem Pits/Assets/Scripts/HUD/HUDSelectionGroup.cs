@@ -20,6 +20,7 @@ public class HUDSelectionGroup : MonoBehaviour {
     [SerializeField] protected bool autoScrollH = false;
 
     public bool IsActiveGroup { get { return isActiveGroup; } }
+    private bool hasEnabled = false;
 
     protected bool setActiveFrameYield = false;
 
@@ -78,6 +79,7 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     public virtual void Enable ()
     {
+        //Debug.Log ( "Select Index " + this.gameObject.name);
         SelectIndex();
 
         isActiveGroup = true;
@@ -85,7 +87,7 @@ public class HUDSelectionGroup : MonoBehaviour {
     }
 
     public virtual void Disable ()
-    {
+    {        
         DeselectIndex ( index );
         isActiveGroup = false;
     }
@@ -181,7 +183,7 @@ public class HUDSelectionGroup : MonoBehaviour {
     }
 
     protected virtual void SelectIndex ()
-    {
+    {        
         DeselectIndex ( previousIndex );
 
         if (index >= children.Count) return;

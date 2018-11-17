@@ -108,6 +108,23 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
         {
             CheckWinner ();
         }
+
+        // Setup for death replay
+        RobotHealth[] allPlayers = FindObjectsOfType<RobotHealth> ();
+        int leftAlive = 0;        
+
+        for (int i = 0; i < allPlayers.Length; i++)
+        {
+            if (!allPlayers[i].deathCalled)
+            {
+                leftAlive++;                
+            }
+        }
+
+        if(leftAlive > 2)
+        {
+            GetComponent<ReplayInvoker> ().RequestReplay ();
+        }
     }
 
     private void CheckWinner ()
@@ -138,7 +155,7 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
     {
         NetworkGameRobot[] robots = FindObjectsOfType<NetworkGameRobot> ();
         NetworkGameRobot winningRobot = robots[0];
-        NetworkGameRobot myRobot = robots[0];
+        //NetworkGameRobot myRobot = robots[0];
 
         for (int i = 0; i < robots.Length; i++)
         {
@@ -148,12 +165,15 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
                 winningRobot = robots[i];
             }
 
-            if (robots[i].photonView.Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-            {
-                // Find the local robot
-                myRobot = robots[i];
-            }
+            //if (robots[i].photonView.Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            //{
+            //    // Find the local robot
+            //    myRobot = robots[i];
+            //}
         }
+
+        FindObjectOfType<ReplayPlayer> ().ClearQueue ();
+        winningRobot.GetComponent<ReplayInvoker> ().RequestReplay ();
 
         if (playerID == PhotonNetwork.LocalPlayer.ActorNumber)
         {

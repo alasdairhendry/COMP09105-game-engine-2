@@ -17,4 +17,9 @@ public static class HUDSelectionManager {
 
         group.Enable ();
     }
+
+    public static HUDSelectionGroup GetActiveGroup ()
+    {
+        return activeGroup;
+    }
 }

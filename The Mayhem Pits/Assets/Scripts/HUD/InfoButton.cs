@@ -61,6 +61,7 @@ public class InfoButton : MonoBehaviour {
             if(currentHold >= holdRequired)
             {
                 Invoke ();
+                //Debug.Log ( "Invoking" );
                 currentHold = 0.0f;
                 isHolding = false;
                 fillImage.fillAmount = 0.0f;
@@ -102,5 +103,17 @@ public class InfoButton : MonoBehaviour {
         {
             action.Invoke ();
         }
+    }
+
+    public void SetEnabled(bool state)
+    {
+        active = state;
+        isHolding = false;
+    }
+
+    public void SetText (string value)
+    {
+        text = value;
+        label.text = text;
     }
 }

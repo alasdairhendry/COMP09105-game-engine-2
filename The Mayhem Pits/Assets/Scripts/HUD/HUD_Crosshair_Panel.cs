@@ -47,7 +47,8 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
 
         //if (!isLocked)
         //{
-            crosshairRect.Rotate(new Vector3(0.0f, 0.0f, 1.0f) * (Mathf.Lerp(0.0f, 1.0f, lockCounter / currentTarget.LockTime)) * Time.deltaTime * 300.0f);
+        if (currentTarget != null)
+            crosshairRect.Rotate ( new Vector3 ( 0.0f, 0.0f, 1.0f ) * (Mathf.Lerp ( 0.0f, 1.0f, lockCounter / currentTarget.LockTime )) * Time.deltaTime * 300.0f );
         //}
 
     }

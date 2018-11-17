@@ -14,6 +14,7 @@ public class Replayable : MonoBehaviour {
     private void Start()
     {
         controller = FindObjectOfType<ReplayController>();
+        if (controller == null) return;
         replayID = controller.RegisterAsReplayable(this);
     }
 

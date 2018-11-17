@@ -47,8 +47,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
     }
 
     private void CreateNetworkLobbyPlayer()
-    {
-        Debug.Log ( "CreateNetworkLobbyPlayer - " + this.gameObject.name, this );
+    {        
         if (SceneManager.GetActiveScene().name == "Menu")
         {
             PhotonNetwork.Instantiate(networkLobbyPlayerPrefab.name, transform.position, transform.rotation, 0);

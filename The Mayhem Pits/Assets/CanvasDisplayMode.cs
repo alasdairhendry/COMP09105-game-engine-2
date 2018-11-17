@@ -48,6 +48,9 @@ public class CanvasDisplayMode : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+	if(this.gameObject.name == "GameReady_Panel")
+        {
+            Debug.Log ( GetComponent<RectTransform> ().anchoredPosition );
+        }	
 	}
 }

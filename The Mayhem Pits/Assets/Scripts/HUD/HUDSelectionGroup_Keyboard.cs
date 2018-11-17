@@ -62,11 +62,13 @@ public class HUDSelectionGroup_Keyboard : HUDSelectionGroup {
         {
             currentAxis.moveDir = MoveDirection.Down;
             ExecuteEvents.Execute ( children[index].gameObject, currentAxis, ExecuteEvents.moveHandler );
-            Debug.Log ( EventSystem.current.currentSelectedGameObject );
+            //Debug.Log ( EventSystem.current.currentSelectedGameObject );
 
             GameObject newTarget = EventSystem.current.currentSelectedGameObject;
 
-            if(newTarget.GetComponent<Button> () == null)
+            if (newTarget == null) return;
+
+            if (newTarget.GetComponent<Button> () == null)
             {
                 return;
             }
@@ -85,9 +87,11 @@ public class HUDSelectionGroup_Keyboard : HUDSelectionGroup {
         {
             currentAxis.moveDir = MoveDirection.Up;
             ExecuteEvents.Execute ( children[index].gameObject, currentAxis, ExecuteEvents.moveHandler );
-            Debug.Log ( EventSystem.current.currentSelectedGameObject );
+            //Debug.Log ( EventSystem.current.currentSelectedGameObject );
 
             GameObject newTarget = EventSystem.current.currentSelectedGameObject;
+
+            if (newTarget == null) return;
 
             if (newTarget.GetComponent<Button> () == null)
             {
@@ -112,9 +116,11 @@ public class HUDSelectionGroup_Keyboard : HUDSelectionGroup {
         {
             currentAxis.moveDir = MoveDirection.Left;
             ExecuteEvents.Execute ( children[index].gameObject, currentAxis, ExecuteEvents.moveHandler );
-            Debug.Log ( EventSystem.current.currentSelectedGameObject );
+            //Debug.Log ( EventSystem.current.currentSelectedGameObject );
 
             GameObject newTarget = EventSystem.current.currentSelectedGameObject;
+
+            if (newTarget == null) return;
 
             if (newTarget.GetComponent<Button> () == null)
             {
@@ -135,9 +141,11 @@ public class HUDSelectionGroup_Keyboard : HUDSelectionGroup {
         {
             currentAxis.moveDir = MoveDirection.Right;
             ExecuteEvents.Execute ( children[index].gameObject, currentAxis, ExecuteEvents.moveHandler );
-            Debug.Log ( EventSystem.current.currentSelectedGameObject );
+            //Debug.Log ( EventSystem.current.currentSelectedGameObject );
 
             GameObject newTarget = EventSystem.current.currentSelectedGameObject;
+
+            if (newTarget == null) return;
 
             if (newTarget.GetComponent<Button> () == null)
             {
@@ -169,7 +177,7 @@ public class HUDSelectionGroup_Keyboard : HUDSelectionGroup {
 
     protected override void InvokeIndex ()
     {
-        Debug.Log ( "Invoking on " + children[index].name );
+        //Debug.Log ( "Invoking on " + children[index].name );
         children[index].onClick.Invoke ();
         children[index].GetComponent<Image> ().color = children[index].colors.pressedColor;
     }

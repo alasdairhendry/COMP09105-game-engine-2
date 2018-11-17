@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "85265171128",
+    "firebase_url": "https://the-mayhem-pits.firebaseio.com",
+    "project_id": "the-mayhem-pits",
+    "storage_bucket": "the-mayhem-pits.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85265171128:android:10b1c26e14d4f739",
+        "android_client_info": {
+          "package_name": "com.AlasdairHendry.TheMayhemPits"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85265171128-34et1l5bnp9ne4v7bkras8kp4udauem6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC08En0AfBzqiiMVUSh-nIZcO6x4gTmUo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

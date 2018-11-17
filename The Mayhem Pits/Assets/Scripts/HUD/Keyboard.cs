@@ -16,11 +16,16 @@ public class Keyboard : MonoBehaviour {
     [SerializeField] private Text visualInput;
 
     private List<Button> buttons = new List<Button> ();
+
+    private Button showButton;
+    private bool show = false;
+
     private bool active = false;
 
     private string currentInput = "";
     private System.Action<string> OnFinish;
     private int maxCharacters = 0;
+    private bool hiddenMode = false;
 
     private void Start ()
     {
@@ -41,6 +46,27 @@ public class Keyboard : MonoBehaviour {
         {
             Text t = buttons[i].GetComponentInChildren<Text> ();
             Button b = buttons[i];
+
+            if(t.text.ToLower() == "show")
+            {
+                showButton = b;
+
+                b.onClick.AddListener ( () =>
+                  {
+                      show = !show;
+                      if (show) { showButton.GetComponentInChildren<Text> ().text = "hide"; }
+                      else { showButton.GetComponentInChildren<Text> ().text = "show"; }
+                      UpdateText ();
+                  } );
+
+                continue;
+            }
+
+            if (t.text.ToLower () == "cancel")
+            {
+                b.onClick.AddListener ( () => { Close (); } );
+                continue;
+            }
 
             if (t.text.ToLower() == "del")
             {                
@@ -160,7 +186,18 @@ public class Keyboard : MonoBehaviour {
 
     private void UpdateText ()
     {
-        visualInput.text = currentInput;
+        if (hiddenMode && !show)
+        {
+            string s = "";
+
+            for (int i = 0; i < currentInput.Length; i++)
+            {
+                s += "*";
+            }
+
+            visualInput.text = s;
+        }
+        else visualInput.text = currentInput;
     }
 
     private void FinishInput ()
@@ -172,15 +209,25 @@ public class Keyboard : MonoBehaviour {
         Close ();
     }
 
-    public void Open (System.Action<string> onFinish, int maxCharacters)
+    public void Open (Mode mode, System.Action<string> onFinish, HUDSelectionGroup returnGroup, int maxCharacters, bool hidden = false)
     {
         OnFinish = onFinish;
+        this.returnGroup = returnGroup;
         this.maxCharacters = maxCharacters;
+        this.hiddenMode = hidden;
+
         active = true;
         selectionGroup.SetActiveGroup ();
         SetBody ();
-        SwitchMode ( Mode.shift );
+        SwitchMode ( mode );
         currentInput = "";
+
+        show = false;
+        showButton.GetComponentInChildren<Text> ().text = "show";
+
+        if (hidden) showButton.gameObject.SetActive ( true );
+        else showButton.gameObject.SetActive ( false );
+
         UpdateText();
     }
 

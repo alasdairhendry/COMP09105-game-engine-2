@@ -80,7 +80,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
         failedToConnect = false;
         if (SceneLoader.Instance.CurrentScene() == "NetworkConnection")
         {
-            SceneLoader.Instance.LoadScene("ModeSelect");
+            SceneLoader.Instance.LoadScene("DatabaseConnection");
         }
     }    
 
