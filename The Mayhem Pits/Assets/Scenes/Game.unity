@@ -13046,16 +13046,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114913193747312128, guid: 54042a902c185624d98b1c4ba1511ac3,
-        type: 2}
-      propertyPath: active
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114913193747312128, guid: 54042a902c185624d98b1c4ba1511ac3,
-        type: 2}
-      propertyPath: ai
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54042a902c185624d98b1c4ba1511ac3, type: 2}
   m_IsPrefabAsset: 0
@@ -23740,11 +23730,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114639291440175180, guid: 7ae9fb5f7a288a345a574cc2e8abb92b,
-        type: 2}
-      propertyPath: mode
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae9fb5f7a288a345a574cc2e8abb92b, type: 2}
   m_IsPrefabAsset: 0
@@ -26525,7 +26510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   replayableObjectPrefab: {fileID: 1886221381194324, guid: e6d023eb8fb80914096bbc29176d4724,
     type: 2}
-  canvasIsIntro: 0
+  introIsPlaying: 0
   endCanvasOffset: 0.3
   cameraTransform: {fileID: 641246699}
   defaultCameraPosition: {x: 0, y: 10.25, z: -21.41}

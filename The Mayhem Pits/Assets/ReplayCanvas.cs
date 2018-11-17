@@ -60,6 +60,8 @@ public class ReplayCanvas : MonoBehaviour {
     {
         if (isEnding) return;
 
+        Debug.Log("End");
+
         isEnding = true;
         animator.SetBool("End", true);
     }    
@@ -67,7 +69,7 @@ public class ReplayCanvas : MonoBehaviour {
     private void OnAnimationEnd_Begin()
     {
         isBeginning = false;
-        player.canvasIsIntro = false;
+        player.introIsPlaying = false;
         animator.SetBool("Begin", false);
     }
 
