@@ -181,7 +181,7 @@ public class MyRobotControls : MonoBehaviour {
 
     private void SpawnSkin()
     {
-        spawnedBodyPrefab.GetComponent<MeshRenderer>().material.SetTexture("_Albedo", MyRobot.Instance.SkinDatas[currentSkinIndex].texture);
+        spawnedBodyPrefab.GetComponent<MeshRenderer>().material.SetTexture( "_MainTex", MyRobot.Instance.SkinDatas[currentSkinIndex].texture);
         MyRobot.Instance.GetMyRobotData.SetSkinData(MyRobot.Instance.SkinDatas[currentSkinIndex]);
         mySkinText.text = "SKIN: " + MyRobot.Instance.SkinDatas[currentSkinIndex].skinName.ToUpper();
     }

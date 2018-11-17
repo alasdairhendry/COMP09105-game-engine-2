@@ -49,9 +49,7 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
     {
         MyRobotData myData = MyRobot.Instance.GetMyRobotData;        
 
-        GameObject body = PhotonNetwork.Instantiate(myData.BodyData.prefab.name, transform.position, transform.rotation, 0);
-
-        GetComponent<ReplayInvoker>().SetReplayable(body.GetComponent<Replayable>());
+        GameObject body = PhotonNetwork.Instantiate(myData.BodyData.prefab.name, transform.position, transform.rotation, 0);        
 
         GameObject weapon = PhotonNetwork.Instantiate(myData.WeaponData.prefab.name, transform.position, transform.rotation, 0);
 
@@ -67,6 +65,8 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
     private void RpcSetupGraphics(int bodyID, int weaponID, int springID, int emblemID, Vector3 weaponMountPosition, Vector3 weaponMountRotation, float mass, int skinIndex)
     {        
         GameObject body = PhotonView.Find(bodyID).gameObject;
+        GetComponent<ReplayInvoker> ().SetReplayable ( body.GetComponent<Replayable> () );
+
         GameObject weapon = PhotonView.Find(weaponID).gameObject;
 
         GameObject emblemSpring = PhotonView.Find ( springID ).gameObject;
@@ -90,7 +90,8 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         emblem.transform.localPosition = Vector3.zero;
         emblem.transform.localEulerAngles = Vector3.zero;
 
-        body.GetComponent<MeshRenderer>().material.SetTexture("_Albedo", MyRobot.Instance.SkinDatas[skinIndex].texture);
+        body.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", MyRobot.Instance.SkinDatas[skinIndex].texture);
+        
 
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<Rigidbody> ().mass = mass;

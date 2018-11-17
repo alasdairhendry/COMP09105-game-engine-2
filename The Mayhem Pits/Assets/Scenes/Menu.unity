@@ -3048,7 +3048,7 @@ Transform:
   m_GameObject: {fileID: 328779415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.75, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.2}
+  m_LocalScale: {x: 0.2, y: 1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 1707485730}
   m_RootOrder: 2
@@ -3344,6 +3344,11 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 114.795006
       objectReference: {fileID: 0}
+    - target: {fileID: 23105324695657888, guid: 9f27fc4c4185b6046ab63977959290dc,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 027d35abbf6004b4a85a60639a434c59, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f27fc4c4185b6046ab63977959290dc, type: 2}
   m_IsPrefabAsset: 0
@@ -4959,7 +4964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4430c4ac2e1ddf1498a3bc5d34012f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_SOLOSTART: 1
+  DEBUG_SOLOSTART: 0
   countdownTime: 6
   countdownText: {fileID: 1590993018}
   roomName: 
@@ -7283,7 +7288,7 @@ Transform:
   m_GameObject: {fileID: 829103422}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.75, y: 0.5, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 1, z: 0.19999999}
+  m_LocalScale: {x: 0.19999999, y: 1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 1707485730}
   m_RootOrder: 3
@@ -12580,6 +12585,11 @@ Prefab:
       propertyPath: mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114396065102711458, guid: 7ae9fb5f7a288a345a574cc2e8abb92b,
+        type: 2}
+      propertyPath: DEBUG_ROBOT_DATA_INDEX
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae9fb5f7a288a345a574cc2e8abb92b, type: 2}
   m_IsPrefabAsset: 0
@@ -12777,7 +12787,7 @@ Camera:
   m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
+  m_ForceIntoRT: 1
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -14146,6 +14156,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23105324695657888, guid: 9f27fc4c4185b6046ab63977959290dc,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 027d35abbf6004b4a85a60639a434c59, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f27fc4c4185b6046ab63977959290dc, type: 2}
   m_IsPrefabAsset: 0
@@ -18431,6 +18446,11 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23105324695657888, guid: 9f27fc4c4185b6046ab63977959290dc,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 027d35abbf6004b4a85a60639a434c59, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f27fc4c4185b6046ab63977959290dc, type: 2}
   m_IsPrefabAsset: 0

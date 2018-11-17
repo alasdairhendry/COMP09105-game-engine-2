@@ -83,7 +83,7 @@ public class NetworkLobbyPlayer : MonoBehaviourPunCallbacks {
         emblem.transform.localPosition = Vector3.zero;
         emblem.transform.localEulerAngles = Vector3.zero;
 
-        body.GetComponent<MeshRenderer>().material.SetTexture("_Albedo", MyRobot.Instance.SkinDatas[skinIndex].texture);
+        body.GetComponent<MeshRenderer>().material.SetTexture( "_MainTex", MyRobot.Instance.SkinDatas[skinIndex].texture);
     }
 
     private void OnPlayerListChanged(Player[] _playerList)

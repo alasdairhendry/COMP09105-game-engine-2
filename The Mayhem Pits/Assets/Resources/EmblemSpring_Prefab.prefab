@@ -119,7 +119,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: c888b4e258207b748a7eec910b04529f, type: 2}
+  - {fileID: 2100000, guid: 9df681198d2ecff4c9d58a9522435fd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 1
+  InstantiationId: 12
   isRuntimeInstantiated: 0
 --- !u!114 &114964802523486584
 MonoBehaviour:

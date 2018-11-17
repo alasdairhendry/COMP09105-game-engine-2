@@ -104,27 +104,28 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
     {
         deathCalled = true;
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            CheckWinner ();
-        }
-
         // Setup for death replay
         RobotHealth[] allPlayers = FindObjectsOfType<RobotHealth> ();
-        int leftAlive = 0;        
+        int leftAlive = 0;
 
         for (int i = 0; i < allPlayers.Length; i++)
         {
             if (!allPlayers[i].deathCalled)
             {
-                leftAlive++;                
+                leftAlive++;
             }
         }
 
-        if(leftAlive > 2)
+        if (leftAlive > 2)
         {
             GetComponent<ReplayInvoker> ().RequestReplay ();
         }
+
+        // Check winner on master client
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CheckWinner ();
+        }       
     }
 
     private void CheckWinner ()
@@ -146,7 +147,7 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
         {
             // A player has won the match
             KillFeed.Instance.AddInfo ( allPlayers[winnerIndex].photonView.Owner.NickName + " has won the tournament!", KillFeed.InfoType.Winner, RpcTarget.AllBuffered );
-            photonView.RPC ( "RPCOnPlayerWin", RpcTarget.AllBuffered, allPlayers[winnerIndex].photonView.Owner.ActorNumber, allPlayers[winnerIndex].photonView.Owner.NickName );            
+            photonView.RPC ( "RPCOnPlayerWin", RpcTarget.All, allPlayers[winnerIndex].photonView.Owner.ActorNumber, allPlayers[winnerIndex].photonView.Owner.NickName );            
         }
     }
 
