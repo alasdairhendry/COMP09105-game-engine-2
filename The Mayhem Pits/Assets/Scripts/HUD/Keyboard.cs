@@ -20,6 +20,7 @@ public class Keyboard : MonoBehaviour {
 
     private string currentInput = "";
     private System.Action<string> OnFinish;
+    private int maxCharacters = 0;
 
     private void Start ()
     {
@@ -27,15 +28,6 @@ public class Keyboard : MonoBehaviour {
         GetButtons ();
         SetButtonListeners ();
         Close ();
-    }
-
-    private void Update ()
-    {
-        if (Input.GetButtonDown ( "XBO_Y" ))
-        {
-            if (!active)
-                Open ( (s) => { Debug.Log ( "Finished inputing with keyboard - Result: " + s ); } );
-        }        
     }
 
     private void GetButtons ()
@@ -50,25 +42,25 @@ public class Keyboard : MonoBehaviour {
             Text t = buttons[i].GetComponentInChildren<Text> ();
             Button b = buttons[i];
 
-            if (t.text == "del")
-            {
-                b.onClick.AddListener ( () => { currentInput.Remove ( currentInput.Length - 1, 1 ); UpdateText (); } );
+            if (t.text.ToLower() == "del")
+            {                
+                b.onClick.AddListener ( () => { Delete(); UpdateText (); } );
                 continue;
             }
 
-            if (t.text == "shift")
+            if (t.text.ToLower() == "shift")
             {
                 b.onClick.AddListener ( () => { IterateMode (); } );
                 continue;
             }
 
-            if (t.text == "space")
+            if (t.text.ToLower() == "space")
             {
                 b.onClick.AddListener ( () => { Add ( " " ); } );
                 continue;
             }
 
-            if (t.text == "enter")
+            if (t.text.ToLower() == "enter")
             {
                 b.onClick.AddListener ( () => { FinishInput (); } );
                 continue;
@@ -140,6 +132,8 @@ public class Keyboard : MonoBehaviour {
 
     private void Add(string s)
     {
+        if (currentInput.Length >= maxCharacters) return;
+
         switch (mode)
         {
             case Mode.lower:
@@ -158,6 +152,12 @@ public class Keyboard : MonoBehaviour {
         }
     }
 
+    private void Delete()
+    {
+        if (currentInput.Length > 0)
+            currentInput = currentInput.Remove(currentInput.Length - 1, 1);
+    }
+
     private void UpdateText ()
     {
         visualInput.text = currentInput;
@@ -172,9 +172,10 @@ public class Keyboard : MonoBehaviour {
         Close ();
     }
 
-    public void Open (System.Action<string> onFinish)
+    public void Open (System.Action<string> onFinish, int maxCharacters)
     {
         OnFinish = onFinish;
+        this.maxCharacters = maxCharacters;
         active = true;
         selectionGroup.SetActiveGroup ();
         SetBody ();

@@ -9,6 +9,8 @@ public class MatchStartController : MonoBehaviourPunCallbacks {
     private float currentCountdown = 5.0f;
     private bool ready = false;
 
+    public bool gameHasBegun { get { return currentCountdown <= 0.0f; } }
+
     [SerializeField] private GameObject startPanel;
     [SerializeField] private Text countdownText;
 	
@@ -65,6 +67,7 @@ public class MatchStartController : MonoBehaviourPunCallbacks {
 
     private void Begin()
     {
+        currentCountdown = 0.0f;
         startPanel.SetActive(false);
         GameObject.FindGameObjectWithTag("LocalGamePlayer").GetComponent<Test_RobotMovement>().enabled = true;
         GameObject.FindGameObjectWithTag("LocalGamePlayer").GetComponent<RobotAbilities>().SetAllowUse(true);

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Obstacle_Trigger_Bouncer : Obstacle_Trigger {    
 
     [SerializeField] private float force;
+    [SerializeField] private GameObject replayParticlePrefab;
 
     public override void Activate ()
     {
@@ -19,6 +20,7 @@ public class Obstacle_Trigger_Bouncer : Obstacle_Trigger {
     private void RPCParticles ()
     {
         GetComponentInChildren<ParticleSystem> ().Play ();
+        GetComponentInChildren<Replayable>().AddFramedAction(() => { GameObject go = Instantiate(replayParticlePrefab, transform.position, Quaternion.identity); });
     }
 
 }

@@ -50,6 +50,9 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         MyRobotData myData = MyRobot.Instance.GetMyRobotData;        
 
         GameObject body = PhotonNetwork.Instantiate(myData.BodyData.prefab.name, transform.position, transform.rotation, 0);
+
+        GetComponent<ReplayInvoker>().SetReplayable(body.GetComponent<Replayable>());
+
         GameObject weapon = PhotonNetwork.Instantiate(myData.WeaponData.prefab.name, transform.position, transform.rotation, 0);
 
         GameObject emblemSpring = PhotonNetwork.Instantiate ( "EmblemSpring_Prefab", transform.position, Quaternion.identity, 0 );

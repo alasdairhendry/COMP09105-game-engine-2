@@ -16,14 +16,13 @@ public class ReplayController : MonoBehaviour {
 
     private Dictionary<Replayable, ReplayableData> registeredReplayables = new Dictionary<Replayable, ReplayableData>();
     private int continuousReplayableCount = 0;
+    private int IDCounter = 0;
 
     public float HoldReplayDataFor { get { return holdReplayDataFor; } }
     public float ReplayCollectionDelay { get { return replayCollectionDelay; } }
     public int MaxReplayIndex { get { return maxReplayIndex; } }
     public int ContinuousReplayableCount { get { return continuousReplayableCount; } }
     public Dictionary<Replayable, ReplayableData> RegisteredReplayables { get { return registeredReplayables; } }
-
-
 
     private void Start()
     {
@@ -56,17 +55,21 @@ public class ReplayController : MonoBehaviour {
         }
     }
 
-    public void RegisterAsReplayable(Replayable from)
+    public int RegisterAsReplayable(Replayable from)
     {
-        if (registeredReplayables.ContainsKey(from)) { Debug.Log("Key already registered"); return; }
+        if (registeredReplayables.ContainsKey(from)) { Debug.Log("Key already registered"); return - 1; }
 
         ReplayableData data = new ReplayableData();
+
+        data.name = IDCounter + "  -  " + from.gameObject.name;
+        data.ID = IDCounter;
         data.mesh = from.GetComponent<MeshFilter>().mesh;
         data.materials = from.GetComponent<MeshRenderer>().materials;
 
         registeredReplayables.Add(from, data);
         replayUpdate += from.OnUpdate;
-        Debug.Log("boop");
+        IDCounter++;
+        return IDCounter - 1;
     }
 
     public void UnRegisterAsReplayable(Replayable from)
@@ -77,7 +80,7 @@ public class ReplayController : MonoBehaviour {
         replayUpdate -= from.OnUpdate;        
     }
 
-    public void CollectData(Replayable from)
+    public void CollectData(Replayable from, System.Action action = null)
     {
         if (!registeredReplayables.ContainsKey(from)) return;
 
@@ -89,16 +92,29 @@ public class ReplayController : MonoBehaviour {
             registeredReplayables[from].registerIndex.RemoveAt(0);
         }
 
+        if (registeredReplayables[from].actions.Count >= maxReplayIndex)
+        {
+            registeredReplayables[from].actions.RemoveAt(0);
+        }
+
         registeredReplayables[from].positions.Add(from.transform.position);
         registeredReplayables[from].rotations.Add(from.transform.rotation);
-        registeredReplayables[from].scales.Add(from.transform.localScale);
+        registeredReplayables[from].scales.Add(from.transform.lossyScale);
         registeredReplayables[from].registerIndex.Add(continuousReplayableCount);
+
+        if(action != null)
+        {
+            registeredReplayables[from].actions.Add(action);
+            registeredReplayables[from].actionIDs.Add(continuousReplayableCount);
+        }
     }
 }
 
 [System.Serializable]
 public class ReplayableData
-{    
+{
+    public string name;
+    public int ID;
     public Mesh mesh;
     public Material[] materials;
 
@@ -107,6 +123,8 @@ public class ReplayableData
    /* [HideInInspector] */public List<Vector3> scales = new List<Vector3>();
     public List<int> registerIndex = new List<int>();
 
+    public List<Action> actions = new List<Action>();
+    public List<int> actionIDs = new List<int>();
 
     public GameObject replayerGameobject;
     public int currentReplayIndex = 0;

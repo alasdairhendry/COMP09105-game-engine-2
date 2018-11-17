@@ -129,7 +129,6 @@ public class HUD_Overloads_Panel : MonoBehaviour {
             activatedCurrent = true;
 
             Overload.OverloadActivationStatus s = overloads[selectionIndex].Activate ();
-            Debug.Log ( s.status + " - " + s.message );
 
             if (s.status)
             {

@@ -19,6 +19,8 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
     private bool ascending = true;    
     private Vector3 direction = new Vector3 ();
 
+    private bool hasExploded = false;
+
     public void SetTarget(NetworkGameRobot robot)
     {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
@@ -41,7 +43,9 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
     }
 
     private void Move ()
-    {     
+    {
+        if (hasExploded) return;
+
         // In case the target disconnects, destroy ourselves.
         if(targetRobot== null)
         {
@@ -77,28 +81,58 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
     private void Explode ()
     {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        if (hasExploded) return;
+
+        hasExploded = true;
+
+        Vector3 bounceDirection = (transform.position - targetRobot.transform.position).normalized;
+        GetComponent<Rigidbody>().velocity = bounceDirection * 4.0f;
+        GetComponent<Rigidbody>().useGravity = true;
 
         targetRobot.GetComponent<RobotHealth> ().ApplyDamageToOtherPlayer ( damage );
         targetRobot.GetComponent<Heatable>().AddNetwork(5.0f);
         photonView.RPC ( "RPCExplode", RpcTarget.All, targetRobot.GetComponent<PhotonView> ().Owner.ActorNumber );
-        PhotonNetwork.Instantiate ( explosionParticles.name, transform.position, Quaternion.identity );        
-        PhotonNetwork.Destroy ( this.gameObject );
+        PhotonNetwork.Instantiate ( explosionParticles.name, transform.position, Quaternion.identity );                
     }
 
     [PunRPC] 
     private void RPCExplode(int targetRobot)
     {
+        // Set sound effects low pass filter
         Camera c = FindObjectOfType<Camera>();
         if(Vector3.Distance(c.gameObject.transform.position, transform.position) < 10.0f)
         {
             FindObjectOfType<SFXCutoff>().Cutoff(1.0f);
-        }
+        }        
 
+        // Play explosion sound 
         GameSoundEffectManager.Instance.PlayLocalSound(GameSoundEffectManager.Effect.Explosion, 1.0f, Random.Range(0.80f, 1.2f), true, transform.position);
 
+        // Apply explosion force if we're the local player
         if(targetRobot == PhotonNetwork.LocalPlayer.ActorNumber)
         {
             GameObject.FindGameObjectWithTag ( "LocalGamePlayer" ).GetComponent<Rigidbody> ().AddForceAtPosition ( Vector3.up * 200.0f * Time.fixedDeltaTime, transform.position, ForceMode.VelocityChange );
         }
+
+        // Create explosion replay callback
+        string path = explosionParticles.name;
+        Vector3 position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        GetComponent<ReplayInvoker>().AddFramedAction(() => 
+        {
+            SmoothLerp.Instantiate(path, position, "Replayable");
+        });
+
+        Invoke("ReplayAndDestroy", 1.5f);
+        //SmoothLerp
+    }
+
+    private void ReplayAndDestroy()
+    {
+        GetComponent<ReplayInvoker>().RequestReplay();
+
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+
+        PhotonNetwork.Destroy(this.gameObject);
     }
 }

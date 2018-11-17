@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 82980790125437324}
   - component: {fileID: 114146968600907402}
   - component: {fileID: 114557475526486998}
+  - component: {fileID: 114574465795635728}
   m_Layer: 0
   m_Name: NetworkGamePlayer_Prefab
   m_TagString: Untagged
@@ -796,6 +797,19 @@ MonoBehaviour:
   maximumHealth: 100
   currentHealth: 0
   healthSlider: {fileID: 114290717012331352}
+--- !u!114 &114574465795635728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996295698057212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86a24c09dcb089459eeee443488cadf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replayable: {fileID: 0}
+  offset: {x: 0, y: 3, z: -5}
 --- !u!114 &114614069013757412
 MonoBehaviour:
   m_ObjectHideFlags: 1

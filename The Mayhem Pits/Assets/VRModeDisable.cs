@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class VRModeDisable : MonoBehaviour {
 
-    [SerializeField] private List<Behaviour> toDisable = new List<Behaviour>();
+    [SerializeField] private List<Behaviour> disableVR = new List<Behaviour>();
+    [SerializeField] private List<Behaviour> disableNormal = new List<Behaviour>();
 
     private void Start()
     {
-        if(ClientMode.Instance.GetMode == ClientMode.Mode.VR)
+        if (ClientMode.Instance.GetMode == ClientMode.Mode.VR)
         {
-            for (int i = 0; i < toDisable.Count; i++)
+            for (int i = 0; i < disableVR.Count; i++)
             {
-                toDisable[i].enabled = false;
+                disableVR[i].enabled = false;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < disableNormal.Count; i++)
+            {
+                disableNormal[i].enabled = false;
             }
         }
     }

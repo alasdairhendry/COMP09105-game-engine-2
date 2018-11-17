@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 4379124097665008}
   - component: {fileID: 33833438879125970}
   - component: {fileID: 23279591835483690}
+  - component: {fileID: 114349037065544554}
   m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
@@ -175,6 +176,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705538331285928}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114349037065544554
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1705538331285928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replayID: -1
 --- !u!114 &114696276253477208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,6 +223,8 @@ MonoBehaviour:
   delay: 1.5
   cycles: 0
   force: 100
+  replayParticlePrefab: {fileID: 1382741192753230, guid: 9dc7a563d99d86d4da329c19e579d5ef,
+    type: 2}
 --- !u!135 &135004018882742712
 SphereCollider:
   m_ObjectHideFlags: 1

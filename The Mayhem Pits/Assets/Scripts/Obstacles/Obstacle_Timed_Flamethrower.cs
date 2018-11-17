@@ -10,6 +10,9 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
     [SerializeField] private List<ParticleSystem> particles = new List<ParticleSystem> ();
     [SerializeField] private float particleDelay = 0.25f;
     [SerializeField] private float damage = 10.0f;
+
+    [SerializeField] private GameObject replayParticles;
+
     private float currentParticleDelay = 0.0f;
     private bool obstacleActive = false;
 
@@ -44,6 +47,20 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
     {
         PlayParticles ();
         obstacleActive = true;
+
+        Replayable r = GetComponentInChildren<Replayable>();
+
+        for (int i = 0; i < particles.Count; i++)
+        {
+            int x = i;
+            r.AddFramedAction(() =>
+            {
+                Debug.Log(x, this);
+                GameObject go = Instantiate(replayParticles);
+                go.transform.position = particles[x].transform.position;
+                go.transform.rotation = particles[x].transform.rotation;                
+            });            
+        }
     }
 
     private void ParticleDelay ()

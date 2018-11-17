@@ -13,6 +13,10 @@ public class HUD_Settings_Panel : MonoBehaviour {
     [SerializeField] private GameObject sfxVolumeButton;
 
     [SerializeField] private GameObject vSyncButton;
+    [SerializeField] private GameObject resolutionButton;
+    [SerializeField] private GameObject texturesButton;
+    [SerializeField] private GameObject antiAliasingButton;
+
     [SerializeField] private GameObject bloomButton;
     [SerializeField] private GameObject vignetteButton;
 
@@ -92,15 +96,73 @@ public class HUD_Settings_Panel : MonoBehaviour {
             if (f != 0)
                 Settings.Instance.VSync = !Settings.Instance.VSync;
 
-            SetBoolButton(Settings.Instance.VSync, vSyncButton.GetComponent<Text>(), "VSYNC");
+            SetBoolButton(Settings.Instance.VSync, vSyncButton.GetComponent<Text>(), "VSync");
         };
+
+        resolutionButton.GetComponent<HUDAxisSlider>().slide += (f) =>
+        {
+            if (f == 0) return;
+
+            HUDAxisSlider a = resolutionButton.GetComponent<HUDAxisSlider>();
+
+            float v = Settings.Instance.Resolution;
+            v += f * Time.deltaTime * a.speed;
+
+            v = Mathf.Clamp(v, a.minValue, a.maxValue);
+
+            SetStringButton(v * 100.0f, resolutionButton.GetComponent<Text>(), "Resolution", "%");
+
+            Settings.Instance.Resolution = v;
+        };
+
+        texturesButton.GetComponent<HUDAxisSlider>().slide += (f) =>
+        {
+            if (f == 0) return;
+
+            HUDAxisSlider a = texturesButton.GetComponent<HUDAxisSlider>();
+
+            int v = Settings.Instance.Textures;
+            v += (int)f * -1;
+
+            v = Mathf.Clamp(v, (int)a.minValue, (int)a.maxValue);
+
+            SetIntDescribedButton(v, texturesButton.GetComponent<Text>(), "Textures", new List<int>() { 3, 2, 1, 0 }, "Low", "Medium", "High", "Very High");
+
+            Settings.Instance.Textures = v;
+        };
+
+        antiAliasingButton.GetComponent<HUDAxisSlider>().slide += (f) =>
+        {
+            if (f == 0) return;
+
+            HUDAxisSlider a = antiAliasingButton.GetComponent<HUDAxisSlider>();
+
+            int v = Settings.Instance.AntiAliasing;
+
+            if(f > 0)
+            {
+                v *= 2;
+            }
+            else if(f < 0)
+            {
+                v /= 2;
+            }            
+
+            v = Mathf.Clamp(v, (int)a.minValue, (int)a.maxValue);
+
+            SetIntDescribedButton(v, antiAliasingButton.GetComponent<Text>(), "Anti Aliasing", new List<int>() { 1, 2, 4, 8 }, "Off", "2x", "4x", "8x");
+
+            Settings.Instance.AntiAliasing = v;
+        };
+
+        // ------------------------------------------------------------------------------------------------------------------
 
         bloomButton.GetComponent<HUDAxisSlider>().slide += (f) =>
         {
             if (f != 0)
                 Settings.Instance.Bloom = !Settings.Instance.Bloom;
 
-            SetBoolButton(Settings.Instance.Bloom, bloomButton.GetComponent<Text>(), "BLOOM");
+            SetBoolButton(Settings.Instance.Bloom, bloomButton.GetComponent<Text>(), "Bloom");
         };
 
         vignetteButton.GetComponent<HUDAxisSlider>().slide += (f) =>
@@ -108,36 +170,50 @@ public class HUD_Settings_Panel : MonoBehaviour {
             if(f != 0)            
                 Settings.Instance.Vignette = !Settings.Instance.Vignette;
 
-            SetBoolButton(Settings.Instance.Vignette, vignetteButton.GetComponent<Text>(), "VIGNETTE");
+            SetBoolButton(Settings.Instance.Vignette, vignetteButton.GetComponent<Text>(), "Vignette");
         };
     }
 
     private void SetDefaults()
     {
-        SetVolumeButton(Settings.Instance.MasterVolume, masterVolumeButton.GetComponent<Text>(), "Master Volume");
-        SetVolumeButton(Settings.Instance.MusicVolume, musicVolumeButton.GetComponent<Text>(), "Music Volume");
-        SetVolumeButton(Settings.Instance.SfxVolume, sfxVolumeButton.GetComponent<Text>(), "Effects Volume");
-        SetBoolButton(Settings.Instance.VSync, vSyncButton.GetComponent<Text>(), "VSYNC");
-        SetBoolButton(Settings.Instance.Bloom, bloomButton.GetComponent<Text>(), "BLOOM");
-        SetBoolButton(Settings.Instance.Vignette, vignetteButton.GetComponent<Text>(), "VIGNETTE");
+        SetStringButton(Settings.Instance.MasterVolume * 100.0f, masterVolumeButton.GetComponent<Text>(), "Master Volume", "%", true);
+        SetStringButton(Settings.Instance.MusicVolume * 100.0f, musicVolumeButton.GetComponent<Text>(), "Music Volume", "%", true);
+        SetStringButton(Settings.Instance.SfxVolume * 100.0f, sfxVolumeButton.GetComponent<Text>(), "Effects Volume", "%", true);
+
+        SetBoolButton(Settings.Instance.VSync, vSyncButton.GetComponent<Text>(), "VSync");
+        SetStringButton(Settings.Instance.Resolution * 100.0f, resolutionButton.GetComponent<Text>(), "Resolution", "%");
+        SetIntDescribedButton(Settings.Instance.Textures, texturesButton.GetComponent<Text>(), "Textures", new List<int>() { 3, 2, 1, 0 }, "Low", "Medium", "High", "Very High");
+        SetIntDescribedButton(Settings.Instance.AntiAliasing, antiAliasingButton.GetComponent<Text>(), "Anti Aliasing", new List<int>() { 1, 2, 4, 8 }, "Off", "2x", "4x", "8x");
+
+        SetBoolButton(Settings.Instance.Bloom, bloomButton.GetComponent<Text>(), "Bloom");
+        SetBoolButton(Settings.Instance.Vignette, vignetteButton.GetComponent<Text>(), "Vignette");
     }
 
-    private void SetVolumeButton(float v, Text text, string s)
+    private void SetStringButton(float v, Text text, string prefix, string suffix = "", bool defaultOff = false)
     {
-        if (v <= 0) text.text = s + ": Off";
-        else text.text = s + ": " + (v * 100.0f).ToString("00") + "%";
+        if (v <= 0 && defaultOff)
+            text.text = prefix + ": Off";
+        else text.text = prefix + ": " + (v).ToString("00") + suffix;
     }
 
-    private void SetBoolButton(bool b, Text text, string s)
+    private void SetBoolButton(bool b, Text text, string prefix, string suffix = "")
     {
         if (b)
         {
-            text.text = s + ": On";
+            text.text = prefix + ": On";
         }
         else
         {
-            text.text = s + ": Off";
+            text.text = prefix + ": Off";
         }
+    }
+
+    private void SetIntDescribedButton(int v, Text text, string prefix, List<int> indices, params string[] descriptions)
+    {
+        if(indices.Count != descriptions.Length) { Debug.LogError("Index mismatch"); return; }
+        if (!indices.Contains(v)) { Debug.LogError("Index missing - Looking for " + v); return; };
+
+        text.text = prefix + ": " + descriptions[indices.IndexOf(v)];
     }
 
 	public void OnClick_Back()

@@ -61,7 +61,6 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
     /// </summary>
     public void ApplyDamageToOtherPlayer (float damage)
     {
-        Debug.Log ( "Taking damage", this );
         currentHealth -= damage;
         healthSlider.value = Mathf.Lerp ( 0.0f, 1.0f, currentHealth / maximumHealth );
 

@@ -42,7 +42,7 @@ public class Test_SmoothCamera : MonoBehaviour {
 
             if (Input.GetButtonDown("XBO_A"))
             {
-                if (allowModeSwitch)
+                if (allowModeSwitch && !FindObjectOfType<HUD_PauseMenu_Panel>().IsPaused)
                     targetType = TargetType.Pillars;
             }
         }
@@ -53,7 +53,7 @@ public class Test_SmoothCamera : MonoBehaviour {
 
             if (Input.GetButtonDown("XBO_A"))
             {
-                if (allowModeSwitch)
+                if (allowModeSwitch && !FindObjectOfType<HUD_PauseMenu_Panel>().IsPaused)
                     targetType = TargetType.Overview;
             }
         }
@@ -64,7 +64,7 @@ public class Test_SmoothCamera : MonoBehaviour {
 
             if (Input.GetButtonDown("XBO_A"))
             {
-                if (allowModeSwitch)
+                if (allowModeSwitch && !FindObjectOfType<HUD_PauseMenu_Panel>().IsPaused)
                     targetType = TargetType.Robot;
             }
         }

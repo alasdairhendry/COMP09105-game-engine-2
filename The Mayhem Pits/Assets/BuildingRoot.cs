@@ -5,7 +5,9 @@ using System.Linq;
 using UnityEngine;
 
 public class BuildingRoot : MonoBehaviour {
-    
+
+    [SerializeField] private List<GameObject> enableOnFinish = new List<GameObject>();
+
     private List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
     private float timePerSegmenet = 1.25f;
     private float currentTime = 0.0f;
@@ -60,6 +62,11 @@ public class BuildingRoot : MonoBehaviour {
 
             i++;
             yield return null;
+        }
+
+        for (int x = 0; x < enableOnFinish.Count; x++)
+        {
+            enableOnFinish[x].SetActive(true);
         }
     }
 

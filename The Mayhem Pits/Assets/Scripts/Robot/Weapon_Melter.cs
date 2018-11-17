@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class Weapon_Melter : Weapon {
 
+    [SerializeField] private GameObject replayParticle;
+
     private ParticleSystem particles;
+    private Replayable replayable;
 
     protected override void Start ()
     {
         particles = GetComponentInChildren<ParticleSystem> ();
+        replayable = GetComponentInChildren<Replayable>();
         base.Start ();
     }
 
@@ -76,8 +80,28 @@ public class Weapon_Melter : Weapon {
     [PunRPC]
     private void RPCAnimate (bool isAttacking)
     {
-        if (isAttacking) { if (particles.isPlaying) return; particles.Play (); }
-        else { particles.Stop (); }
+        if (isAttacking)
+        {
+            if (!replayable.AddedActionThisUpdate)
+            {
+                Vector3 pos = this.transform.Find("Particle System").position;
+                Quaternion rot = this.transform.Find("Particle System").rotation;
+
+                replayable.AddFramedAction(() =>
+                {
+                    if (this.transform == null) return;
+                    if (this.transform.Find("Particle System") == null) return;
+
+                    GameObject go = Instantiate(replayParticle);
+                    go.transform.position = pos;
+                    go.transform.rotation = rot;
+                });
+            }
+
+            if (particles.isPlaying) return;
+            particles.Play();
+        }
+        else { particles.Stop(); }
     }
 
     public override void OnChildCollisionStay (Collider collision)

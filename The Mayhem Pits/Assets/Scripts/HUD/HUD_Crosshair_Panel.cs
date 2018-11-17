@@ -10,6 +10,7 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
     [SerializeField] private GameObject bodyPanel;
     [SerializeField] private RectTransform crosshairRect;
     [SerializeField] private RectTransform contraintsRect;
+    [SerializeField] private GameObject firePanel;
     [SerializeField] private Slider lockSlider;
     
     [SerializeField] private float targetDistance = 10.0f;
@@ -39,9 +40,22 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
         if (!active) return;
 
         FindClosestTarget ();
-        MoveCrosshair ();
-        MonitorLocking ();
+        //MoveCrosshair ();
+        //MonitorLocking ();
         UpdateSlider ();
+        //ConstrainHUD ();
+
+        //if (!isLocked)
+        //{
+            crosshairRect.Rotate(new Vector3(0.0f, 0.0f, 1.0f) * (Mathf.Lerp(0.0f, 1.0f, lockCounter / currentTarget.LockTime)) * Time.deltaTime * 300.0f);
+        //}
+
+    }
+
+    private void LateUpdate()
+    {
+        MoveCrosshair();
+        MonitorLocking();
         ConstrainHUD ();
     }
 
@@ -81,7 +95,6 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
             //Debug.Log ( "Crosshair: Position " + crosshairScreenPosition );
         }
 
-        Debug.Log ( "Closest Target: " + closestTarget.name + " - " + maxDistance );
         currentTarget = maxDistance <= targetDistance ? closestTarget : null;
     }
 
@@ -100,6 +113,9 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
             float x = SmoothLerp.Lerp ( crosshairRect.anchoredPosition.x, 0.0f, Time.deltaTime * 50.0f );
             float y = SmoothLerp.Lerp ( crosshairRect.anchoredPosition.y, 0.0f, Time.deltaTime * 50.0f );
 
+            x = Mathf.Clamp(x, Mathf.Min(crosshairRect.anchoredPosition.x, 0.0f), Mathf.Max(crosshairRect.anchoredPosition.x, 0.0f));
+            y = Mathf.Clamp(y, Mathf.Min(crosshairRect.anchoredPosition.y, 0.0f), Mathf.Max(crosshairRect.anchoredPosition.y, 0.0f));
+
             crosshairRect.anchoredPosition = new Vector2 ( x, y );
             isLocking = false;
         }
@@ -109,25 +125,42 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
             Vector2 proportionalPosition = new Vector2 ( viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y );
 
             Vector3 targetScreenPosition = proportionalPosition - uiOffset;
-            float x = SmoothLerp.Lerp ( crosshairRect.anchoredPosition.x, targetScreenPosition.x, Time.deltaTime * 150.0f );
-            float y = SmoothLerp.Lerp ( crosshairRect.anchoredPosition.y, targetScreenPosition.y, Time.deltaTime * 150.0f );
+            float x = SmoothLerp.Lerp(crosshairRect.anchoredPosition.x, targetScreenPosition.x, Time.deltaTime * 150.0f);
+            float y = SmoothLerp.Lerp(crosshairRect.anchoredPosition.y, targetScreenPosition.y, Time.deltaTime * 150.0f);
+         
+            x = Mathf.Clamp(x, Mathf.Min( crosshairRect.anchoredPosition.x, targetScreenPosition.x), Mathf.Max(crosshairRect.anchoredPosition.x, targetScreenPosition.x));
+            y = Mathf.Clamp(y, Mathf.Min(crosshairRect.anchoredPosition.y, targetScreenPosition.y), Mathf.Max(crosshairRect.anchoredPosition.y, targetScreenPosition.y));
 
-            crosshairRect.anchoredPosition = new Vector2 ( x, y );
+            crosshairRect.anchoredPosition = new Vector2(x, y);
+            
             isLocking = true;
         }
     }
 
     private void MoveLockedCrosshair ()
     {
-        Vector2 viewportPosition = Camera.main.WorldToViewportPoint ( currentTarget.transform.GetComponentInChildren<Renderer> ().bounds.center );
-        Vector2 proportionalPosition = new Vector2 ( viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y );
+        //Vector2 viewportPosition = Camera.main.WorldToViewportPoint ( currentTarget.transform.GetComponentInChildren<Renderer> ().bounds.center );
+        //Vector2 proportionalPosition = new Vector2 ( viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y );
+
+        //Vector3 targetScreenPosition = proportionalPosition - uiOffset;
+        //float x = SmoothLerp.Lerp ( contraintsRect.anchoredPosition.x, targetScreenPosition.x, Time.deltaTime * 1500.0f );
+        //float y = SmoothLerp.Lerp ( contraintsRect.anchoredPosition.y, targetScreenPosition.y, Time.deltaTime * 1500.0f );
+
+        //contraintsRect.anchoredPosition = targetScreenPosition;
+        //crosshairRect.anchoredPosition = targetScreenPosition;        
+
+        Vector2 viewportPosition = Camera.main.WorldToViewportPoint(currentTarget.transform.GetComponentInChildren<Renderer>().bounds.center);
+        Vector2 proportionalPosition = new Vector2(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y);
 
         Vector3 targetScreenPosition = proportionalPosition - uiOffset;
-        float x = SmoothLerp.Lerp ( contraintsRect.anchoredPosition.x, targetScreenPosition.x, Time.deltaTime * 1500.0f );
-        float y = SmoothLerp.Lerp ( contraintsRect.anchoredPosition.y, targetScreenPosition.y, Time.deltaTime * 1500.0f );
+        float x = SmoothLerp.Lerp(crosshairRect.anchoredPosition.x, targetScreenPosition.x, Time.deltaTime * 1500.0f);
+        float y = SmoothLerp.Lerp(crosshairRect.anchoredPosition.y, targetScreenPosition.y, Time.deltaTime * 1500.0f);
 
-        contraintsRect.anchoredPosition = targetScreenPosition;
-        crosshairRect.anchoredPosition = targetScreenPosition;        
+        x = Mathf.Clamp(x, Mathf.Min(crosshairRect.anchoredPosition.x, targetScreenPosition.x), Mathf.Max(crosshairRect.anchoredPosition.x, targetScreenPosition.x));
+        y = Mathf.Clamp(y, Mathf.Min(crosshairRect.anchoredPosition.y, targetScreenPosition.y), Mathf.Max(crosshairRect.anchoredPosition.y, targetScreenPosition.y));
+
+        contraintsRect.anchoredPosition = new Vector2(x, y);
+        crosshairRect.anchoredPosition = new Vector2(x, y);
     }
 
     private void MonitorLocking ()
@@ -160,6 +193,8 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
         {
             onLockedToTarget ( currentTarget );
         }
+
+        firePanel.SetActive(true);
     }
 
     private void ClearLock ()
@@ -169,7 +204,12 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
         lockCounter = 0.0f;
         contraintsRect.GetComponent<Image> ().color = Color.white;
         crosshairRect.GetComponent<Image> ().color = Color.white;
+        contraintsRect.anchoredPosition = Vector2.zero;
+        crosshairRect.anchoredPosition = Vector2.zero;
+        lockSlider.value = 0.0f;
         lockSlider.gameObject.SetActive ( true );
+
+        firePanel.SetActive(false);
     }
 
     public bool Show (Action<LockableTarget> onLocked)
@@ -196,7 +236,7 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
     private void GetTargets ()
     {
         lockableTargets = FindObjectsOfType<LockableTarget> ().ToList ();
-        Debug.Log ( PhotonNetwork.LocalPlayer.ActorNumber );
+        
         for (int i = 0; i < lockableTargets.Count; i++)
         {
             if (lockableTargets[i].GetComponent<PhotonView> ().Owner == null) continue;

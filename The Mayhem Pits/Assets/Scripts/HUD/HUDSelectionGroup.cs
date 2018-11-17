@@ -7,6 +7,10 @@ using UnityEngine.UI;
 
 public class HUDSelectionGroup : MonoBehaviour {
 
+    public enum ChildrenType { Animation, ColourTint }
+    [SerializeField] protected ChildrenType childrenType;
+    [SerializeField] protected ColorBlock colorTintBlock;
+
     [SerializeField] protected List<Button> children = new List<Button> ();
     [SerializeField] protected bool autoDetectChildren = false;
 
@@ -155,10 +159,25 @@ public class HUDSelectionGroup : MonoBehaviour {
 
     protected virtual void InvokeIndex ()
     {
+        if (children[index] == null) return;
         if (!children[index].IsActive()) return;
         //Debug.Log ( "Invoking on " + children[index].name );
-        children[index].onClick.Invoke ();
-        children[index].GetComponent<Animator> ().SetTrigger ( "Pressed" );
+        children[index].onClick.Invoke ();        
+
+        switch (childrenType)
+        {
+            case ChildrenType.Animation:
+                children[index].GetComponent<Animator>().SetTrigger("Pressed");
+                break;
+
+            case ChildrenType.ColourTint:
+                children[index].GetComponent<Button>().targetGraphic.color = colorTintBlock.pressedColor;                
+                break;
+
+            default:
+                children[index].GetComponent<Button>().targetGraphic.color = colorTintBlock.pressedColor;
+                break;
+        }
     }
 
     protected virtual void SelectIndex ()
@@ -166,17 +185,44 @@ public class HUDSelectionGroup : MonoBehaviour {
         DeselectIndex ( previousIndex );
 
         if (index >= children.Count) return;
+        if (children[index] == null) return;
 
-        if (children[index] != null)
-            children[index].GetComponent<Animator> ().SetTrigger ( "Highlighted" );
+        switch (childrenType)
+        {
+            case ChildrenType.Animation:                
+                    children[index].GetComponent<Animator>().SetTrigger("Highlighted");
+                break;
+
+            case ChildrenType.ColourTint:                
+                    children[index].GetComponent<Button>().targetGraphic.color = colorTintBlock.highlightedColor;
+                break;
+
+            default:                
+                    children[index].GetComponent<Button>().targetGraphic.color = colorTintBlock.highlightedColor;
+                break;
+        }
+
     }
 
     protected virtual void DeselectIndex (int index)
     {
         if (index >= children.Count) return;
+        if (children[index] == null) return;
 
-        if (children[index] != null)
-            children[index].GetComponent<Animator>().SetTrigger("Normal");
+        switch (childrenType)
+        {
+            case ChildrenType.Animation:                
+                    children[index].GetComponent<Animator>().SetTrigger("Normal");
+                break;
+
+            case ChildrenType.ColourTint:                
+                    children[index].GetComponent<Button>().targetGraphic.color = colorTintBlock.normalColor;
+                break;
+
+            default:                
+                    children[index].GetComponent<Button>().targetGraphic.color = colorTintBlock.normalColor;
+                break;
+        }
     }
 
     protected virtual void IncrementIndex ()

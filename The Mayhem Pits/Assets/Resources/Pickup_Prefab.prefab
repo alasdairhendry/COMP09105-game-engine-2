@@ -407,7 +407,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 65335
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replayID: -1
 --- !u!114 &114374773545989452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -493,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replayID: -1
 --- !u!114 &114560569410977290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -504,6 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replayID: -1
 --- !u!114 &114675282699598904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -523,7 +526,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 1
+  InstantiationId: 12
   isRuntimeInstantiated: 0
 --- !u!114 &114870528262939718
 MonoBehaviour:

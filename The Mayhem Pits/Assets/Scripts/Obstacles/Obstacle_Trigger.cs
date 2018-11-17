@@ -47,7 +47,6 @@ public class Obstacle_Trigger : Obstacle {
 
     protected virtual void OnTriggerEnter (Collider other)
     {
-        Debug.Log ( other.gameObject.name );
         targetCollider = other;
         ActivateNetwork ();
     }
