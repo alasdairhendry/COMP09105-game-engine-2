@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class ReplayCanvas : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class ReplayCanvas : MonoBehaviour {
 
     private float currentBeginCounter = 0.0f;
     private float currentEndCounter = 0.0f;
+
+    [SerializeField] private VideoPlayer video;
 
 	// Use this for initialization
 	void Start () {
@@ -53,6 +56,7 @@ public class ReplayCanvas : MonoBehaviour {
 
         isBeginning = true;
         animator.SetBool("Begin", true);
+        video.Play ();
         //animator.ResetTrigger("Begin");
     }
 

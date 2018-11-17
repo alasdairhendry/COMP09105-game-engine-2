@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   replayable: {fileID: 114682427438861452}
-  offset: {x: 0, y: 3, z: -5}
+  offset: {x: 5, y: 3, z: -1}
 --- !u!135 &135077669528745654
 SphereCollider:
   m_ObjectHideFlags: 1

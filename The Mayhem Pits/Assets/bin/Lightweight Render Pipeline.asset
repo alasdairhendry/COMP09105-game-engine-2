@@ -19,8 +19,8 @@ MonoBehaviour:
   m_RequireOpaqueTexture: 0
   m_OpaqueDownsampling: 1
   m_SupportsHDR: 0
-  m_MSAA: 1
-  m_RenderScale: 0.49691173
+  m_MSAA: 8
+  m_RenderScale: 1.060579
   m_SupportsDynamicBatching: 1
   m_DirectionalShadowsSupported: 1
   m_ShadowAtlasResolution: 2048
@@ -38,7 +38,7 @@ MonoBehaviour:
   m_KeepSoftShadowVariants: 1
   m_ResourcesAsset: {fileID: 11400000, guid: aac5a08c32552a14c89394b703f1978a, type: 2}
   m_SavedXRConfig:
-    renderScale: 0.49691173
+    renderScale: 1.060579
     viewportScale: 1
     useOcclusionMesh: 1
     occlusionMaskScale: 1
