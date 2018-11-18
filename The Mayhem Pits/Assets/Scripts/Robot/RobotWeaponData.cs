@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class RobotWeaponData {
+public class RobotWeaponData : CustomRobotData {
 
     public enum ResourceType { Electricity, Fuel }
 
-    public string weaponName;
-    public GameObject prefab;
-    public Sprite sprite;
+    //public string weaponName;
+    //public GameObject prefab;
+    //public Sprite sprite;
 
     public float baseDamage;
 

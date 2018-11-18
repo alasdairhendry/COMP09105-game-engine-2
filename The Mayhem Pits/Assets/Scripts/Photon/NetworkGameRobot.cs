@@ -58,11 +58,11 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
 
         int skinIndex = MyRobot.Instance.SkinDatas.IndexOf(MyRobot.Instance.GetMyRobotData.SkinData);
 
-        photonView.RPC("RpcSetupGraphics", RpcTarget.AllBuffered, body.GetPhotonView().ViewID, weapon.GetPhotonView ().ViewID, emblemSpring.GetPhotonView ().ViewID, emblem.GetPhotonView ().ViewID, myData.WeaponMountPosition, myData.WeaponMountRotation, myData.BodyData.mass, skinIndex);
+        photonView.RPC("RpcSetupGraphics", RpcTarget.AllBuffered, body.GetPhotonView().ViewID, weapon.GetPhotonView ().ViewID, emblemSpring.GetPhotonView ().ViewID, emblem.GetPhotonView ().ViewID, myData.BodyData.mass, skinIndex);
     }
 
     [PunRPC]
-    private void RpcSetupGraphics(int bodyID, int weaponID, int springID, int emblemID, Vector3 weaponMountPosition, Vector3 weaponMountRotation, float mass, int skinIndex)
+    private void RpcSetupGraphics(int bodyID, int weaponID, int springID, int emblemID, float mass, int skinIndex)
     {        
         GameObject body = PhotonView.Find(bodyID).gameObject;
         GetComponent<ReplayInvoker> ().SetReplayable ( body.GetComponent<Replayable> () );
@@ -78,8 +78,8 @@ public class NetworkGameRobot : MonoBehaviourPunCallbacks {
         body.name = "Body";
 
         weapon.transform.SetParent(transform.Find("Graphics"));
-        weapon.transform.localPosition = weaponMountPosition;
-        weapon.transform.localEulerAngles = weaponMountRotation;
+        weapon.transform.position = body.GetComponentInChildren<WeaponMount> ().transform.position;
+        weapon.transform.rotation = body.GetComponentInChildren<WeaponMount> ().transform.rotation;
         weapon.name = "Weapon";
 
         emblemSpring.transform.SetParent ( body.GetComponentInChildren<EmblemMount>().transform );

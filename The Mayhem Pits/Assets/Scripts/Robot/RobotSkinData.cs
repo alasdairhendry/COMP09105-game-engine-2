@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class RobotSkinData {
-
-    public string skinName;
+public class RobotSkinData : CustomRobotData {
+    
     public Texture2D texture;
 
 }

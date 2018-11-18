@@ -54,10 +54,10 @@ public class NetworkLobbyPlayer : MonoBehaviourPunCallbacks {
 
         int skinIndex = MyRobot.Instance.SkinDatas.IndexOf(MyRobot.Instance.GetMyRobotData.SkinData);
 
-        photonView.RPC("SetupLobbyGraphics", RpcTarget.AllBuffered, body.GetPhotonView().ViewID, weapon.GetPhotonView().ViewID, emblemSpring.GetPhotonView().ViewID, emblem.GetPhotonView().ViewID, myData.WeaponMountPosition, myData.WeaponMountRotation, skinIndex);
+        photonView.RPC("SetupLobbyGraphics", RpcTarget.AllBuffered, body.GetPhotonView().ViewID, weapon.GetPhotonView().ViewID, emblemSpring.GetPhotonView().ViewID, emblem.GetPhotonView().ViewID, skinIndex);
     }	
 
-    [PunRPC] private void SetupLobbyGraphics(int bodyID, int weaponID, int springID, int emblemID, Vector3 weaponMountPosition, Vector3 weaponMountRotation, int skinIndex)
+    [PunRPC] private void SetupLobbyGraphics(int bodyID, int weaponID, int springID, int emblemID, int skinIndex)
     {
         GameObject body = PhotonView.Find(bodyID).gameObject;
         GameObject weapon = PhotonView.Find(weaponID).gameObject;
@@ -71,8 +71,8 @@ public class NetworkLobbyPlayer : MonoBehaviourPunCallbacks {
         body.name = "Body";
         
         weapon.transform.SetParent(transform.Find("Graphics"));
-        weapon.transform.localPosition = weaponMountPosition;
-        weapon.transform.localEulerAngles = weaponMountRotation;
+        weapon.transform.position = body.GetComponentInChildren<WeaponMount> ().transform.position;
+        weapon.transform.rotation = body.GetComponentInChildren<WeaponMount> ().transform.rotation;
         weapon.name = "Weapon";
 
         emblemSpring.transform.SetParent(body.GetComponentInChildren<EmblemMount>().transform);

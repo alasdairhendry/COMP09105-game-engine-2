@@ -231,6 +231,7 @@ public class DatabaseManager : MonoBehaviour {
                     DatabaseAccount account = new DatabaseAccount ();
                     account.username = username;
                     account.password = password;
+                    account.unlocks.Add ( "0", false );
                     account.id = database.GetReference ( "accounts" ).Push ().Key;
 
                     database.GetReference ( "accounts" ).Child ( account.id ).SetRawJsonValueAsync ( JsonUtility.ToJson ( account ) ).ContinueWith ( addTask =>
@@ -239,6 +240,7 @@ public class DatabaseManager : MonoBehaviour {
                         if (addTask.IsFaulted) { Debug.LogError ( "Error creating account: " + addTask.Exception.Message ); onReturn ( false, "Error connecting to server." ); if (!returned) returned = true; }
                         else if (addTask.IsCompleted)
                         {
+                       
                             // Account created successfully
                             Debug.Log ( "Account created successfully" );
                             PlayerPrefs.SetString ( "databaseUsername", username );
@@ -247,6 +249,7 @@ public class DatabaseManager : MonoBehaviour {
                             if (!returned)
                                 onReturn ( true, "Account Created Successfully" );
                             returned = true;
+                                             
                         }
 
                     } );
@@ -322,4 +325,5 @@ public class DatabaseAccount
     public string password;
     public string id;
     public int coins = 0;
+    public Dictionary<string, object> unlocks = new Dictionary<string, object> ();
 }

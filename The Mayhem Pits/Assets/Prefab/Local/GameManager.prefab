@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114639291440175180}
   - component: {fileID: 114396065102711458}
   - component: {fileID: 114705123267970034}
+  - component: {fileID: 114978105739737156}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -67,28 +68,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyDatas:
   - name: Cuber
+    DebugID: 0
     description: 
     prefab: {fileID: 1219671560389214, guid: e703a7e4d96275247956ec8b545b8b07, type: 2}
+    sprite: {fileID: 0}
     maxSpeed: 10
     acceleration: 1000
     rotationalSpeed: 120
     mass: 2
   - name: Flipper
+    DebugID: 0
     description: 
     prefab: {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f, type: 2}
+    sprite: {fileID: 0}
     maxSpeed: 12
     acceleration: 1250
     rotationalSpeed: 120
     mass: 1
   - name: Tanky
+    DebugID: 0
     description: 
     prefab: {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2, type: 2}
+    sprite: {fileID: 0}
     maxSpeed: 9
     acceleration: 800
     rotationalSpeed: 120
     mass: 4
   weaponDatas:
-  - weaponName: Wheelsaw
+  - name: Wheelsaw
+    DebugID: 0
+    description: 
     prefab: {fileID: 1357956000610302, guid: 25f5fcdf169d5f6429946695858b5f6d, type: 2}
     sprite: {fileID: 21300000, guid: 32ca33c35ee876441bfd38e221f6d983, type: 3}
     baseDamage: 10
@@ -96,7 +105,9 @@ MonoBehaviour:
     baseResourceMax: 100
     baseResourceDepletion: 15
     baseResourceRegeneration: 5
-  - weaponName: Melter
+  - name: Melter
+    DebugID: 0
+    description: 
     prefab: {fileID: 1370256643284910, guid: 68a736dc5f1907241bb5c271bae7bfb6, type: 2}
     sprite: {fileID: 21300000, guid: 8ed0975cbebf4a142b772ac9a66c1efc, type: 3}
     baseDamage: 5
@@ -105,48 +116,96 @@ MonoBehaviour:
     baseResourceDepletion: 12
     baseResourceRegeneration: 5
   emblemDatas:
-  - emblemName: Soccer Ball
+  - name: Soccer Ball
+    DebugID: 0
+    description: 
     prefab: {fileID: 1065108408312758, guid: 8b116d3991a86e34d9e31d9163ca741a, type: 2}
     sprite: {fileID: 0}
-  - emblemName: Rubber Duck
+  - name: Rubber Duck
+    DebugID: 0
+    description: 
     prefab: {fileID: 1408682102010550, guid: 0c8fffcf96524f14ca045d0f4afc2c03, type: 2}
     sprite: {fileID: 0}
-  - emblemName: Gamepad
+  - name: Gamepad
+    DebugID: 0
+    description: 
     prefab: {fileID: 1137074974808026, guid: dee6fadc0eecc5a499f48875fd5bc7f5, type: 2}
     sprite: {fileID: 0}
-  - emblemName: Trophy
+  - name: Trophy
+    DebugID: 0
+    description: 
     prefab: {fileID: 1297259058128264, guid: aead5509c58f49f4db97c62cbb3b258a, type: 2}
     sprite: {fileID: 0}
   skinDatas:
-  - skinName: None
+  - name: None
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: 44af1c295c19b814ebbbd4a39183aea1, type: 3}
-  - skinName: Flame
+  - name: Flame
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: 4359e85bd40ffb044bec8a1cbd4fcbc6, type: 3}
-  - skinName: Artwork
+  - name: Artwork
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: 5cbbd772fbf9bf54fb8e2ee540fbd22b, type: 3}
-  - skinName: Blotch
+  - name: Blotch
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: fe3a0148689db474e8151ce7a485f66d, type: 3}
-  - skinName: Camo
+  - name: Camo
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: b64ad1bcbae0dc64f808720af7b9853d, type: 3}
-  - skinName: Illusion
+  - name: Illusion
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: 3c05bfdb90d16464bb707c6709fbb8fc, type: 3}
-  - skinName: Lines
+  - name: Lines
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: aff4b1ca2294f134e982f9a39bb55744, type: 3}
-  - skinName: Smiles
+  - name: Smiles
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: ac45897af10ef4d42809a7eef784631e, type: 3}
-  - skinName: Aces
+  - name: Aces
+    DebugID: 0
+    description: 
+    prefab: {fileID: 0}
+    sprite: {fileID: 0}
     texture: {fileID: 2800000, guid: f7cf47bf973c52b48b54f56dac4b1e52, type: 3}
   myRobotData:
     bodyData:
       name: 
+      DebugID: 0
       description: 
       prefab: {fileID: 0}
+      sprite: {fileID: 0}
       maxSpeed: 0
       acceleration: 0
       rotationalSpeed: 0
       mass: 0
     weaponData:
-      weaponName: 
+      name: 
+      DebugID: 0
+      description: 
       prefab: {fileID: 0}
       sprite: {fileID: 0}
       baseDamage: 0
@@ -155,13 +214,19 @@ MonoBehaviour:
       baseResourceDepletion: 0
       baseResourceRegeneration: 0
     emblemData:
-      emblemName: 
+      name: 
+      DebugID: 0
+      description: 
       prefab: {fileID: 0}
       sprite: {fileID: 0}
     skinData:
-      skinName: 
+      name: 
+      DebugID: 0
+      description: 
+      prefab: {fileID: 0}
+      sprite: {fileID: 0}
       texture: {fileID: 0}
-  DEBUG_ROBOT_DATA_INDEX: 1
+  DEBUG_ROBOT_DATA_INDEX: 0
   DEBUG_WEAPON_DATA_INDEX: 0
   DEBUG_EMBLEM_DATA_INDEX: 0
   DEBUG_SKIN_DATA_INDEX: 0
@@ -176,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5063e3055f36f094fb89591a474c0c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 1
+  mode: 0
 --- !u!114 &114705123267970034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,3 +260,87 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c09196ec7ec3d0a4a9d7cbc5f777a543, type: 2}
   - {fileID: 11400000, guid: 88e3185e3b92d83458b3bdbd84bf872e, type: 2}
   renderPipeline: {fileID: 11400000, guid: 0f92d7cbe1ba8334a8801b4bdec457b0, type: 2}
+--- !u!114 &114978105739737156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284099178472842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef340d50e77e75a478d821cab250bdfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  purchasables:
+  - id: 0
+    name: Cuber
+    cost: 0
+    unlocked: 1
+  - id: 1
+    name: Flipper
+    cost: 300
+    unlocked: 0
+  - id: 2
+    name: Tanky
+    cost: 500
+    unlocked: 0
+  - id: 3
+    name: Wheelsaw
+    cost: 0
+    unlocked: 1
+  - id: 4
+    name: Melter
+    cost: 750
+    unlocked: 0
+  - id: 5
+    name: Soccer Ball
+    cost: 0
+    unlocked: 1
+  - id: 6
+    name: Rubber Duck
+    cost: 450
+    unlocked: 0
+  - id: 7
+    name: Gamepad
+    cost: 450
+    unlocked: 0
+  - id: 8
+    name: Trophy
+    cost: 450
+    unlocked: 0
+  - id: 9
+    name: None
+    cost: 0
+    unlocked: 1
+  - id: 10
+    name: Flame
+    cost: 300
+    unlocked: 0
+  - id: 11
+    name: Artwork
+    cost: 300
+    unlocked: 0
+  - id: 12
+    name: Blotch
+    cost: 300
+    unlocked: 0
+  - id: 13
+    name: Camo
+    cost: 300
+    unlocked: 0
+  - id: 14
+    name: Illusion
+    cost: 300
+    unlocked: 0
+  - id: 15
+    name: Lines
+    cost: 300
+    unlocked: 0
+  - id: 16
+    name: Smiles
+    cost: 300
+    unlocked: 0
+  - id: 17
+    name: Aces
+    cost: 300
+    unlocked: 0

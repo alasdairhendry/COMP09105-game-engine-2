@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class RobotEmblemData {
+public class RobotEmblemData : CustomRobotData {
 
-    public string emblemName;
-    public GameObject prefab;
-    public Sprite sprite;
+    //public string emblemName;
+    //public GameObject prefab;
+    //public Sprite sprite;
 
 }
