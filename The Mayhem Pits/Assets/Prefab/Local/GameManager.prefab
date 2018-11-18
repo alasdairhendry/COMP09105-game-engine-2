@@ -161,7 +161,7 @@ MonoBehaviour:
     skinData:
       skinName: 
       texture: {fileID: 0}
-  DEBUG_ROBOT_DATA_INDEX: 0
+  DEBUG_ROBOT_DATA_INDEX: 1
   DEBUG_WEAPON_DATA_INDEX: 0
   DEBUG_EMBLEM_DATA_INDEX: 0
   DEBUG_SKIN_DATA_INDEX: 0

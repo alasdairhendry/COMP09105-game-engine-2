@@ -10,6 +10,7 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
     [SerializeField] private float boostedSpeed = 25.0f;
     [SerializeField] private float ascendingSpeed = 10.0f;
     [SerializeField] private float damage = 20.0f;
+    [SerializeField] private GameObject networkExplosionParticles;
     [SerializeField] private GameObject explosionParticles;
 
     private NetworkGameRobot targetRobot;
@@ -92,7 +93,7 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
         targetRobot.GetComponent<RobotHealth> ().ApplyDamageToOtherPlayer ( damage );
         targetRobot.GetComponent<Heatable>().AddNetwork(5.0f);
         photonView.RPC ( "RPCExplode", RpcTarget.All, targetRobot.GetComponent<PhotonView> ().Owner.ActorNumber );
-        PhotonNetwork.Instantiate ( explosionParticles.name, transform.position, Quaternion.identity );                
+        PhotonNetwork.Instantiate ( networkExplosionParticles.name, transform.position, Quaternion.identity );                
     }
 
     [PunRPC] 

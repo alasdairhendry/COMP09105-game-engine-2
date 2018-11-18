@@ -45,8 +45,8 @@ public class HUD_DatabaseLogin_Panel : MonoBehaviour {
         bodyPanel.SetActive ( false );
         usernamePanelButton.SetEnabled ( true );
 
-        usernameText.text = "";
-        passwordText.text = "";
+        usernameText.text = "Username";
+        passwordText.text = "Password";
         insertedUsername = "";
         insertedPassword = "";
 
@@ -57,28 +57,28 @@ public class HUD_DatabaseLogin_Panel : MonoBehaviour {
 
 	public void OnPress_Username ()
     {
-        FindObjectOfType<Keyboard> ().Open ( Keyboard.Mode.shift, (s) => { SetUsername (s); }, GetComponentInChildren<HUDSelectionGroup>(), 12 );
+        SetInfoButtonStates(false);
+
+        FindObjectOfType<Keyboard> ().Open ( Keyboard.Mode.shift, (s) => { SetUsername (s); }, () => { SetInfoButtonStates(true); }, GetComponentInChildren<HUDSelectionGroup>(), 12 );
     }
 
     public void OnPress_Password ()
     {
-        FindObjectOfType<Keyboard> ().Open ( Keyboard.Mode.lower, (s) => { SetPassword (s); }, GetComponentInChildren<HUDSelectionGroup> (), 12, true );
+        SetInfoButtonStates(false);
+
+        FindObjectOfType<Keyboard> ().Open ( Keyboard.Mode.lower, (s) => { SetPassword (s); }, () => { SetInfoButtonStates(true); }, GetComponentInChildren<HUDSelectionGroup> (), 12, true );
     }
 
     public void OnClick_Login ()
     {
-        loginButton.SetEnabled ( false );
-        createButton.SetEnabled ( false );
-        cancelButton.SetEnabled ( false );
+        SetInfoButtonStates(false);
 
         DatabaseManager.Instance.TryLoginWithPassword ( insertedUsername, insertedPassword,
             (b, s) =>
             {
                 if (!b)
                 {
-                    loginButton.SetEnabled ( true );
-                    createButton.SetEnabled ( true );
-                    cancelButton.SetEnabled ( true );
+                    SetInfoButtonStates(true);
 
                     statusText.text = s;
                 }
@@ -91,18 +91,14 @@ public class HUD_DatabaseLogin_Panel : MonoBehaviour {
 
     public void OnClick_Create ()
     {
-        loginButton.SetEnabled ( false );
-        createButton.SetEnabled ( false );
-        cancelButton.SetEnabled ( false );
+        SetInfoButtonStates(false);
 
         DatabaseManager.Instance.CreateDatabaseAccount ( insertedUsername, insertedPassword,
             (b, s) =>
             {
                 if (!b)
                 {
-                    loginButton.SetEnabled ( true );
-                    createButton.SetEnabled ( true );
-                    cancelButton.SetEnabled ( true );
+                    SetInfoButtonStates(true);
 
                     statusText.text = s;
                 }
@@ -120,6 +116,8 @@ public class HUD_DatabaseLogin_Panel : MonoBehaviour {
 
     private void SetUsername(string s)
     {
+        SetInfoButtonStates(true);
+
         if (string.IsNullOrEmpty ( s )) return;
         usernameText.text = s;
         insertedUsername = s;
@@ -127,6 +125,8 @@ public class HUD_DatabaseLogin_Panel : MonoBehaviour {
 
     private void SetPassword(string s)
     {
+        SetInfoButtonStates(true);
+
         if (string.IsNullOrEmpty ( s )) return;
 
         string v = "";
@@ -138,5 +138,12 @@ public class HUD_DatabaseLogin_Panel : MonoBehaviour {
 
         insertedPassword = s;
         passwordText.text = v;
+    }
+
+    private void SetInfoButtonStates(bool state)
+    {
+        loginButton.SetEnabled(state);
+        createButton.SetEnabled(state);
+        cancelButton.SetEnabled(state);
     }
 }

@@ -23,7 +23,10 @@ public class Keyboard : MonoBehaviour {
     private bool active = false;
 
     private string currentInput = "";
+
     private System.Action<string> OnFinish;
+    private System.Action OnCancel;
+
     private int maxCharacters = 0;
     private bool hiddenMode = false;
 
@@ -64,7 +67,7 @@ public class Keyboard : MonoBehaviour {
 
             if (t.text.ToLower () == "cancel")
             {
-                b.onClick.AddListener ( () => { Close (); } );
+                b.onClick.AddListener ( () => { CancelInput (); } );
                 continue;
             }
 
@@ -200,18 +203,31 @@ public class Keyboard : MonoBehaviour {
         else visualInput.text = currentInput;
     }
 
+    private void CancelInput()
+    {
+        if (OnCancel != null)
+            OnCancel();
+
+        OnFinish = null;
+        OnCancel = null;
+        Close();
+    }
+    
     private void FinishInput ()
     {
         if (OnFinish != null)
             OnFinish (currentInput);
 
         OnFinish = null;
+        OnCancel = null;
         Close ();
     }
 
-    public void Open (Mode mode, System.Action<string> onFinish, HUDSelectionGroup returnGroup, int maxCharacters, bool hidden = false)
+    public void Open (Mode mode, System.Action<string> onFinish, System.Action onCancel, HUDSelectionGroup returnGroup, int maxCharacters, bool hidden = false)
     {
         OnFinish = onFinish;
+        OnCancel = onCancel;
+
         this.returnGroup = returnGroup;
         this.maxCharacters = maxCharacters;
         this.hiddenMode = hidden;

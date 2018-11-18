@@ -193,6 +193,8 @@ MonoBehaviour:
   boostedSpeed: 15
   ascendingSpeed: 3
   damage: 20
+  networkExplosionParticles: {fileID: 1795003272736258, guid: 212071e7e8c7afb4a8f2c3269e21e5f7,
+    type: 2}
   explosionParticles: {fileID: 1931540543680938, guid: 3b2932a63ab0fd04cb630d08105fdd24,
     type: 2}
 --- !u!114 &114682427438861452
