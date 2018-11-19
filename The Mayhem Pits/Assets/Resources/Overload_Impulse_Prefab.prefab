@@ -74,7 +74,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   overloadName: Impulse
-  sprite: {fileID: 21300000, guid: 302fa23147e40a14e8885324d1d46bf2, type: 3}
+  sprite: {fileID: 21300000, guid: a9f0555c56197fa4f8712bd7b19aa87f, type: 3}
   hasSpecificInput: 0
   specificInput: 
   specificInputSprite: {fileID: 0}

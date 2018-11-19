@@ -27,28 +27,6 @@ public class NetworkPlayerNameInput : MonoBehaviour
         DatabaseManager.Instance.onLogout += OnLogout;
     }
 
-    private void Update ()
-    {
-        if (Input.GetButtonDown ( "XBO_Y" ))
-        {
-            //FindObjectOfType<Keyboard> ().Open ( (s) => { SetPlayerName ( s ); }, 12 );
-    
-        }
-
-        if (Input.GetKeyDown ( KeyCode.Y ))
-        {
-            if (DatabaseManager.Instance.UserIsLoggedIn)
-            {
-                DatabaseManager.Instance.LogOut ();
-                Debug.Log ( "heyo" );
-            }
-            else
-            {
-                DatabaseManager.Instance.CheckStoredLogin ();
-            }
-        }
-    }
-
     public void OnHold_Y ()
     {
         if (DatabaseManager.Instance.UserIsLoggedIn)
@@ -62,19 +40,6 @@ public class NetworkPlayerNameInput : MonoBehaviour
             yButton.SetEnabled ( false );          
         }
     }
-
-    //public void SetPlayerName(string value)
-    //{        
-    //    if (string.IsNullOrEmpty(value))
-    //    {
-    //        Debug.LogError("Player Name is null or empty");
-    //        return;
-    //    }
-
-    //    usernameText.text = value;
-    //    PhotonNetwork.NickName = value;
-    //    PlayerPrefs.SetString(playerNamePrefKey, value);
-    //}
 
     private void OnLogin(string username)
     {

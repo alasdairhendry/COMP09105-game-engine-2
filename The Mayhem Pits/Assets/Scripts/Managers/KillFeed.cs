@@ -28,14 +28,6 @@ public class KillFeed : MonoBehaviourPunCallbacks {
         public Sprite sprite;
     }
 
-    private void Update ()
-    {
-        if (Input.GetKeyDown ( KeyCode.K ))
-        {
-            AddInfo ( (Random.value * 100.0f).ToString () );
-        }
-    }
-
     public void AddInfo (string info)
     {
         GameObject go = Instantiate ( informationPrefab );

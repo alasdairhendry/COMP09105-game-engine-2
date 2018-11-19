@@ -26,7 +26,7 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
 
     private void Update ()
     {
-        if (Input.GetButtonDown("XBO_Select")) GetComponentInChildren<ReplayInvoker>().RequestReplay(1.0f);
+        //if (Input.GetButtonDown("XBO_Select")) GetComponentInChildren<ReplayInvoker>().RequestReplay(1.0f);
 
         UpdateParticles ();
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;

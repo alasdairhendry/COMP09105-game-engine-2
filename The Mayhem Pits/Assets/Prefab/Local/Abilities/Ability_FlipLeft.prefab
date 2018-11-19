@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Flip
   id: 0
-  sprite: {fileID: 21300000, guid: 0b6f999675e85be4b937be061e38ef59, type: 3}
+  sprite: {fileID: 21300000, guid: f70bf01023c367341b50996abfe2612d, type: 3}
   cooldown: 0.75
   uses: 0
   hasSpecificInput: 0

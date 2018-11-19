@@ -23,8 +23,7 @@ public class DatabaseManager : MonoBehaviour {
     public System.Action<string> onLogin;
     public System.Action onLogout;
 
-    public bool UserIsLoggedIn { get; protected set; }
-    //public DatabaseAccount CurrentAccount { get { return currentAccount; } }
+    public bool UserIsLoggedIn { get; protected set; }    
 
     public string AccountUsername { get { return currentAccount.username; } }
     public int AccountCoins { get { return currentAccount.coins; } }
@@ -69,8 +68,7 @@ public class DatabaseManager : MonoBehaviour {
             {
                 startupCheckPerformed = true;
                 GetDatabaseReferences ();
-                CheckStoredLogin ();
-                //CreateDatabaseAccount("Alipwnzor", "History", null);
+                CheckStoredLogin ();                
             }
 
             if (Input.GetKeyDown ( KeyCode.C ))
