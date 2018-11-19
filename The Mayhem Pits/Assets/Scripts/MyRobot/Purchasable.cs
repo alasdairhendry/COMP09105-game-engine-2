@@ -20,7 +20,12 @@ public class Purchasable {
     public void Unlock ()
     {
         unlocked = true;
-        cost = 0;
+        //cost = 0;
+    }
+
+    public void SetUnlockFromDatabase(bool unlocked)
+    {
+        this.unlocked = unlocked;
     }
 }
 

@@ -24,7 +24,7 @@ public class Test_SmoothCamera : MonoBehaviour {
     {
         cameraMounts = GameObject.FindObjectsOfType<CameraMount>();
 
-        if(ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
+        if (ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
         {
             transform.GetChild(1).SetParent(transform.GetChild(0));
         }

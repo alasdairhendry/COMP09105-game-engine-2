@@ -10,8 +10,8 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
     [SerializeField] private float boostedSpeed = 25.0f;
     [SerializeField] private float ascendingSpeed = 10.0f;
     [SerializeField] private float damage = 20.0f;
+    [SerializeField] private GameObject localExplosionParticles;
     [SerializeField] private GameObject networkExplosionParticles;
-    [SerializeField] private GameObject explosionParticles;
 
     private NetworkGameRobot targetRobot;
     private Vector3 initialRobotPosition;
@@ -21,6 +21,8 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
     private Vector3 direction = new Vector3 ();
 
     private bool hasExploded = false;
+    private bool hasDestroyed = false;
+    private float destroyDelay = 0.25f;
 
     public void SetTarget(NetworkGameRobot robot)
     {
@@ -35,12 +37,28 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
         targetPeak.y = targetPeakY;
     }
 
+    private void Start()
+    {
+        FindObjectOfType<MatchStartController>().RegisterMatchEnd(OnMatchEnd);
+    }
+
     private void Update ()
     {
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         if (targetRobot == null) return;
 
         Move ();
+
+        if(hasExploded && !hasDestroyed)
+        {
+            destroyDelay -= Time.deltaTime;
+
+            if(destroyDelay<= 0.0f)
+            {
+                hasDestroyed = true;
+                PhotonNetwork.Destroy(this.gameObject);
+            }
+        }
     }
 
     private void Move ()
@@ -90,10 +108,13 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
         GetComponent<Rigidbody>().velocity = bounceDirection * 4.0f;
         GetComponent<Rigidbody>().useGravity = true;
 
+        GameObject.FindGameObjectWithTag("LocalGamePlayer").GetComponent<NetworkGameRobot>().damageInflicted += damage;
         targetRobot.GetComponent<RobotHealth> ().ApplyDamageToOtherPlayer ( damage );
-        targetRobot.GetComponent<Heatable>().AddNetwork(5.0f);
+        //targetRobot.GetComponent<Heatable>().AddNetwork(5.0f);
         photonView.RPC ( "RPCExplode", RpcTarget.All, targetRobot.GetComponent<PhotonView> ().Owner.ActorNumber );
-        PhotonNetwork.Instantiate ( networkExplosionParticles.name, transform.position, Quaternion.identity );                
+        PhotonNetwork.Instantiate ( networkExplosionParticles.name, transform.position, Quaternion.identity );
+
+        Debug.Log("Explode");
     }
 
     [PunRPC] 
@@ -116,24 +137,32 @@ public class Overload_MissileObject : MonoBehaviourPunCallbacks {
         }
 
         // Create explosion replay callback
-        string path = explosionParticles.name;
+        string path = localExplosionParticles.name;
         Vector3 position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
+        Debug.Log("Adding framed action");
         GetComponent<ReplayInvoker>().AddFramedAction(() => 
         {
             SmoothLerp.Instantiate(path, position, "Replayable");
+            Debug.Log("framed action");
         });
 
-        Invoke("ReplayAndDestroy", 1.5f);
-        //SmoothLerp
-    }
-
-    private void ReplayAndDestroy()
-    {
-        GetComponent<ReplayInvoker>().RequestReplay();
+        GetComponent<ReplayInvoker>().RequestReplay(2.0f);
+        FindObjectOfType<MatchStartController>().UnRegisterMatchEnd(OnMatchEnd);
 
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+        //
 
+        Debug.Log("RPCExplode");
+    }   
+
+    private void OnMatchEnd()
+    {
+        if (this == null) return;
+        GameSoundEffectManager.Instance.PlayLocalSound(GameSoundEffectManager.Effect.Explosion, 1.0f, Random.Range(0.80f, 1.2f), true, transform.position);
+        GameObject go = Instantiate(localExplosionParticles, transform.position, Quaternion.identity);        
+
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         PhotonNetwork.Destroy(this.gameObject);
     }
 }

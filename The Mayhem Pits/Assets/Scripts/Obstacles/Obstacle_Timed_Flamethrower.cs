@@ -55,7 +55,6 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
             int x = i;
             r.AddFramedAction(() =>
             {
-                Debug.Log(x, this);
                 GameObject go = Instantiate(replayParticles);
                 go.transform.position = particles[x].transform.position;
                 go.transform.rotation = particles[x].transform.rotation;                
@@ -117,15 +116,15 @@ public class Obstacle_Timed_Flamethrower : Obstacle_Timed {
             damagedThisFrame.Add(health);
         }
 
-        Heatable heatable = other.gameObject.GetComponentInParent<Heatable> ();
+        //Heatable heatable = other.gameObject.GetComponentInParent<Heatable> ();
 
-        if (heatable != null)
-        {            
-            heatable.AddNetwork ( damage * Time.deltaTime * 0.5f );
-        }
-        else
-        {
-            Debug.Log ( "Hitting item that isnt heatable" );
-        }
+        //if (heatable != null)
+        //{            
+        //    heatable.AddNetwork ( damage * Time.deltaTime * 0.5f );
+        //}
+        //else
+        //{
+        //    Debug.Log ( "Hitting item that isnt heatable" );
+        //}
     }
 }

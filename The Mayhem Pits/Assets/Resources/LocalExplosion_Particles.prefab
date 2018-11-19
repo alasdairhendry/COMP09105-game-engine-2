@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
-  network: 1
+  network: 0
 --- !u!198 &198980297143473616
 ParticleSystem:
   m_ObjectHideFlags: 1

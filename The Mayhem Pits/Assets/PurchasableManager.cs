@@ -71,6 +71,18 @@ public class PurchasableManager : MonoBehaviour {
         return null;
     }
 
+    public void SetUnlocksFromDatabase(List<int> IDs)
+    {
+        for (int i = 0; i < purchasables.Count; i++)
+        {
+            if (IDs.Contains(purchasables[i].ID))
+            {
+                purchasables[i].SetUnlockFromDatabase(true);
+            }
+            else purchasables[i].SetUnlockFromDatabase(false);
+        }
+    }
+
     public bool UnlockPurchasable(int id)
     {
         for (int i = 0; i < purchasables.Count; i++)
@@ -78,7 +90,12 @@ public class PurchasableManager : MonoBehaviour {
             if(id == purchasables[i].ID)
             {
                 if (purchasables[i].Unlocked) return false;
-                else { purchasables[i].Unlock (); return true; }
+                else
+                {
+                    purchasables[i].Unlock ();
+                    DatabaseManager.Instance.UpdateUnlocks(id);
+                    return true;
+                }
             }
         }
 

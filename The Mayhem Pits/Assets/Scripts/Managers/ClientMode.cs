@@ -13,8 +13,11 @@ public class ClientMode : MonoBehaviour {
             Instance = this;
         else if (Instance != this)
             Destroy(gameObject);
+    }
 
-        if(mode == Mode.Normal && SceneManager.GetActiveScene().name != "ModeSelect")
+    private void Start()
+    {        
+        if (mode == Mode.Normal/* && SceneManager.GetActiveScene().name != "NetworkConnection" && SceneManager.GetActiveScene().name != "DatabaseConnection" && SceneManager.GetActiveScene().name != "ModeSelect"*/)
             UnityEngine.XR.XRSettings.enabled = false;
     }
 

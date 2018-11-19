@@ -34,6 +34,8 @@ public class ReplayPlayer : MonoBehaviour {
     // Replay queue
     private Queue<ReplayData> replayQueue = new Queue<ReplayData>();
 
+    private List<ReplayData> replayDelayQueue = new List<ReplayData>();
+
     // The active replay data we are playing
     private ReplayData activeReplay = new ReplayData();
 
@@ -73,7 +75,7 @@ public class ReplayPlayer : MonoBehaviour {
 
     private void Update()
     {
-        if (Input.GetButtonDown("XBO_Select")) RequestReplay();
+        CheckDelayedQueue();
 
         if (!isPlaying)
         {
@@ -90,6 +92,26 @@ public class ReplayPlayer : MonoBehaviour {
     private void LateUpdate()
     {
         SetCameraPosition();
+    }
+
+    private void CheckDelayedQueue()
+    {
+        for (int i = 0; i < replayDelayQueue.Count; i++)
+        {
+            if(replayDelayQueue[i].captureDelay <= 0)
+            {
+                Debug.Log("Found waiting replay: Target Index - " + replayDelayQueue[i].targetIndex);
+                replayDelayQueue[i] = CreateNewReplayData(replayDelayQueue[i]);
+                SetTarget(replayDelayQueue[i].targetIndex, replayDelayQueue[i].targetOffset, replayDelayQueue[i]);
+
+                replayQueue.Enqueue(replayDelayQueue[i]);
+                replayDelayQueue.RemoveAt(i);
+            }
+            else
+            {
+                replayDelayQueue[i].captureDelay -= Time.deltaTime;
+            }
+        }
     }
 
     private void CheckQueue()
@@ -111,6 +133,10 @@ public class ReplayPlayer : MonoBehaviour {
             introIsPlaying = true;
             isIntroPlay = true;
             isPlaying = true;
+
+            cameraTransform.position = defaultCameraPosition;
+            cameraTransform.rotation = Quaternion.Euler(defaultCameraRotation);
+
             calledEndOnCanvas = false;
         }
     }
@@ -168,22 +194,31 @@ public class ReplayPlayer : MonoBehaviour {
         }
     }
 
-    public void RequestReplay(int targetReplayID = -1, Vector3 offset = new Vector3())
-    {
-        ReplayData data = CreateNewReplayData();
-        SetTarget(targetReplayID, offset, data);
-        replayQueue.Enqueue(data);
-    }
-
-    private ReplayData CreateNewReplayData()
+    public void RequestReplay(float captureDelay, int targetReplayID = -1, Vector3 offset = new Vector3())
     {
         ReplayData data = new ReplayData();
+        data.captureDelay = captureDelay;
+        data.targetIndex = targetReplayID;
+        data.targetOffset = offset;
+
+        replayDelayQueue.Add(data);
+
+        //ReplayData data = CreateNewReplayData(captureDelay);
+        //SetTarget(targetReplayID, offset, data);
+        //replayDelayQueue.Add(data);
+        //Debug.Log("Adding capture delay " + captureDelay);
+        //replayQueue.Enqueue(data);
+    }
+
+    private ReplayData CreateNewReplayData(ReplayData data)
+    {
+        //ReplayData data = new ReplayData();
         data.relativeReplayIndex = controller.ContinuousReplayableCount - controller.MaxReplayIndex;
 
         if (data.relativeReplayIndex < 0) data.relativeReplayIndex = 0;
 
         data.targetReplayIndex = controller.ContinuousReplayableCount;
-
+        //data.captureDelay = captureDelay;
         data.replayLengthSeconds = ((float)data.targetReplayIndex - (float)data.relativeReplayIndex) * controller.ReplayCollectionDelay;
 
         foreach (KeyValuePair<Replayable, ReplayableData> item in controller.RegisteredReplayables)
@@ -222,6 +257,7 @@ public class ReplayPlayer : MonoBehaviour {
 
             for (int i = 0; i < item.Value.actionIDs.Count; i++)
             {
+                if (i < 0 || i >= item.Value.actions.Count) continue;
                 if (item.Value.actions[i] != null)
                 {
                     newData.actions.Add(item.Value.actions[i]);
@@ -240,11 +276,10 @@ public class ReplayPlayer : MonoBehaviour {
         bool found = false;
 
         for (int i = 0; i < data.data.Count; i++)
-        {
+        {            
             if (data.data[i].ID == targetReplayID)
             {
                 found = true;
-
                 //if (targetIndex >= 0 && !isPlaying)   // Mid replay switch????
                 //    cameraTransform.position = activeReplay[i].replayerGameobject.transform.position + offset;
 
@@ -255,7 +290,7 @@ public class ReplayPlayer : MonoBehaviour {
         }
 
         if (!found)
-        {
+        {            
             data.targetIndex = -1;
             data.targetOffset = new Vector3();
         }
@@ -295,8 +330,8 @@ public class ReplayPlayer : MonoBehaviour {
             targetRotation = Quaternion.Euler(defaultCameraRotation);
         }
 
-        cameraTransform.position = Vector3.Slerp(cameraTransform.position, targetPosition, Time.deltaTime * 15.0f);
-        cameraTransform.rotation = Quaternion.Slerp(cameraTransform.rotation, targetRotation, Time.deltaTime * 4.0f);
+        cameraTransform.position = targetPosition; /*Vector3.Slerp(cameraTransform.position, targetPosition, Time.deltaTime * 15.0f);*/
+        cameraTransform.rotation = targetRotation;/*Quaternion.Slerp(cameraTransform.rotation, targetRotation, Time.deltaTime * 4.0f);*/
     }
 
     private void CreateGameObjects()
@@ -338,8 +373,16 @@ public class ReplayPlayer : MonoBehaviour {
             {
                 if(activeReplay.data[i].actionIDs[x] == activeReplay.relativeReplayIndex - 1)
                 {
+                    Debug.Log("Playing action replay from index " + activeReplay.relativeReplayIndex);
                     if (activeReplay.data[i].actions[x] != null)
+                    {
                         activeReplay.data[i].actions[x]();
+                        
+                    }
+                    else
+                    {
+                        Debug.Log("Found action at index " + activeReplay.relativeReplayIndex + " but it is null");
+                    }
                 }
             }
         }
@@ -404,6 +447,7 @@ public class ReplayPlayer : MonoBehaviour {
 	
 }
 
+[System.Serializable]
 public class ReplayData
 {
     public List<ReplayableData> data = new List<ReplayableData>();
@@ -415,5 +459,7 @@ public class ReplayData
 
     public int targetIndex = -1;
     public Vector3 targetOffset;
+
+    public float captureDelay = 0.0f;
 
 }

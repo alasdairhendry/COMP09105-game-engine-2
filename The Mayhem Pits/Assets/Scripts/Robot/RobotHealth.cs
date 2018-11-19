@@ -12,6 +12,7 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
     [SerializeField] private float currentHealth = 0.0f;
     [SerializeField] private Slider healthSlider;
     private bool deathCalled = false;
+    public bool DeathCalled { get { return deathCalled; } }
 
     private ParticleSystem.MainModule particlesModule;
     private ParticleSystem particles;
@@ -25,6 +26,8 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
 
     private void Update ()
     {
+        if (Input.GetButtonDown("XBO_Select")) GetComponentInChildren<ReplayInvoker>().RequestReplay(1.0f);
+
         UpdateParticles ();
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
 
@@ -78,6 +81,7 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
         if(currentHealth <= 0)
         {            
             FindObjectOfType<HUD_GameOver_Panel> ().Open (true);
+            FindObjectOfType<HUD_GameOver_Panel>().CalculateCoins();
             GetComponent<Test_RobotMovement> ().enabled = false;
             GetComponent<RobotAbilities> ().enabled = false;
             GetComponent<RobotOverloads> ().enabled = false;
@@ -93,6 +97,7 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
 
             GetComponent<RobotSound> ().StopAudio ();
             deathCalled = true;
+
             FindObjectOfType<Test_SmoothCamera> ().SetMode (Test_SmoothCamera.TargetType.Overview);
             KillFeed.Instance.AddInfo ( photonView.Owner.NickName + " has been eliminated", KillFeed.InfoType.Killed, RpcTarget.AllBuffered );
             photonView.RPC ( "RPCDie", RpcTarget.AllBuffered );
@@ -116,9 +121,9 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
             }
         }
 
-        if (leftAlive > 2)
+        if (leftAlive >= 2)
         {
-            GetComponent<ReplayInvoker> ().RequestReplay ();
+            GetComponent<ReplayInvoker> ().RequestReplay (1.5f);
         }
 
         // Check winner on master client
@@ -154,9 +159,11 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
     [PunRPC]
     private void RPCOnPlayerWin (int playerID, string playerName)
     {
+        FindObjectOfType<MatchStartController>().MatchEnd();
+        Debug.Log("Match End");
+
         NetworkGameRobot[] robots = FindObjectsOfType<NetworkGameRobot> ();
-        NetworkGameRobot winningRobot = robots[0];
-        //NetworkGameRobot myRobot = robots[0];
+        NetworkGameRobot winningRobot = robots[0];        
 
         for (int i = 0; i < robots.Length; i++)
         {
@@ -164,42 +171,43 @@ public class RobotHealth : MonoBehaviourPunCallbacks {
             {
                 // Find the winning robot
                 winningRobot = robots[i];
-            }
-
-            //if (robots[i].photonView.Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-            //{
-            //    // Find the local robot
-            //    myRobot = robots[i];
-            //}
+            }            
         }
 
         FindObjectOfType<ReplayPlayer> ().ClearQueue ();
-        winningRobot.GetComponent<ReplayInvoker> ().RequestReplay ();
+        winningRobot.GetComponent<ReplayInvoker> ().RequestReplay (0.0f);
 
         if (playerID == PhotonNetwork.LocalPlayer.ActorNumber)
         {
             // This client has won            
-            FindObjectOfType<HUD_GameOver_Panel> ().Open ( false );
-            FindObjectOfType<HUD_GameOver_Panel> ().SetWinner ( playerName );
+            FindObjectOfType<HUD_GameOver_Panel>().Open(false);
+            FindObjectOfType<HUD_GameOver_Panel>().CalculateCoins();
+            FindObjectOfType<HUD_GameOver_Panel>().SetWinner(playerName);
             FindObjectOfType<Test_SmoothCamera> ().SetMode ( Test_SmoothCamera.TargetType.Overview );
         }
         else
         {
             // This client has lost
             FindObjectOfType<Test_SmoothCamera> ().SetTarget ( winningRobot.transform );
-            FindObjectOfType<HUD_GameOver_Panel> ().Open ( false );
-            FindObjectOfType<HUD_GameOver_Panel> ().SetWinner ( playerName );
+            FindObjectOfType<HUD_GameOver_Panel>().Open(false);
+            FindObjectOfType<HUD_GameOver_Panel>().SetWinner(playerName);
 
             FindObjectOfType<Test_SmoothCamera> ().SetMode ( Test_SmoothCamera.TargetType.Overview );
-            FindObjectOfType<Test_SmoothCamera> ().DisableModeSwitch ();
-            FindObjectOfType<Test_SmoothCamera> ().GetComponentInChildren<Camera> ().fieldOfView = 40.0f;
+            FindObjectOfType<Test_SmoothCamera> ().DisableModeSwitch ();            
 
         }
 
-        FindObjectOfType<HUD_Ability_Panel>().gameObject.SetActive(false);
-        FindObjectOfType<HUD_Crosshair_Panel>().gameObject.SetActive(false);
-        FindObjectOfType<HUD_Overloads_Panel>().gameObject.SetActive(false);
-        FindObjectOfType<HUD_Weapon_Panel>().gameObject.SetActive(false);
+        if (FindObjectOfType<HUD_Ability_Panel>() != null)
+            FindObjectOfType<HUD_Ability_Panel>().gameObject.SetActive(false);
+
+        if (FindObjectOfType<HUD_Crosshair_Panel>() != null)
+            FindObjectOfType<HUD_Crosshair_Panel>().gameObject.SetActive(false);
+
+        if (FindObjectOfType<HUD_Overloads_Panel>() != null)
+            FindObjectOfType<HUD_Overloads_Panel>().gameObject.SetActive(false);
+
+        if (FindObjectOfType<HUD_Weapon_Panel>() != null)
+            FindObjectOfType<HUD_Weapon_Panel>().gameObject.SetActive(false);
 
         winningRobot.GetComponent<RobotHealth> ().enabled = false;
         FindObjectOfType<CelebrationEffects> ().Activate ();

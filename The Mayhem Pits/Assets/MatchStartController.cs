@@ -13,6 +13,8 @@ public class MatchStartController : MonoBehaviourPunCallbacks {
 
     [SerializeField] private GameObject startPanel;
     [SerializeField] private Text countdownText;
+
+    private System.Action onMatchEnd;
 	
     public void SetReady()
     {
@@ -72,5 +74,23 @@ public class MatchStartController : MonoBehaviourPunCallbacks {
         GameObject.FindGameObjectWithTag("LocalGamePlayer").GetComponent<Test_RobotMovement>().enabled = true;
         GameObject.FindGameObjectWithTag("LocalGamePlayer").GetComponent<RobotAbilities>().SetAllowUse(true);
         GameObject.FindGameObjectWithTag("LocalGamePlayer").GetComponent<RobotOverloads>().SetAllowUse(true);
+    }
+
+    public void MatchEnd()
+    {
+        if(onMatchEnd != null)
+        {
+            onMatchEnd();
+        }
+    }
+
+    public void RegisterMatchEnd(System.Action foo)
+    {
+        onMatchEnd += foo;
+    }
+
+    public void UnRegisterMatchEnd(System.Action foo)
+    {
+        onMatchEnd -= foo;
     }
 }

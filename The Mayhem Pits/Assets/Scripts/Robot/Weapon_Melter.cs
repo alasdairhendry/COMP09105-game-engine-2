@@ -72,9 +72,6 @@ public class Weapon_Melter : Weapon {
     {
         base.Animate ();
         photonView.RPC ( "RPCAnimate", RpcTarget.All, isAttacking );
-
-        //if (isAttacking) { if (particles.isPlaying) return; particles.Play (); }
-        //else { particles.Stop (); }
     }
 
     [PunRPC]
@@ -105,11 +102,9 @@ public class Weapon_Melter : Weapon {
     }
 
     public override void OnChildCollisionStay (Collider collision)
-    {
-        base.OnChildCollisionStay ( collision );        
-
+    {               
         if (!isAttacking) return;        
-
+        
         RobotHealth health = collision.gameObject.GetComponentInParent<RobotHealth> ();        
 
         if (health == GetComponentInParent<RobotHealth> ()) return;
@@ -118,20 +113,22 @@ public class Weapon_Melter : Weapon {
         if (health != null)
         {
             float damage = data.baseDamage * Input.GetAxis("XBO_LT") * Time.deltaTime;
+            localRobot.damageInflicted += damage;
+
             health.ApplyDamageToOtherPlayer ( damage );
             damagesThisFrame.Add(health);
         }
 
-        Heatable heatable = collision.gameObject.GetComponentInParent<Heatable> ();
+        //Heatable heatable = collision.gameObject.GetComponentInParent<Heatable> ();
 
-        if (heatable != null)
-        {
-            Debug.Log ( "Heating Gameobject " + heatable.gameObject.name );            
-            heatable.AddNetwork ( data.baseDamage * Time.deltaTime * 0.5f );
-        }
-        else
-        {
-            Debug.Log ( "Hitting item that isnt heatable" );
-        }        
+        //if (heatable != null)
+        //{
+        //    Debug.Log ( "Heating Gameobject " + heatable.gameObject.name );            
+        //    heatable.AddNetwork ( data.baseDamage * Time.deltaTime * 0.5f );
+        //}
+        //else
+        //{
+        //    Debug.Log ( "Hitting item that isnt heatable" );
+        //}        
     }
 }

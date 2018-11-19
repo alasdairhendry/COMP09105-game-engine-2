@@ -49,7 +49,6 @@ public class HUD_PauseMenu_Panel : MonoBehaviour {
 
     public void OnClick_Quit()
     {
-        PhotonNetwork.LeaveRoom();
-        SceneLoader.Instance.LoadScene("Menu");
+        PhotonNetwork.LeaveRoom();        
     }
 }

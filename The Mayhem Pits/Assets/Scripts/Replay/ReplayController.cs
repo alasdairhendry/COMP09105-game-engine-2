@@ -104,6 +104,7 @@ public class ReplayController : MonoBehaviour {
 
         if(action != null)
         {
+            Debug.Log("Collected action from " + from.gameObject.name);
             registeredReplayables[from].actions.Add(action);
             registeredReplayables[from].actionIDs.Add(continuousReplayableCount);
         }

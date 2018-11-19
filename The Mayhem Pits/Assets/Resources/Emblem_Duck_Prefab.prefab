@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8489de10192db4ea95b54e7926b20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  replayID: -1
 --- !u!114 &114798893975416408
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -17,6 +17,8 @@ public class ChildOffset : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (root == null || transform == null) { Destroy(this.gameObject); return; }
+
         transform.SetParent ( null );
         transform.position = root.transform.position + initialOffset;
 	}

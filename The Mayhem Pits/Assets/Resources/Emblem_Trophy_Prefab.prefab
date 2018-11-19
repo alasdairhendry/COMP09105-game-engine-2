@@ -197,7 +197,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
-  InstantiationId: 2
+  InstantiationId: 6
   isRuntimeInstantiated: 0
 --- !u!114 &114552319991441096
 MonoBehaviour:
@@ -9431,8 +9431,8 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d71c92831464944438f4cdd17066986c, type: 2}
-  - {fileID: 2100000, guid: d71c92831464944438f4cdd17066986c, type: 2}
+  - {fileID: 2100000, guid: 48b92b4da9fed964e8fca6014f3e41c2, type: 2}
+  - {fileID: 2100000, guid: 48b92b4da9fed964e8fca6014f3e41c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9488,8 +9488,8 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d71c92831464944438f4cdd17066986c, type: 2}
-  - {fileID: 2100000, guid: d71c92831464944438f4cdd17066986c, type: 2}
+  - {fileID: 2100000, guid: 48b92b4da9fed964e8fca6014f3e41c2, type: 2}
+  - {fileID: 2100000, guid: 48b92b4da9fed964e8fca6014f3e41c2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

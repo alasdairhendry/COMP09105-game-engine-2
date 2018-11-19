@@ -8,10 +8,10 @@ public class ReplayInvoker : MonoBehaviour {
     [SerializeField] private Replayable replayable;
     [SerializeField] private Vector3 offset;
 
-    public void RequestReplay()
+    public void RequestReplay(float captureDelay)
     {
         if (replayable.ReplayID == -1) return;
-        FindObjectOfType<ReplayPlayer>().RequestReplay(replayable.ReplayID, offset);        
+        FindObjectOfType<ReplayPlayer>().RequestReplay(captureDelay, replayable.ReplayID, offset);        
     }
 
     public void SetReplayable(Replayable replayable)
@@ -22,6 +22,10 @@ public class ReplayInvoker : MonoBehaviour {
     public void AddFramedAction(System.Action action)
     {
         if (action != null)
+        {
+            if (replayable.ReplayID == 177)
+                Debug.Log("ReplayInvoker - Add Framed Action");
             replayable.AddFramedAction(action);
+        }
     }
 }

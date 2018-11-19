@@ -137,7 +137,7 @@ public class Settings : MonoBehaviour {
     private void OnSet_Textures(int value)
     {
         value = Mathf.Clamp(value, 0, 3);
-        //QualitySettings.masterTextureLimit = value;
+        QualitySettings.masterTextureLimit = value;
 
         PlayerPrefs.SetInt(TEXTURES, value);
     }

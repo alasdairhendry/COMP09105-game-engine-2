@@ -70,6 +70,7 @@ public class DatabaseManager : MonoBehaviour {
                 startupCheckPerformed = true;
                 GetDatabaseReferences ();
                 CheckStoredLogin ();
+                //CreateDatabaseAccount("Alipwnzor", "History", null);
             }
 
             if (Input.GetKeyDown ( KeyCode.C ))
@@ -92,10 +93,9 @@ public class DatabaseManager : MonoBehaviour {
     public void CheckStoredLogin ()
     {
         if (PlayerPrefs.HasKey ( "databaseUsername" ))
-        {
-            Debug.Log ( "Found stored login " + PlayerPrefs.GetString ( "databaseUsername" ) );
-            TryDefaultLogin ( PlayerPrefs.GetString ( "databaseUsername" ) );
+        {            
             SetConnectionLabel ( "Found previously used account" );
+            TryDefaultLogin ( PlayerPrefs.GetString ( "databaseUsername" ) );
         }
         else { OnDefaultLoginFailed (); }
     }    
@@ -104,19 +104,21 @@ public class DatabaseManager : MonoBehaviour {
     {
         SetConnectionLabel ( "Connecting to previously used account" );
 
-        Debug.Log ( "Try default login" );
-
         FirebaseDatabase.DefaultInstance.GetReference ( "accounts" ).GetValueAsync ().ContinueWith ( task =>
         {
-            if (task.IsFaulted || task.IsCanceled) { Debug.LogError ( "Error retrieving database: " + task.Exception.Message ); OnDefaultLoginFailed(); }
+            if (task.IsFaulted || task.IsCanceled) { Debug.LogError ("(TryDefaultLogin) - Error retrieving database: " + task.Exception.Message ); OnDefaultLoginFailed(); }
             else if (task.IsCompleted)
-            {
+            {                
                 DataSnapshot snapshot = task.Result;
+
+                bool foundChild = false;
 
                 foreach (DataSnapshot data in snapshot.Children)
                 {                    
                     if(data.Child("username").Value.ToString() == username)
-                    {                       
+                    {
+
+                        foundChild = true;
                         SetCurrentAccount ( data );
                         
                         PlayerPrefs.SetString ( "databaseUsername", username );
@@ -125,14 +127,17 @@ public class DatabaseManager : MonoBehaviour {
                     }
                 }
 
+                if (!foundChild)
+                {
+                    OnDefaultLoginFailed();
+                }
+
             }
         } );
     }    
 
     private void OnDefaultLoginSuccess ()
     {
-        Debug.Log ( "Successfully logged in with stored details" );
-
         UserIsLoggedIn = true;
         if (onLogin != null) onLogin (currentAccount.username);
 
@@ -145,7 +150,6 @@ public class DatabaseManager : MonoBehaviour {
     private void OnDefaultLoginFailed ()
     {
         // Ask user to login.
-        Debug.Log ( "Failed to login with stored details - maybe the user hasnt logged in from this computer before" );
         UserIsLoggedIn = false;
         SetConnectionLabel ( "No Previous Accounts Found." );
         Invoke ( "LoadNextScene", 1.0f );
@@ -231,7 +235,10 @@ public class DatabaseManager : MonoBehaviour {
                     DatabaseAccount account = new DatabaseAccount ();
                     account.username = username;
                     account.password = password;
-                    account.unlocks.Add ( "0", false );
+                    account.unlocks.Add(0);
+                    account.unlocks.Add(3);
+                    account.unlocks.Add(5);
+                    account.unlocks.Add(9);
                     account.id = database.GetReference ( "accounts" ).Push ().Key;
 
                     database.GetReference ( "accounts" ).Child ( account.id ).SetRawJsonValueAsync ( JsonUtility.ToJson ( account ) ).ContinueWith ( addTask =>
@@ -242,7 +249,6 @@ public class DatabaseManager : MonoBehaviour {
                         {
                        
                             // Account created successfully
-                            Debug.Log ( "Account created successfully" );
                             PlayerPrefs.SetString ( "databaseUsername", username );
                             CheckStoredLogin ();
 
@@ -259,19 +265,43 @@ public class DatabaseManager : MonoBehaviour {
     }
 
     private void SetCurrentAccount (DataSnapshot data)
-    {
-        currentAccount = new DatabaseAccount ()
+    {      
+        currentAccount = new DatabaseAccount()
         {
-            username = data.Child ( "username" ).Value.ToString (),
-            coins = int.Parse ( data.Child ( "coins" ).Value.ToString () ),
+            username = data.Child("username").Value.ToString(),
+            coins = int.Parse(data.Child("coins").Value.ToString()),
+
+            bodyIndex = int.Parse(data.Child("bodyIndex").Value.ToString()),
+            weaponIndex = int.Parse(data.Child("weaponIndex").Value.ToString()),
+            emblemIndex = int.Parse(data.Child("emblemIndex").Value.ToString()),
+            skinIndex = int.Parse(data.Child("skinIndex").Value.ToString()),
+
             id = data.Key
+            //unlocks = (List<int>)data.Child("unlocks").Value
         };
+       
+        foreach (DataSnapshot child in data.Child("unlocks").Children)
+        {
+            currentAccount.unlocks.Add(int.Parse(child.Value.ToString()));
+        }   
+
+        PurchasableManager.Instance.SetUnlocksFromDatabase(currentAccount.unlocks);  
+
+        MyRobot.Instance.GetMyRobotData.SetBodyData(MyRobot.Instance.BodyDatas[currentAccount.bodyIndex]);
+        MyRobot.Instance.GetMyRobotData.SetWeaponData(MyRobot.Instance.WeaponDatas[currentAccount.weaponIndex]);
+        MyRobot.Instance.GetMyRobotData.SetEmblemData(MyRobot.Instance.EmblemDatas[currentAccount.emblemIndex]);
+        MyRobot.Instance.GetMyRobotData.SetSkinData(MyRobot.Instance.SkinDatas[currentAccount.skinIndex]);
     }
 
     public void LogOut ()
     {
         currentAccount = null;
         UserIsLoggedIn = false;
+        PurchasableManager.Instance.SetUnlocksFromDatabase(new List<int>() { 0, 3, 5, 9 });
+        MyRobot.Instance.GetMyRobotData.SetBodyData(MyRobot.Instance.BodyDatas[0]);
+        MyRobot.Instance.GetMyRobotData.SetWeaponData(MyRobot.Instance.WeaponDatas[0]);
+        MyRobot.Instance.GetMyRobotData.SetEmblemData(MyRobot.Instance.EmblemDatas[0]);
+        MyRobot.Instance.GetMyRobotData.SetSkinData(MyRobot.Instance.SkinDatas[0]);
 
         if (onLogout != null)
             onLogout ();
@@ -296,26 +326,43 @@ public class DatabaseManager : MonoBehaviour {
         if (!UserIsLoggedIn) return;
 
         currentAccount.coins = value;
-        FirebaseDatabase.DefaultInstance.GetReference ( "accounts" ).Child ( currentAccount.id ).Child ( "coins" ).SetValueAsync ( value );
+        FirebaseDatabase.DefaultInstance.GetReference("accounts").Child(currentAccount.id).Child("coins").SetValueAsync(value);
     }
 
-    //private void OnSceneChanged(Scene current, Scene next)
-    //{
-    //    if (!startupCheckPerformed) return;
-    //    Debug.Log ( "boop" );
-    //    if(next.name == "NetworkConnection")
-    //    {
-    //        if (UserIsLoggedIn)
-    //        {
-    //            SceneLoader.Instance.LoadScene ( "ModeSelect" );
-    //        }
-    //        else
-    //        {
-    //            GetDatabaseReferences ();
-    //            CheckStoredLogin ();
-    //        }
-    //    }
-    //}
+    public void AddCoins(int value)
+    {
+        if (!UserIsLoggedIn) return;
+
+        currentAccount.coins += value;
+        FirebaseDatabase.DefaultInstance.GetReference("accounts").Child(currentAccount.id).Child("coins").SetValueAsync(currentAccount.coins);
+    }
+
+    public void UpdateUnlocks(params int[] IDs)
+    {
+        if (!UserIsLoggedIn) return;
+        if (IDs.Length <= 0) return;
+
+        for (int i = 0; i < IDs.Length; i++)
+        {
+            currentAccount.unlocks.Add(IDs[i]);            
+            FirebaseDatabase.DefaultInstance.GetReference("accounts").Child(currentAccount.id).Child("unlocks").Push().SetValueAsync(IDs[i]);            
+        }        
+    }
+
+    public void UpdateRobotData()
+    {
+        if (!UserIsLoggedIn) return;
+
+        currentAccount.bodyIndex = MyRobot.Instance.BodyDatas.IndexOf(MyRobot.Instance.GetMyRobotData.BodyData);
+        currentAccount.weaponIndex = MyRobot.Instance.WeaponDatas.IndexOf(MyRobot.Instance.GetMyRobotData.WeaponData);
+        currentAccount.emblemIndex = MyRobot.Instance.EmblemDatas.IndexOf(MyRobot.Instance.GetMyRobotData.EmblemData);
+        currentAccount.skinIndex = MyRobot.Instance.SkinDatas.IndexOf(MyRobot.Instance.GetMyRobotData.SkinData);
+
+        FirebaseDatabase.DefaultInstance.GetReference("accounts").Child(currentAccount.id).Child("bodyIndex").SetValueAsync(currentAccount.bodyIndex);
+        FirebaseDatabase.DefaultInstance.GetReference("accounts").Child(currentAccount.id).Child("weaponIndex").SetValueAsync(currentAccount.weaponIndex);
+        FirebaseDatabase.DefaultInstance.GetReference("accounts").Child(currentAccount.id).Child("emblemIndex").SetValueAsync(currentAccount.emblemIndex);
+        FirebaseDatabase.DefaultInstance.GetReference("accounts").Child(currentAccount.id).Child("skinIndex").SetValueAsync(currentAccount.skinIndex);
+    }
 }
 
 [System.Serializable]
@@ -324,6 +371,12 @@ public class DatabaseAccount
     public string username;
     public string password;
     public string id;
-    public int coins = 0;
-    public Dictionary<string, object> unlocks = new Dictionary<string, object> ();
+
+    public int bodyIndex = 0;
+    public int weaponIndex = 0;
+    public int emblemIndex = 0;
+    public int skinIndex = 0;
+
+    public int coins = 0;        
+    public List<int> unlocks = new List<int>();
 }

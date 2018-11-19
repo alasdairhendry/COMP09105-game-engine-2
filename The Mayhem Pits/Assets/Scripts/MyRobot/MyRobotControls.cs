@@ -47,6 +47,11 @@ public class MyRobotControls : MonoBehaviour {
     private void Start()
     {
         mainCamera = FindObjectOfType<Camera>();
+
+        if (ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
+            transform.Find("Graphics").transform.localPosition = Vector3.zero;
+        else transform.Find("Graphics").transform.localPosition = new Vector3(-2.5f, 0.0f, 0.0f);
+
         originalRootPosition = transform.Find("Graphics").transform.position;
 
         currentBodyIndex = MyRobot.Instance.BodyDatas.IndexOf ( MyRobot.Instance.GetMyRobotData.BodyData );
@@ -79,6 +84,12 @@ public class MyRobotControls : MonoBehaviour {
                 notLoggedInText.text = "";
             }
         }
+
+        if (DatabaseManager.Instance.UserIsLoggedIn)
+        {
+            coinsText.text = "£" + DatabaseManager.Instance.AccountCoins.ToString("00");
+        }
+        else { coinsText.text = "£00"; }
     }
 
     public void OnClick_Body()
@@ -90,6 +101,7 @@ public class MyRobotControls : MonoBehaviour {
         {
             // Body is purchased
             MyRobot.Instance.GetMyRobotData.SetBodyData ( MyRobot.Instance.BodyDatas[currentBodyIndex] );
+            DatabaseManager.Instance.UpdateRobotData();
         }
         else
         {
@@ -121,6 +133,7 @@ public class MyRobotControls : MonoBehaviour {
         {
             // Body is purchased
             MyRobot.Instance.GetMyRobotData.SetWeaponData ( MyRobot.Instance.WeaponDatas[currentWeaponIndex] );
+            DatabaseManager.Instance.UpdateRobotData();
         }
         else
         {
@@ -152,6 +165,7 @@ public class MyRobotControls : MonoBehaviour {
         {
             // Body is purchased
             MyRobot.Instance.GetMyRobotData.SetEmblemData ( MyRobot.Instance.EmblemDatas[currentEmblemIndex] );
+            DatabaseManager.Instance.UpdateRobotData();
         }
         else
         {
@@ -183,6 +197,7 @@ public class MyRobotControls : MonoBehaviour {
         {
             // Body is purchased
             MyRobot.Instance.GetMyRobotData.SetSkinData ( MyRobot.Instance.SkinDatas[currentSkinIndex] );
+            DatabaseManager.Instance.UpdateRobotData();
         }
         else
         {
@@ -269,6 +284,9 @@ public class MyRobotControls : MonoBehaviour {
 
         spawnedBodyPrefab = Instantiate(MyRobot.Instance.BodyDatas[currentBodyIndex].prefab, transform.Find("Graphics"));
         spawnedBodyPrefab.transform.localPosition = Vector3.zero;
+
+        //else spawnedBodyPrefab.transform.localPosition = Vector3.zero + new Vector3(2.5f, 0.0f, 0.0f);
+
         spawnedBodyPrefab.transform.localEulerAngles = Vector3.zero;        
 
         myBodyText.text = "BODY: " + MyRobot.Instance.BodyDatas[currentBodyIndex].name.ToUpper ();
@@ -463,7 +481,12 @@ public class MyRobotControls : MonoBehaviour {
         currentZoom = SmoothLerp.Lerp(currentZoom, Input.GetAxis("XBO_RT"), Time.deltaTime * 0.5f);
         currentZoom = Mathf.Clamp(currentZoom, 0.0f, 1.0f);
 
-        Vector3 targetPosition = mainCamera.transform.position +- new Vector3(0.0f, 0.5f, -2.0f);
+        Vector3 targetPosition = new Vector3();
+
+        //if (ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
+            targetPosition = mainCamera.transform.position + -new Vector3(0.0f, 0.5f, -2.0f);
+        //else targetPosition = mainCamera.transform.position + -new Vector3(0.0f, 0.5f, -2.0f);
+
         transform.Find("Graphics").transform.position = Vector3.Lerp(originalRootPosition, targetPosition, currentZoom);      
     }
 

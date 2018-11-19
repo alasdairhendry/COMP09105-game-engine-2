@@ -95,10 +95,10 @@ public class Heatable : MonoBehaviourPunCallbacks {
         heat = Mathf.Clamp ( heat, 0, heatMax );
     }
 
-    public virtual void AddNetwork(float amount)
-    {
-        photonView.RPC ( "RPCAddNetwork", RpcTarget.AllBuffered, amount );
-    }
+    //public virtual void AddNetwork(float amount)
+    //{
+    //    photonView.RPC ( "RPCAddNetwork", RpcTarget.AllBuffered, amount );
+    //}
 
     [PunRPC]
     protected virtual void RPCAddNetwork(float amount)

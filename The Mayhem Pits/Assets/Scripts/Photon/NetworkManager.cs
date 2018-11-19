@@ -154,6 +154,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     {
         if (onLeftRoom != null)
             onLeftRoom();
+
+        if(SceneManager.GetActiveScene().name == "Game")
+        {
+            SceneLoader.Instance.LoadScene("Menu");
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

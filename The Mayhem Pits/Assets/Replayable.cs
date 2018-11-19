@@ -20,6 +20,13 @@ public class Replayable : MonoBehaviour {
 
     public void OnUpdate()
     {
+        if(replayID == 177)
+        {
+            if(ActionThisUpdate != null)
+            {
+                Debug.Log("Action doesnt == null");
+            }
+        }
         controller.CollectData(this, ActionThisUpdate);
         ActionThisUpdate = null;
     }
@@ -27,7 +34,11 @@ public class Replayable : MonoBehaviour {
     public void AddFramedAction(System.Action action)
     {
         if (action != null)
+        {
+            if (replayID == 177)
+                Debug.Log("Replayable - Add Framed Action");
             ActionThisUpdate += action;
+        }
     }
 
     private void OnDestroy()

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class NetworkGameRobot : MonoBehaviourPunCallbacks {
 
+    public float damageInflicted = 0.0f;
+
     // Use this for initialization
     void Start()
     {

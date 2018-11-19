@@ -21,6 +21,11 @@ public class Weapon_CollisionPoint : MonoBehaviour {
         weapon.OnChildCollisionStay ( other );
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        weapon.OnChildCollisionExit(other);
+    }
+
     //private void OnCollisionEnter (Collision collision)
     //{
     //    weapon.OnChildCollisionEnter ( collision );
