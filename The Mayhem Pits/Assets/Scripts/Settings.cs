@@ -146,7 +146,8 @@ public class Settings : MonoBehaviour {
     {
         value = Mathf.Clamp(value, 1, 8);
 
-        renderPipeline.msaaSampleCount = value;
+        //renderPipeline.msaaSampleCount = value;
+        QualitySettings.antiAliasing = value;
         PlayerPrefs.SetInt(ANTIALIASING, value);
     }
 

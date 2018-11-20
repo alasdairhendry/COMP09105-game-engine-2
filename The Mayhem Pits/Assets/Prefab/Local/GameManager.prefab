@@ -37,8 +37,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1284099178472842}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.318921, y: -2.036694, z: -1.2603579}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,8 +81,8 @@ MonoBehaviour:
     description: 
     prefab: {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f, type: 2}
     sprite: {fileID: 0}
-    maxSpeed: 12
-    acceleration: 1250
+    maxSpeed: 11
+    acceleration: 1205
     rotationalSpeed: 120
     mass: 1
   - name: Tanky
@@ -91,7 +91,7 @@ MonoBehaviour:
     prefab: {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2, type: 2}
     sprite: {fileID: 0}
     maxSpeed: 9
-    acceleration: 800
+    acceleration: 900
     rotationalSpeed: 120
     mass: 4
   weaponDatas:

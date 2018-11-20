@@ -63,7 +63,7 @@ public class MyRobotControls : MonoBehaviour {
 
         if (!DatabaseManager.Instance.UserIsLoggedIn)
         {
-            notLoggedInText.text = "You are not currently logged in. \nPlease create an account to customise your robot." ;
+            notLoggedInText.gameObject.SetActive(true);
         }
 
         SpawnBody();
@@ -72,7 +72,7 @@ public class MyRobotControls : MonoBehaviour {
     private void Update ()
     {
         transform.GetChild ( 0 ).Rotate ( Vector3.up, Time.deltaTime * Input.GetAxis ( "XBO_RH" ) * -150.0f, Space.World );
-        GetZoom();
+        
 
         if (hideInfoText)
         {
@@ -90,6 +90,11 @@ public class MyRobotControls : MonoBehaviour {
             coinsText.text = "£" + DatabaseManager.Instance.AccountCoins.ToString("00");
         }
         else { coinsText.text = "£00"; }
+    }
+
+    private void LateUpdate()
+    {
+        GetZoom();
     }
 
     public void OnClick_Body()
@@ -479,14 +484,16 @@ public class MyRobotControls : MonoBehaviour {
     private void GetZoom()
     {
         currentZoom = SmoothLerp.Lerp(currentZoom, Input.GetAxis("XBO_RT"), Time.deltaTime * 0.5f);
+        //currentZoom = Input.GetAxis("XBO_RT")
         currentZoom = Mathf.Clamp(currentZoom, 0.0f, 1.0f);
 
         Vector3 targetPosition = new Vector3();
 
         //if (ClientMode.Instance.GetMode == ClientMode.Mode.Normal)
-            targetPosition = mainCamera.transform.position + -new Vector3(0.0f, 0.5f, -2.0f);
+            targetPosition = mainCamera.transform.position + -new Vector3(0.0f, 0.5f, -2.5f);
         //else targetPosition = mainCamera.transform.position + -new Vector3(0.0f, 0.5f, -2.0f);
 
+        Debug.Log(Input.GetAxis("XBO_LT"));
         transform.Find("Graphics").transform.position = Vector3.Lerp(originalRootPosition, targetPosition, currentZoom);      
     }
 

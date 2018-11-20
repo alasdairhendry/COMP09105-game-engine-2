@@ -102,8 +102,10 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks, IPunObservable {
     public override void OnPlayerLeftRoom (Player otherPlayer)
     {
         if (KillFeed.Instance == null) return;
-        if (photonView.IsMine)
-            KillFeed.Instance.AddInfo(otherPlayer.NickName + " has left the game.", KillFeed.InfoType.Disconnect);
+
+        if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
+
+        KillFeed.Instance.AddInfo(otherPlayer.NickName + " has left the game.", KillFeed.InfoType.Disconnect, RpcTarget.All);
     }
 
     public void SetGameReady()

@@ -93,10 +93,10 @@ public class DatabaseManager : MonoBehaviour {
     {
         if (PlayerPrefs.HasKey ( "databaseUsername" ))
         {            
-            SetConnectionLabel ( "Found previously used account" );
+            SetConnectionLabel ( "Found previously used account." );
             TryDefaultLogin ( PlayerPrefs.GetString ( "databaseUsername" ) );
         }
-        else { OnDefaultLoginFailed (); }
+        else { OnDefaultLoginFailed ("No Previous Accounts Found."); }
     }    
 
     public void TryDefaultLogin (string username)
@@ -105,7 +105,7 @@ public class DatabaseManager : MonoBehaviour {
 
         FirebaseDatabase.DefaultInstance.GetReference ( "accounts" ).GetValueAsync ().ContinueWith ( task =>
         {
-            if (task.IsFaulted || task.IsCanceled) { Debug.LogError ("(TryDefaultLogin) - Error retrieving database: " + task.Exception.Message ); OnDefaultLoginFailed(); }
+            if (task.IsFaulted || task.IsCanceled) { Debug.LogError ("(TryDefaultLogin) - Error retrieving database: " + task.Exception.Message ); OnDefaultLoginFailed("Error retrieving information: " + task.Exception.Message); }
             else if (task.IsCompleted)
             {                
                 DataSnapshot snapshot = task.Result;
@@ -128,7 +128,7 @@ public class DatabaseManager : MonoBehaviour {
 
                 if (!foundChild)
                 {
-                    OnDefaultLoginFailed();
+                    OnDefaultLoginFailed( "Couldn't find username in database. Your account may have been deleted." );
                 }
 
             }
@@ -146,11 +146,11 @@ public class DatabaseManager : MonoBehaviour {
             Invoke ( "LoadNextScene", 1.0f );
     }
 
-    private void OnDefaultLoginFailed ()
+    private void OnDefaultLoginFailed (string error)
     {
         // Ask user to login.
         UserIsLoggedIn = false;
-        SetConnectionLabel ( "No Previous Accounts Found." );
+        SetConnectionLabel ( error );
         Invoke ( "LoadNextScene", 1.0f );
     }
 
@@ -317,7 +317,8 @@ public class DatabaseManager : MonoBehaviour {
 
     private void LoadNextScene ()
     {
-        SceneLoader.Instance.LoadScene ( "ModeSelect" );
+        if (SceneLoader.Instance.CurrentScene() == "DatabaseConnection")
+            SceneLoader.Instance.LoadScene("ModeSelect");
     }
 
     public void UpdateCoins(int value)

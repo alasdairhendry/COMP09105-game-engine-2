@@ -67,7 +67,7 @@ public class Test_RobotMovement : MonoBehaviourPunCallbacks {
                 Vector3 force = (transform.forward * Input.GetAxis ( "XBO_RT" ) * data.BodyData.acceleration * Time.fixedDeltaTime) / wheelConnections.Count;
                 rb.AddForceAtPosition ( force, wheelConnections[i].wheel.transform.position, ForceMode.Acceleration );
             }
-        }
+        }        
     }
 
     private void Rotate()

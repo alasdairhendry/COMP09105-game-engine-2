@@ -6,8 +6,9 @@ using UnityEngine.Networking;
 
 public class Robot : MonoBehaviourPunCallbacks {
 
-    Rigidbody rb;
+    private Rigidbody rb;
     private Vector3 currentVelocity;
+    //[SerializeField] private GameObject particlesPrefab;
 
     //private List<Ability> abilities = new List<Ability>();    
 
@@ -15,11 +16,6 @@ public class Robot : MonoBehaviourPunCallbacks {
     {
         rb = GetComponent<Rigidbody> ();
         CreateCOMAnchor();
-    }
-
-    private void Update()
-    {
-
     }
 
     private void CreateCOMAnchor()

@@ -62,6 +62,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         base.OnLeftRoom ();
         countdownIsRunning = false;
         CheckPlayerCount ();
+        countdownText.text = "Welcome!";
         //Debug.Log ( "Left room" );
     }
 
@@ -114,6 +115,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
 
     private void SetRoomLockState (bool state)
     {
+        Debug.LogError("Setting room (IsOpen: " + state + ")");
         if (PhotonNetwork.CurrentRoom != null)
             PhotonNetwork.CurrentRoom.IsOpen = state;
     }
@@ -140,6 +142,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
             {
                 SetRoomLockState ( false );
                 PhotonNetwork.LoadLevel("Game");
+                Debug.LogError("Loading Main Level On Network");
+                yield break;
             }
 
             yield return new WaitForSeconds(1.0f);

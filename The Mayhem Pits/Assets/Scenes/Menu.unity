@@ -4992,7 +4992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4430c4ac2e1ddf1498a3bc5d34012f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_SOLOSTART: 1
+  DEBUG_SOLOSTART: 0
   countdownTime: 6
   countdownText: {fileID: 1590993018}
   roomName: 
@@ -14849,11 +14849,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4427684417875936, guid: 7ae9fb5f7a288a345a574cc2e8abb92b, type: 2}
       propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114639291440175180, guid: 7ae9fb5f7a288a345a574cc2e8abb92b,
-        type: 2}
-      propertyPath: mode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
