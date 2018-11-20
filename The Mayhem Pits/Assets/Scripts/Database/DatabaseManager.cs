@@ -13,6 +13,7 @@ public class DatabaseManager : MonoBehaviour {
     public static DatabaseManager Instance;
 
     private bool startupCheckPerformed = false;
+    public bool StartupCheckFlag { set { startupCheckPerformed = value; } }
 
     [SerializeField] private DatabaseAccount currentAccount;
     [SerializeField] private bool databaseReady = false;
@@ -71,11 +72,11 @@ public class DatabaseManager : MonoBehaviour {
                 CheckStoredLogin ();                
             }
 
-            if (Input.GetKeyDown ( KeyCode.C ))
-            {
-                if (UserIsLoggedIn)
-                    UpdateCoins ( currentAccount.coins + 20 );
-            }
+            //if (Input.GetKeyDown ( KeyCode.C ))
+            //{
+            //    if (UserIsLoggedIn)
+            //        UpdateCoins ( currentAccount.coins + 20 );
+            //}
         }    
     }
 

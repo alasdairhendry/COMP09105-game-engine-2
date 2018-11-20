@@ -63,6 +63,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
             {
                 currentRetryDelay = 0.0f;
                 ConnectToMasterServer ();
+                failedToConnect = false;
             }
         }
     }
@@ -72,22 +73,28 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
     {
         PhotonNetwork.GameVersion = gameVersion;
         PhotonNetwork.ConnectUsingSettings();
+        Debug.LogError ( "ConnectToMasterServer" );
     }
 
     // Called when the player successfully connects to the master server
     public override void OnConnectedToMaster()
     {
+        Debug.LogError ( "OnConnectedToMaster - Scene: " + SceneLoader.Instance.CurrentScene());
         failedToConnect = false;
         if (SceneLoader.Instance.CurrentScene() == "NetworkConnection")
         {
             SceneLoader.Instance.LoadScene("DatabaseConnection");
+
+            if (DatabaseManager.Instance != null)
+                DatabaseManager.Instance.StartupCheckFlag = false;
         }
-    }    
+    }         
 
     // Called when the player disconnects from the master server
     public override void OnDisconnected(DisconnectCause cause)
     {
         failedToConnect = true;
+        Debug.LogError ( "Disconnected: " + cause.ToString () );
 
         if(SceneLoader.Instance.CurrentScene() == "NetworkConnection")
         {
@@ -97,7 +104,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks {
         }
         else
         {
-            if (cause == DisconnectCause.DisconnectByClientLogic) return;
+            if (cause == DisconnectCause.DisconnectByClientLogic) { Debug.LogError ( "Disconnected by client logic" ); return; }
             SceneLoader.Instance.LoadScene ( "NetworkConnection" );
             ConnectToMasterServer ();
         }

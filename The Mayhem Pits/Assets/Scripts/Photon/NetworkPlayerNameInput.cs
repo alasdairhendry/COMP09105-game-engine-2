@@ -47,14 +47,21 @@ public class NetworkPlayerNameInput : MonoBehaviour
         usernameText.text = username;
         yButton.SetText ( "Log out" );
         userImage.sprite = userSprites[1];
+
+        if (PhotonNetwork.InRoom)
+            PhotonNetwork.LeaveRoom ();
     }
 
     private void OnLogout ()
     {
-        PhotonNetwork.NickName = "Guest";
-        usernameText.text = "Guest";
+        float value = Random.Range ( 1000.0f, 9999.0f );
+        PhotonNetwork.NickName = "Guest-" + value.ToString ("0000");
+        usernameText.text = "Guest-" + value.ToString("0000");
         yButton.SetText ( "Log in" );
         userImage.sprite = userSprites[0];
+
+        if (PhotonNetwork.InRoom)
+            PhotonNetwork.LeaveRoom ();
     }
 
     private void OnDestroy ()

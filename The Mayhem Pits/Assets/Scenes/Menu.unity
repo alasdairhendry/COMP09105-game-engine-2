@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.528
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.022944072, g: 0.012284609, b: 0.022676291, a: 0.528}
+  m_IndirectSpecularColor: {r: 0.001775857, g: 0.0009508211, b: 0.0017551308, a: 0.528}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4992,7 +4992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4430c4ac2e1ddf1498a3bc5d34012f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DEBUG_SOLOSTART: 0
+  DEBUG_SOLOSTART: 1
   countdownTime: 6
   countdownText: {fileID: 1590993018}
   roomName: 
