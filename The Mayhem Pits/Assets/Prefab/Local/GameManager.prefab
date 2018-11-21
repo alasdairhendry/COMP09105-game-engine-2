@@ -82,7 +82,7 @@ MonoBehaviour:
     prefab: {fileID: 1627863257975790, guid: 36c7095427d3c7545b9fdb05ff32377f, type: 2}
     sprite: {fileID: 0}
     maxSpeed: 11
-    acceleration: 1205
+    acceleration: 1200
     rotationalSpeed: 120
     mass: 1
   - name: Tanky
