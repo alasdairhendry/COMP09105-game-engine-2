@@ -91,9 +91,7 @@ public class RobotAbilities : MonoBehaviourPunCallbacks
         AddAbility ( ability_FlipLeftPrefab );
         AddAbility ( ability_FlipRightPrefab );
         AddAbility ( ability_BoostPrefab );
-        AddAbility ( ability_BoostPrefab );
-        AddAbility ( ability_BoostPrefab );
-        AddAbility ( ability_BoostPrefab );
+        AddAbility ( ability_BoostPrefab );                
     }
 
     public void AddAbility (GameObject prefab)

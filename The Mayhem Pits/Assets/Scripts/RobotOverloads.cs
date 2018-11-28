@@ -94,7 +94,7 @@ public class RobotOverloads : MonoBehaviourPunCallbacks {
     private void CreateInitialAbilities ()
     {
         //return;
-        AddAbility(impulsePrefab);
+        //AddAbility(impulsePrefab);
         //AddAbility ( impulsePrefab );
         //AddAbility ( impulsePrefab );
 

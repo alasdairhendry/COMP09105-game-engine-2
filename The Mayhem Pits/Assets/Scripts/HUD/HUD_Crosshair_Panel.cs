@@ -243,10 +243,10 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
             if (lockableTargets[i].GetComponent<PhotonView> ().Owner == null) continue;
             if (PhotonNetwork.LocalPlayer == null) continue;
 
-            //if (lockableTargets[i].GetComponent<PhotonView> ().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-            //{
-            //    lockableTargets.RemoveAt ( i );
-            //}
+            if (lockableTargets[i].GetComponent<PhotonView> ().Owner.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                lockableTargets.RemoveAt ( i );
+            }
         }
     }
 
