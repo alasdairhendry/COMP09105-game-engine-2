@@ -103,16 +103,4 @@ public class RobotAbilities : MonoBehaviourPunCallbacks
         ability.SetTargetRobot ( this.gameObject );
         abilityPanel.AddAbility ( ability, abilities );   
     }
-
-    //public void ActivateAbility(string abilityName)
-    //{
-    //    for (int i = 0; i < abilities.Count; i++)
-    //    {
-    //        if(abilityName == abilities[i].AbilityName)
-    //        {
-    //            abilities[i].Activate ();
-    //            return;
-    //        }
-    //    }
-    //}
 }

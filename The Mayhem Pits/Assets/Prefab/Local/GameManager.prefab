@@ -85,15 +85,6 @@ MonoBehaviour:
     acceleration: 1200
     rotationalSpeed: 120
     mass: 1
-  - name: Tanky
-    DebugID: 0
-    description: 
-    prefab: {fileID: 1809382880685396, guid: 2c8cde3c48a10f64abc3c4c4993b75a2, type: 2}
-    sprite: {fileID: 0}
-    maxSpeed: 9
-    acceleration: 900
-    rotationalSpeed: 120
-    mass: 4
   weaponDatas:
   - name: Wheelsaw
     DebugID: 0

@@ -23,8 +23,7 @@ public class RobotOverloads : MonoBehaviourPunCallbacks {
 
     // Use this for initialization
     void Start ()
-    {
-        //return
+    {        
         if (!photonView.IsMine && PhotonNetwork.IsConnected) return;
         overloadPanel = FindObjectOfType<HUD_Overloads_Panel> ();
         CreateInitialAbilities ();
@@ -93,14 +92,7 @@ public class RobotOverloads : MonoBehaviourPunCallbacks {
 
     private void CreateInitialAbilities ()
     {
-        //return;
-        //AddAbility(impulsePrefab);
-        //AddAbility ( impulsePrefab );
-        //AddAbility ( impulsePrefab );
 
-        //AddAbility ( impulsePrefab );
-        //AddAbility ( impulsePrefab );
-        //AddAbility ( impulsePrefab );
     }
 
     public bool AddAbility(GameObject prefab)

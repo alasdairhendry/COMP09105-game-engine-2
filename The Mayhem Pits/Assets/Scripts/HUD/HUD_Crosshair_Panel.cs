@@ -40,17 +40,10 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
         if (!active) return;
 
         FindClosestTarget ();
-        //MoveCrosshair ();
-        //MonitorLocking ();
         UpdateSlider ();
-        //ConstrainHUD ();
 
-        //if (!isLocked)
-        //{
         if (currentTarget != null)
             crosshairRect.Rotate ( new Vector3 ( 0.0f, 0.0f, 1.0f ) * (Mathf.Lerp ( 0.0f, 1.0f, lockCounter / currentTarget.LockTime )) * Time.deltaTime * 300.0f );
-        //}
-
     }
 
     private void LateUpdate()
@@ -91,9 +84,6 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
                 maxDistance = distance;
                 closestTarget = lockableTargets[i];
             }
-
-            //Debug.Log ( "Target " + lockableTargets[i].name + ": Position " + targetScreenPosition );
-            //Debug.Log ( "Crosshair: Position " + crosshairScreenPosition );
         }
 
         currentTarget = maxDistance <= targetDistance ? closestTarget : null;
@@ -139,17 +129,7 @@ public class HUD_Crosshair_Panel : MonoBehaviour {
     }
 
     private void MoveLockedCrosshair ()
-    {
-        //Vector2 viewportPosition = Camera.main.WorldToViewportPoint ( currentTarget.transform.GetComponentInChildren<Renderer> ().bounds.center );
-        //Vector2 proportionalPosition = new Vector2 ( viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y );
-
-        //Vector3 targetScreenPosition = proportionalPosition - uiOffset;
-        //float x = SmoothLerp.Lerp ( contraintsRect.anchoredPosition.x, targetScreenPosition.x, Time.deltaTime * 1500.0f );
-        //float y = SmoothLerp.Lerp ( contraintsRect.anchoredPosition.y, targetScreenPosition.y, Time.deltaTime * 1500.0f );
-
-        //contraintsRect.anchoredPosition = targetScreenPosition;
-        //crosshairRect.anchoredPosition = targetScreenPosition;        
-
+    {       
         Vector2 viewportPosition = Camera.main.WorldToViewportPoint(currentTarget.transform.GetComponentInChildren<Renderer>().bounds.center);
         Vector2 proportionalPosition = new Vector2(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y);
 
